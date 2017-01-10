@@ -37,5 +37,13 @@ public class DatabaseManager {
         dbHelper.close();
     }
 
+    protected void insertLists(String title, String desc, String creator,
+                               String languageA, String languageB) {
+
+    }
+
+    protected void insertWord(String wordA, String wordB) {
+
+    }
 
 }

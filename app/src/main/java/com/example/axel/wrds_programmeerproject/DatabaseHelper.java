@@ -29,8 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     // Word table columns
     public static final String pk_word_id = "word_id";
     public static final String fk_list_id = "list_id";
-    public static final String str_word = "word";
-    public static final String str_translation = "translation";
+    public static final String str_wordA = "wordA";
+    public static final String str_wordB = "wordB";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -49,8 +49,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String createWordTable = "create timetable " + wordTable + "(" +
             pk_word_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             fk_list_id + "INTEGER NOT NULL, " +
-            str_word + "TEXT NOT NULL, " +
-            str_translation + "TEXT NOT NULL);";
+            str_wordA + "TEXT NOT NULL, " +
+            str_wordB + "TEXT NOT NULL);";
 
     @Override
     public void onCreate(SQLiteDatabase db) {

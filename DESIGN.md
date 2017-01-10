@@ -48,5 +48,5 @@ For the database there are two tables: list and word. The list table has the fol
 The word table has the following attributes:
 - word_id (primary_key, int)
 - list_id (foreign key, int)
-- word (text)
-- translation (text)
+- wordA (text)
+- wordB (text)

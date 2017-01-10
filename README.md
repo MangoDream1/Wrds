@@ -10,6 +10,27 @@ The user will be able to created lists with a words in one language and the tran
 
 **a visual sketch of what the application will look like for the user; if you envision the application to have multiple screens, sketch these all out; not in full detail though**
 
+Main View:
+
+![Main View](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Main View.png "Main View")
+
+Main View add list dialog:
+
+![Main View add list dialog](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Main View add list dialog.png "Main View add list dialog")
+
+List View:
+
+![List View](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/List View.png "List View")
+
+Exam View:
+
+![Exam view](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Exam view.png "Exam view")
+
+Exam view incorrect pop up:
+
+![Exam view incorrect pop up](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Exam view incorrect pop up.png "Exam view incorrect pop up")
+
+
 **what data sets and data sources will you need, how you will get the data into the right form for your app**
 
 The user creates lists of words and these need to be saved. Otherwise no external data sets are used.

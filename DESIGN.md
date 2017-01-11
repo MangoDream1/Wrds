@@ -1,9 +1,5 @@
 ### Design document
 
-###### Activity flow:
-
-MainActivity -> ListActivity -> ExamActivity -> ResultActivity
-
 ###### Classes
 
 - **MainActivity**: Main screen that shows all the lists of the user. The user can create or select a word list.
@@ -14,6 +10,14 @@ MainActivity -> ListActivity -> ExamActivity -> ResultActivity
 - **DatabaseManager**: Singelton that handles inserting and deleting of items in the database.
 - **CMListDialog**: Dialog that handles create of modification of a list
 - **AnswerComparison**: Class that compares two strings and shows the differences.
+- **WordsAdapter**: Adapter that will fill in RecyclerView in ListActivity.
+- **WordListsAdapter**: Adapter that will fill in RecyclerView in MainActivity.
+
+###### Class layout
+
+Black arrows are data flow. Dotted arrows are Activity flow. Class functions are not yet known for all classes.
+
+![Class layout](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/classLayout.png "Class layout")
 
 ###### Sketches
 

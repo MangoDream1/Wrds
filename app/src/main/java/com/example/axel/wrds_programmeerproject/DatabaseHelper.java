@@ -10,14 +10,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     static final String DB_NAME = "wrds.db";
-    static final int DB_VERSION = 1;
+    static final int DB_VERSION = 2;
 
     // Table names
     public static final String listTable = "ListTable";
     public static final String wordTable = "WordTable";
 
     // List table columns
-    public static final String pk_listId = "list_id";
+    public static final String pk_listId = "_id";
     public static final String str_title = "title";
     public static final String str_desc = "desc";
     public static final String dt_createdAt = "createdAt";
@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String str_languageB = "languageB";
 
     // Word table columns
-    public static final String pk_wordId = "word_id";
+    public static final String pk_wordId = "_id";
     public static final String fk_listId = "list_id";
     public static final String str_wordA = "wordA";
     public static final String str_wordB = "wordB";

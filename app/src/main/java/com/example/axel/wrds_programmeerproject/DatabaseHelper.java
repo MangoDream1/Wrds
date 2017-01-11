@@ -1,7 +1,6 @@
 package com.example.axel.wrds_programmeerproject;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -18,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String wordTable = "WordTable";
 
     // List table columns
-    public static final String pk_list_id = "list_id";
+    public static final String pk_listId = "list_id";
     public static final String str_title = "title";
     public static final String str_desc = "desc";
     public static final String dt_createdAt = "createdAt";
@@ -27,8 +26,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String str_languageB = "languageB";
 
     // Word table columns
-    public static final String pk_word_id = "word_id";
-    public static final String fk_list_id = "list_id";
+    public static final String pk_wordId = "word_id";
+    public static final String fk_listId = "list_id";
     public static final String str_wordA = "wordA";
     public static final String str_wordB = "wordB";
 
@@ -38,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     // Create database queries
     public static final String createListTable = "create timetable " + listTable + "(" +
-            pk_list_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            pk_listId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             str_title + " TEXT NOT NULL, " +
             str_desc + " TEXT, " +
             dt_createdAt + " DATETIME DEFAULT CURRENT_DATE, " +
@@ -47,8 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             str_languageB + " TEXT NOT NULL);";
 
     public static final String createWordTable = "create timetable " + wordTable + "(" +
-            pk_word_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            fk_list_id + "INTEGER NOT NULL, " +
+            pk_wordId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            fk_listId + "INTEGER NOT NULL, " +
             str_wordA + "TEXT NOT NULL, " +
             str_wordB + "TEXT NOT NULL);";
 

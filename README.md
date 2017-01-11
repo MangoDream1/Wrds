@@ -8,7 +8,7 @@ No APIs are needed. If there is any time left, maybe Firebase so that lists of w
 
 A similar app is Duolingo, only here the the list of words is pre-defined by the application. The examination part however is similar in the way how this application should do it.
 
-##### Sketches
+### Sketches
 
 Main View:
 

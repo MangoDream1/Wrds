@@ -9,7 +9,7 @@ import android.widget.TextView;
  * Created by axel on 10-1-17.
  */
 
-public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHolder> {
+public class WordListsAdapter extends RecyclerView.Adapter<WordListsAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
@@ -35,12 +35,12 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHo
     }
 
     @Override
-    public WordListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WordListsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(WordListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(WordListsAdapter.ViewHolder holder, int position) {
 
     }
 

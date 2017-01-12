@@ -35,6 +35,7 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
 //        title.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_title)));
         creator.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_creator)));
 
+        // Add languages into one string
         String languageText = cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_languageA))
                 + " - " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_languageB));
 

@@ -50,11 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.add_button:
                 CMDialog cmDialog = new CMDialog();
                 cmDialog.show(getFragmentManager(), "CMDialog");
-
-                adapter.swapCursor(dbm.getUserLists());
-                adapter.notifyDataSetChanged();
-
         }
+    }
+
+    public void dataChange() {
+        adapter.swapCursor(dbm.getUserLists());
+        adapter.notifyDataSetChanged();
     }
 }
 

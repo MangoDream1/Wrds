@@ -16,14 +16,14 @@ import android.widget.EditText;
 
 public class CMDialog extends DialogFragment {
 
-    // TODO split modify and create from eachother based on dialog creation location
+    // TODO split modify and create from each other based on dialog creation location
 
     private DatabaseManager dbm;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
 
         // Use the Builder class for convenient dialog construction
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -55,6 +55,8 @@ public class CMDialog extends DialogFragment {
                                 .getText().toString();
 
                         dbm.insertList(name, desc, "you", lanA, lanB);
+
+                        ((MainActivity) activity).dataChange();
 
                     }
                 })

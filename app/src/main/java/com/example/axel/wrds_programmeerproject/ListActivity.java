@@ -29,9 +29,7 @@ public class ListActivity extends AppCompatActivity {
 
         title = String.format("%s (%s - %s)", title, lanA, lanB);
 
-        Log.d("Test title: ", title);
-
-        // Creates toolbar
+        // Creates toolbar and sets title
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_menu);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);

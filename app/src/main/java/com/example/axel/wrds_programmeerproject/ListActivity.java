@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -48,19 +51,34 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         adapter = new WordsCursorAdapter(this, R.layout.word_item, cursor, 0);
 
+        // Populate listView
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
+        // Set editText footer
         View footer = getLayoutInflater().inflate(R.layout.word_footer, null);
         listView.addFooterView(footer);
 
+        // Set onClick
         addWordButton = (Button) footer.findViewById(R.id.add_word_button);
         addWordButton.setOnClickListener(this);
 
+        // Find editTexts
         wordAEditText = (EditText) findViewById(R.id.wordA_editText);
         wordBEditText = (EditText) findViewById(R.id.wordB_editText);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Create menu
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        menu.findItem(R.id.play).setVisible(true);
+
+        return true;
     }
 
     @Override
@@ -83,8 +101,27 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         dataChange();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.play:
+                Intent intent = new Intent(this, ExamActivity.class);
+                intent.putExtra("listId", listId);
+
+                startActivity(intent);
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
     public void dataChange() {
         adapter.swapCursor(dbm.getListWords(listId));
         adapter.notifyDataSetChanged();
     }
+
+
 }

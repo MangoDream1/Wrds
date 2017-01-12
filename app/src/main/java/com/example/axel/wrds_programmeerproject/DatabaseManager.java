@@ -50,7 +50,7 @@ public class DatabaseManager {
 
     }
 
-    protected int updateList(int listId, String title, String desc, String creator,
+    protected int updateList(long listId, String title, String desc, String creator,
                              String languageA, String languageB) {
         /* Updates values in a list using listId to find the list */
 
@@ -62,7 +62,7 @@ public class DatabaseManager {
 
     }
 
-    protected void deleteList(int listId) {
+    protected void deleteList(long listId) {
         /* Delete list from database */
 
         database.delete(DatabaseHelper.listTable, DatabaseHelper.pk_listId + " = " + listId, null);
@@ -121,7 +121,7 @@ public class DatabaseManager {
 
     }
 
-    protected void insertWord(int listId, String wordA, String wordB) {
+    protected void insertWord(long listId, String wordA, String wordB) {
         /* Inserts new word in database connecting with correct list */
 
         ContentValues contentValues = new ContentValues();
@@ -134,7 +134,7 @@ public class DatabaseManager {
 
     }
 
-    protected int updateWord(int wordId, String wordA, String wordB) {
+    protected int updateWord(long wordId, String wordA, String wordB) {
         /* Updates a word in the database */
 
         ContentValues contentValues = new ContentValues();
@@ -146,12 +146,11 @@ public class DatabaseManager {
 
     }
 
-    protected void deleteWord(int wordId) {
+    protected void deleteWord(long wordId) {
         database.delete(DatabaseHelper.wordTable, DatabaseHelper.pk_wordId + " = " + wordId, null);
-
     }
 
-    protected Cursor getListWords(int listId) {
+    protected Cursor getListWords(long listId) {
         /* Get all the words of a list */
 
         String[] columns = new String[]{DatabaseHelper.str_wordA, DatabaseHelper.str_wordB};

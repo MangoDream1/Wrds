@@ -109,7 +109,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("listId", listId);
 
                 startActivity(intent);
-
                 return true;
 
             default:

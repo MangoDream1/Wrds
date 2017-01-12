@@ -1,8 +1,13 @@
 package com.example.axel.wrds_programmeerproject;
 
-/**
- * Created by axel on 12-1-17.
- */
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-public class ExamActivity {
+public class ExamActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_exam);
+    }
 }

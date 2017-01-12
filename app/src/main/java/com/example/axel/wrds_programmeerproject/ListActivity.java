@@ -37,6 +37,7 @@ public class ListActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
 
+        dbm.insertWord(listId, "test", "TEST");
         Cursor cursor = dbm.getListWords(listId);
 
         adapter = new WordsCursorAdapter(this, R.layout.word_item, cursor, 0);

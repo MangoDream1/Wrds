@@ -126,9 +126,9 @@ public class DatabaseManager {
 
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(DatabaseHelper.fk_listId, listId);
         contentValues.put(DatabaseHelper.str_wordA, wordA);
         contentValues.put(DatabaseHelper.str_wordB, wordB);
-        contentValues.put(DatabaseHelper.fk_listId, listId);
 
         database.insert(DatabaseHelper.wordTable, null, contentValues);
 
@@ -153,10 +153,11 @@ public class DatabaseManager {
     protected Cursor getListWords(long listId) {
         /* Get all the words of a list */
 
-        String[] columns = new String[]{DatabaseHelper.str_wordA, DatabaseHelper.str_wordB};
+        String[] columns = new String[]{DatabaseHelper.pk_wordId, DatabaseHelper.str_wordA,
+                DatabaseHelper.str_wordB};
 
-        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, null, null,
-                null, null, null);
+        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, DatabaseHelper.fk_listId
+                        + " = " + String.valueOf(listId), null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -165,6 +166,4 @@ public class DatabaseManager {
         return cursor;
 
     }
-
-
 }

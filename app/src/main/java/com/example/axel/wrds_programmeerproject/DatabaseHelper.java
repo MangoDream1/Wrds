@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     static final String DB_NAME = "wrds.db";
-    static final int DB_VERSION = 2;
+    static final int DB_VERSION = 3;
 
     // Table names
     public static final String listTable = "ListTable";
@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     // Create database queries
-    public static final String createListTable = "create table " + listTable + "(" +
+    public static final String createListTable = "create table " + listTable + " (" +
             pk_listId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             str_title + " TEXT NOT NULL, " +
             str_desc + " TEXT, " +
@@ -45,11 +45,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             str_languageA + " TEXT NOT NULL, " +
             str_languageB + " TEXT NOT NULL);";
 
-    public static final String createWordTable = "create table " + wordTable + "(" +
+    public static final String createWordTable = "create table " + wordTable + " (" +
             pk_wordId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            fk_listId + "INTEGER NOT NULL, " +
-            str_wordA + "TEXT NOT NULL, " +
-            str_wordB + "TEXT NOT NULL);";
+            fk_listId + " INTEGER NOT NULL, " +
+            str_wordA + " TEXT NOT NULL, " +
+            str_wordB + " TEXT NOT NULL);";
 
     @Override
     public void onCreate(SQLiteDatabase db) {

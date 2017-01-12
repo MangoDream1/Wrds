@@ -89,6 +89,18 @@ public class DatabaseManager {
         return getUserLists(10);
     }
 
+    protected Cursor getUserListTitle(long id) {
+        Cursor cursor = database.query(DatabaseHelper.listTable,
+                new String[]{DatabaseHelper.str_title},
+                DatabaseHelper.pk_listId + " = " + String.valueOf(id), null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
+    }
+
 
     private ContentValues createListContentValues(String title, String desc, String creator,
                                                   String languageA, String languageB) {
@@ -139,9 +151,9 @@ public class DatabaseManager {
     protected Cursor getListWords(int listId) {
         /* Get all the words of a list */
 
-        String[] colomns = new String[]{DatabaseHelper.str_wordA, DatabaseHelper.str_wordB};
+        String[] columns = new String[]{DatabaseHelper.str_wordA, DatabaseHelper.str_wordB};
 
-        Cursor cursor = database.query(DatabaseHelper.wordTable, colomns, null, null,
+        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, null, null,
                 null, null, null);
 
         if (cursor != null) {

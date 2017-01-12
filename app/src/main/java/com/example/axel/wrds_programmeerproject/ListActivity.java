@@ -106,7 +106,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.play:
                 Intent intent = new Intent(this, ExamActivity.class);
-                intent.putExtra("listId", listId);
+                intent.putExtra("id", listId);
 
                 startActivity(intent);
                 return true;

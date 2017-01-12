@@ -6,11 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ListView;
 
 public class ListActivity extends AppCompatActivity {
 
     private long listId;
     private DatabaseManager dbm;
+    private WordsCursorAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,14 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_menu);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
+
+        Cursor cursor = dbm.getListWords(listId);
+
+        adapter = new WordsCursorAdapter(this, R.layout.word_item, cursor, 0);
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
 
     }
 }

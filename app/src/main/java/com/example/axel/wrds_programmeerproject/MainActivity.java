@@ -1,7 +1,6 @@
 package com.example.axel.wrds_programmeerproject;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // Creates toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_menu);
-        setSupportActionBar(myToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_menu);
+        setSupportActionBar(toolbar);
 
         Button add_button = (Button) findViewById(R.id.add_button);
         add_button.setOnClickListener(this);

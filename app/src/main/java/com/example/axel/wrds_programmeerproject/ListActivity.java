@@ -20,9 +20,14 @@ public class ListActivity extends AppCompatActivity {
 
         DatabaseManager.getInstance();
 
-        Cursor titleCursor = dbm.getUserListTitle(listId);
-        String title = titleCursor.getString(titleCursor.getColumnIndex(DatabaseHelper.str_title));
+        Cursor listCursor = dbm.getUserListTitle(listId);
+        String title = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_title));
+        String lanA = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_languageA));
+        String lanB = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_languageB));
 
+        title = String.format("%s (%s - %s)", title, lanA, lanB);
+
+        setTitle(title);
 
     }
 }

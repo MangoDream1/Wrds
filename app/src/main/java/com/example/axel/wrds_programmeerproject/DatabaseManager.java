@@ -90,9 +90,12 @@ public class DatabaseManager {
     }
 
     protected Cursor getUserListTitle(long id) {
-        Cursor cursor = database.query(DatabaseHelper.listTable,
-                new String[]{DatabaseHelper.str_title},
-                DatabaseHelper.pk_listId + " = " + String.valueOf(id), null, null, null, null);
+        String[] columns = new String[]{DatabaseHelper.str_title,
+                DatabaseHelper.str_languageA, DatabaseHelper.str_languageB};
+
+
+        Cursor cursor = database.query(DatabaseHelper.listTable, columns, DatabaseHelper.pk_listId
+                + " = " + String.valueOf(id), null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();

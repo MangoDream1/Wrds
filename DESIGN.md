@@ -54,3 +54,9 @@ The word table has the following attributes:
 - list_id (foreign key, int)
 - wordA (text)
 - wordB (text)
+
+###### Minimal viable product
+
+
+###### Upgrades possiblities
+

@@ -15,7 +15,7 @@
 
 ###### Class layout
 
-Black arrows are data flow. Dotted arrows are Activity flow. Class functions are not yet known for all classes.
+Black arrows are data flow. Dotted arrows are Activity flow. Class functions are not yet known for all classes. This class layout are the minimal viable product. The sketches show how the activities would look.
 
 ![Class layout](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/classLayout.png "Class layout")
 
@@ -55,8 +55,9 @@ The word table has the following attributes:
 - wordA (text)
 - wordB (text)
 
-###### Minimal viable product
-
-
 ###### Upgrades possiblities
 
+- Share a list via Firebase. So that users can share their lists with each other.
+- Search function to search your lists
+- See which letters you have written correct and what wrong
+- Create a list out of the words the user has incorrectly entered

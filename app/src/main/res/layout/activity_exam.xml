@@ -39,10 +39,10 @@
         android:textColor="@android:color/black" />
 
     <TextView
-        android:text="wordA"
+        android:text="translate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wordA" />
+        android:id="@+id/translate" />
 
     <EditText
         android:layout_width="match_parent"

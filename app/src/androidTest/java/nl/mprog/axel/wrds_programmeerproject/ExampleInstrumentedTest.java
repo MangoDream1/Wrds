@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.axel.wrds_programmeerproject", appContext.getPackageName());
+        assertEquals("nl.mprog.axel.wrds_programmeerproject", appContext.getPackageName());
     }
 }

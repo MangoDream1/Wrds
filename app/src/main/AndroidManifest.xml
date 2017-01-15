@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.axel.wrds_programmeerproject">
+    package="nl.mprog.axel.wrds_programmeerproject">
 
     <application
         android:allowBackup="true"

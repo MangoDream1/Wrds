@@ -48,8 +48,6 @@
 
 ## Day 6
 
-- Weekend
-
 ## Day 7
 
 

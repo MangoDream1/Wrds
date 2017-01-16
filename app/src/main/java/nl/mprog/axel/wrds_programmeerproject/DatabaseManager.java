@@ -3,7 +3,9 @@ package nl.mprog.axel.wrds_programmeerproject;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.database.DatabaseUtilsCompat;
 
 import java.sql.SQLException;
 
@@ -104,6 +106,10 @@ public class DatabaseManager {
         return cursor;
     }
 
+    public long countListWords(long id) {
+        return DatabaseUtils.queryNumEntries(database, DatabaseHelper.wordTable,
+                DatabaseHelper.fk_listId + " = " + String.valueOf(id));
+    }
 
     private ContentValues createListContentValues(String title, String desc, String creator,
                                                   String languageA, String languageB) {

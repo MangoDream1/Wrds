@@ -2,9 +2,13 @@ package nl.mprog.axel.wrds_programmeerproject;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 /**
  * Created by axel on 11-01-17.
@@ -29,10 +33,9 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
 
         // Set views
         title.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_title)));
-//        title.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_title)));
         desc.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_desc)));
 
-//        title.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_title)));
+        date.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.dt_createdAt)));
         creator.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_creator)));
 
         // Add languages into one string
@@ -41,5 +44,9 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
 
         language.setText(languageText);
 
+        // Count nWords of the list
+        nWords.setText(" (" + String.valueOf(DatabaseManager.getInstance().countListWords(
+                cursor.getLong(cursor.getColumnIndex(DatabaseHelper.pk_listId)))) + ")");
     }
+
 }

@@ -39,8 +39,8 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);
 
-        Button checkButton = (Button) findViewById(R.id.check_button);
-        checkButton.setOnClickListener(this);
+        (findViewById(R.id.check_button)).setOnClickListener(this);
+        (findViewById(R.id.cancel_button)).setOnClickListener(this);
 
         Cursor cursor = dbm.getListWords(listId);
 
@@ -109,8 +109,14 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
                     startActivity(intent);
 
-
+                    finish();
                 }
+                break;
+
+            case R.id.cancel_button:
+                // TODO check if user is sure dialog
+                finish();
+                break;
         }
     }
 }

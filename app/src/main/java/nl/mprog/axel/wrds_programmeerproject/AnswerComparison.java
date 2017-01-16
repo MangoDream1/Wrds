@@ -4,6 +4,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,51 @@ public class AnswerComparison {
 
         List<String> similarities = findSimilarities(wordA, wordB);
 
+        ArrayList<Integer> indexes = new ArrayList<>();
 
-        //TODO reverse span. Now underline fault instead of correct
+        indexes.add(0);
+
+        int offset = 0;
+        int wordALength = wordA.length();
+
         for (String similarity: similarities) {
+            Log.d("test similiarity", similarity);
+
             int start = wordA.indexOf(similarity);
-            int end = start + similarity.length();
+
+            indexes.add(start + offset);
+            indexes.add(start + similarity.length() + offset);
+
+            offset = offset + similarity.length();
+            wordA = wordA.replaceFirst(similarity, "");
+
+            Log.d("test wordA", wordA);
+            Log.d("test offset", String.valueOf(offset));
+
+        }
+
+        indexes.add(wordALength);
+
+        Log.d("test ding", indexes.toString());
+
+        for (int i = 0; i < indexes.size(); i = i + 2) {
+            int start = indexes.get(i);
+            int end = indexes.get(i+1);
+
+            Log.d("test start", String.valueOf(start));
+            Log.d("test end", String.valueOf(end));
+
 
             spanString.setSpan(new UnderlineSpan(), start, end, 0);
         }
+//
+//        //TODO reverse span. Now underline fault instead of correct
+//        for (String similarity: similarities) {
+//            int start = wordA.indexOf(similarity);
+//            int end = start + similarity.length();
+//
+//            spanString.setSpan(new UnderlineSpan(), start, end, 0);
+//        }
 
         return spanString;
     }
@@ -62,7 +100,11 @@ public class AnswerComparison {
             if (lstA.contains(bPartition)) {
                 result.add(bPartition);
                 lstA.remove(bPartition);
-                wordA = wordA.replace(bPartition, "");
+
+                // TODO make it replace first but also fix issue with out of bounds span creation
+                wordA = wordA.replace(bPartition, "_");
+
+                Log.d("test partition", wordA);
             }
 
         }

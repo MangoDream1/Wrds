@@ -11,13 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class ExamActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String wordA;
     private String wordB;
+
+    private int randomInt;
+
+    private int nMistakes;
 
     private long listId;
     private DatabaseManager dbm;
@@ -32,18 +35,6 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);
-
-//        Cursor listCursor = dbm.getUserListTitle(listId);
-//        String title = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_title));
-//        String lanA  = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_languageA));
-//        String lanB  = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_languageB));
-//
-//        title = String.format("%s (%s - %s)", title, lanA, lanB);
-//
-//        // Creates toolbar and sets title
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.main_menu);
-//        toolbar.setTitle(title);
-//        setSupportActionBar(toolbar);
 
         Button checkButton = (Button) findViewById(R.id.check_button);
         checkButton.setOnClickListener(this);
@@ -61,11 +52,11 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findRandomWord() {
-        String[] random = dataList.get(new Random().nextInt(dataList.size()));
-        String translate = random[0];
-        wordA = random[1];
+        randomInt = new Random().nextInt(dataList.size());
 
-        Log.d("test random", Arrays.toString(random));
+        String translate = dataList.get(randomInt)[0];
+        wordA = dataList.get(randomInt)[1];
+
         Log.d("test translate", translate);
 
         ((TextView) this.findViewById(R.id.translate)).setText(translate);
@@ -85,13 +76,29 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                 wordB = editText.getText().toString();
 
                 if (answerComparison.checkCorrect(wordA, wordB)) {
-                    Log.d("test correct", "true");
+                    dataList.remove(randomInt);
+
                 } else {
-                    Log.d("test correct", "false");
+                    // Made a mistake
+                    nMistakes++;
 
                     TextView test = (TextView) findViewById(R.id.textView2);
 
-                    test.setText(answerComparison.createWrongUnderlinedString(wordA, wordB));
+                    test.setText(answerComparison.underlineWrongPart(wordA, wordB));
+
+                    // set new random word
+                    findRandomWord();
+                }
+
+                // If empty all is done
+                if (dataList.isEmpty()) {
+                    Intent intent = new Intent(this, ResultActivity.class);
+                    intent.putExtra("nMistakes", nMistakes);
+                    intent.putExtra("sizeList", dataList.size());
+
+                    startActivity(intent);
+
+
                 }
         }
     }

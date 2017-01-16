@@ -1,13 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_result"
+    android:id="@+id/activity_exam"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="nl.mprog.axel.wrds_programmeerproject.ResultActivity">
+    tools:context="nl.mprog.axel.wrds_programmeerproject.ResultActivity"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <View
+        android:layout_weight="0.26"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.50">
+
+        <TextView
+            android:text="Your score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="24sp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/score"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textStyle="normal|bold"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textAlignment="center"
+            android:textSize="60sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Number of mistakes made:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nMistakes"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="Amount right 1st time:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/aRightFirstTime"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="Amount right 2nd time:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/aRightSecondTime"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="Amount right 3rd time:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/aRightThirdTime"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="Amount right >3rd time:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+                <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/aRightThirdPlusTime"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="retry mistakes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retryMistakesButton"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="retry all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retryAllButton"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="Continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/continueButton"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

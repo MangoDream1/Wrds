@@ -2,9 +2,7 @@ package nl.mprog.axel.wrds_programmeerproject;
 
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +13,6 @@ import java.util.List;
 public class AnswerComparison {
 
     public boolean checkCorrect(String wordA, String wordB) {
-        Log.d("test wordA", wordA);
-        Log.d("test wordB", wordB);
-
         return wordA.equals(wordB);
     }
 
@@ -25,59 +20,44 @@ public class AnswerComparison {
         SpannableString spanString = new SpannableString(wordA);
 
         List<String> similarities = findSimilarities(wordA, wordB);
+        List<Integer> indexes = findIndexesOfSubstringsInString(wordA, similarities);
 
+        for (int i = 0; i < indexes.size(); i = i + 2) {
+            spanString.setSpan(new UnderlineSpan(), indexes.get(i), indexes.get(i+1), 0);
+        }
+
+        return spanString;
+    }
+
+    private List<Integer> findIndexesOfSubstringsInString(String string,
+                                                          List<String> substringList) {
+        int offset = 0;
+        int wordALength = string.length();
+
+        // Create index and add 0 for start
         ArrayList<Integer> indexes = new ArrayList<>();
-
         indexes.add(0);
 
-        int offset = 0;
-        int wordALength = wordA.length();
-
-        for (String similarity: similarities) {
-            Log.d("test similiarity", similarity);
-
-            int start = wordA.indexOf(similarity);
+        // Loop through substringList and find all indexes in string
+        for (String substring: substringList) {
+            int start = string.indexOf(substring);
 
             indexes.add(start + offset);
-            indexes.add(start + similarity.length() + offset);
+            indexes.add(start + substring.length() + offset);
 
-            offset = offset + similarity.length();
-            wordA = wordA.replaceFirst(similarity, "");
-
-            Log.d("test wordA", wordA);
-            Log.d("test offset", String.valueOf(offset));
-
+            offset = offset + substring.length();
+            string = string.replaceFirst(substring, "~");
         }
 
         indexes.add(wordALength);
 
-        Log.d("test ding", indexes.toString());
-
-        for (int i = 0; i < indexes.size(); i = i + 2) {
-            int start = indexes.get(i);
-            int end = indexes.get(i+1);
-
-            Log.d("test start", String.valueOf(start));
-            Log.d("test end", String.valueOf(end));
-
-
-            spanString.setSpan(new UnderlineSpan(), start, end, 0);
-        }
-//
-//        //TODO reverse span. Now underline fault instead of correct
-//        for (String similarity: similarities) {
-//            int start = wordA.indexOf(similarity);
-//            int end = start + similarity.length();
-//
-//            spanString.setSpan(new UnderlineSpan(), start, end, 0);
-//        }
-
-        return spanString;
+        return indexes;
     }
 
     private List<String> createPartitions(String word, int size) {
         List<String> l = new ArrayList<>();
 
+        // Create all possible substring of the given size by looping
         for (int i = 0; i < word.length() - size + 1; i++) {
             String substring = word.substring(i, i+ size);
             l.add(substring);
@@ -89,6 +69,7 @@ public class AnswerComparison {
     private List<String> findSimilarities(String wordA, String wordB,
                                           int size, List<String> result) {
 
+        // If size equals 1 then quit since single letter are not a good indication of correctness
         if (size == 1) {
             return result;
         }
@@ -101,14 +82,14 @@ public class AnswerComparison {
                 result.add(bPartition);
                 lstA.remove(bPartition);
 
-                // TODO make it replace first but also fix issue with out of bounds span creation
-                wordA = wordA.replace(bPartition, "_");
-
-                Log.d("test partition", wordA);
+                // Replace partition with nonsense so that the coming smaller partitions
+                // are not found in this larger partition
+                wordA = wordA.replaceFirst(bPartition, "~");
+                wordB = wordB.replaceFirst(bPartition, "~");
             }
-
         }
 
+        // Recursion to find all similarities regardless of size
         return findSimilarities(wordA, wordB, size-1, result);
     }
 

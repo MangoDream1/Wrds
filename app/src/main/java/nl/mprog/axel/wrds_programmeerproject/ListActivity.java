@@ -90,6 +90,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 dbm.insertWord(listId, wordA, wordB);
                 dataChange();
+                break;
         }
     }
 

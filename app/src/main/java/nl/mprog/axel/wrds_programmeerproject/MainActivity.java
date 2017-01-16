@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.add_button:
                 CMDialog cmDialog = new CMDialog();
                 cmDialog.show(getFragmentManager(), "CMDialog");
+
+                break;
         }
     }
 

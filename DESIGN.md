@@ -39,6 +39,11 @@ Exam view incorrect pop up:
 
 ![Exam view incorrect pop up](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Exam view incorrect pop up.png "Exam view incorrect pop up")
 
+Result View:
+
+![Result View](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Result View.png "Result View")
+
+
 ###### Database Design
 
 For the database there are two tables: list and word. The list table has the following attributes:

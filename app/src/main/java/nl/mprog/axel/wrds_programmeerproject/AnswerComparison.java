@@ -21,7 +21,7 @@ public class AnswerComparison {
         return wordA.equals(wordB);
     }
 
-    public SpannableString createWrongUnderlinedString(String wordA, String wordB) {
+    public SpannableString underlineWrongPart(String wordA, String wordB) {
         SpannableString spanString = new SpannableString(wordA);
 
         List<String> similarities = findSimilarities(wordA, wordB);

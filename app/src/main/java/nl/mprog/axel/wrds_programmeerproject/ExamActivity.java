@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     private long listId;
     private DatabaseManager dbm;
     private ArrayList<String[]> dataList = new ArrayList<>();
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
             });
         }
 
+        createProgressBar();
         findRandomWord();
     }
 
@@ -57,10 +61,16 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         String translate = dataList.get(randomInt)[0];
         wordA = dataList.get(randomInt)[1];
 
-        Log.d("test translate", translate);
-
         ((TextView) this.findViewById(R.id.translate)).setText(translate);
+    }
 
+    private void createProgressBar() {
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setMax(dataList.size());
+    }
+
+    private void updateProgressBar() {
+        progressBar.setProgress(progressBar.getProgress()+1);
     }
 
     @Override
@@ -84,11 +94,14 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                     // set new random word
                     findRandomWord();
                 } else {
+                    updateProgressBar();
+                    findRandomWord();
+
                     // Correct thus don't ask again
                     dataList.remove(randomInt);
                 }
 
-                // If empty all is done
+                // If empty exam is done
                 if (dataList.isEmpty()) {
                     Intent intent = new Intent(this, ResultActivity.class);
                     intent.putExtra("nMistakes", nMistakes);

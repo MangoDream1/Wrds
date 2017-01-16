@@ -50,5 +50,10 @@
 
 ## Day 7
 
+- Started AnswerComparison, to find where the user has made errors
 
 # Week 2
+
+## Day 1
+
+- Continued AnswerComparison, still has a bug need to be fixed.

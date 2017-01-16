@@ -25,7 +25,9 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
     private long listId;
     private DatabaseManager dbm;
+
     private ArrayList<String[]> dataList = new ArrayList<>();
+    private int dataListSize;
 
     private ProgressBar progressBar;
 
@@ -51,11 +53,29 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
             });
         }
 
+        dataListSize = dataList.size();
+
         createProgressBar();
         findRandomWord();
     }
 
+    private void startResultActivity() {
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("nMistakes", nMistakes);
+        intent.putExtra("sizeList", dataListSize);
+
+        startActivity(intent);
+
+        finish();
+    }
+
     private void findRandomWord() {
+        // If empty then exam is finished
+        if (dataList.isEmpty()) {
+            startResultActivity();
+            return;
+        }
+
         randomInt = new Random().nextInt(dataList.size());
 
         String translate = dataList.get(randomInt)[0];
@@ -66,7 +86,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
     private void createProgressBar() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setMax(dataList.size());
+        progressBar.setMax(dataListSize);
     }
 
     private void updateProgressBar() {
@@ -95,21 +115,12 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                     findRandomWord();
                 } else {
                     updateProgressBar();
-                    findRandomWord();
 
                     // Correct thus don't ask again
                     dataList.remove(randomInt);
-                }
 
-                // If empty exam is done
-                if (dataList.isEmpty()) {
-                    Intent intent = new Intent(this, ResultActivity.class);
-                    intent.putExtra("nMistakes", nMistakes);
-                    intent.putExtra("sizeList", dataList.size());
+                    findRandomWord();
 
-                    startActivity(intent);
-
-                    finish();
                 }
                 break;
 

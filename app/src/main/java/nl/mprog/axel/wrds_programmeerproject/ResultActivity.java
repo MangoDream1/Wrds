@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class ResultActivity extends AppCompatActivity {
             return "1";
         }
 
-        return String.valueOf(Math.round(100 + 900 / ((double) total / nMistakes))/100);
+        return String.valueOf(Math.round(100 + 900 / ((double) total / (total - nMistakes)))/100);
     }
 
 }

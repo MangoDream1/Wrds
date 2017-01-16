@@ -67,18 +67,13 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.check_button:
-                // TODO check if wordB is empty then prevent AnswerComparison
-
                 AnswerComparison answerComparison = new AnswerComparison();
 
                 EditText editText = (EditText) findViewById(R.id.editText);
 
                 wordB = editText.getText().toString();
 
-                if (answerComparison.checkCorrect(wordA, wordB)) {
-                    dataList.remove(randomInt);
-
-                } else {
+                if (wordB.isEmpty() || !answerComparison.checkCorrect(wordA, wordB)) {
                     // Made a mistake
                     nMistakes++;
 
@@ -88,6 +83,9 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
                     // set new random word
                     findRandomWord();
+                } else {
+                    // Correct thus don't ask again
+                    dataList.remove(randomInt);
                 }
 
                 // If empty all is done

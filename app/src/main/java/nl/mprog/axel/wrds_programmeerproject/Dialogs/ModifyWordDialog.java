@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import nl.mprog.axel.wrds_programmeerproject.Activities.ListActivity;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
@@ -62,6 +63,8 @@ public class ModifyWordDialog extends DialogFragment {
                         String wordB = wordBEditText.getText().toString();
 
                         dbm.updateWord(wordId, wordA, wordB);
+
+                        ((ListActivity) activity).dataChange();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

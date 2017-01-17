@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -87,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_button:
-                CMDialog cmDialog = new CMDialog();
-                cmDialog.show(getFragmentManager(), "CMDialog");
+                CMListDialog cmListDialog = new CMListDialog();
+                cmListDialog.show(getFragmentManager(), "CMListDialog");
 
                 break;
         }

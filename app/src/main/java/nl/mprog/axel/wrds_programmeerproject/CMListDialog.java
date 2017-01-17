@@ -14,7 +14,7 @@ import android.widget.EditText;
  * Created by axel on 11-1-17.
  */
 
-public class CMDialog extends DialogFragment {
+public class CMListDialog extends DialogFragment {
 
     // TODO split modify and create from each other based on dialog creation location
 

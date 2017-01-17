@@ -22,7 +22,7 @@ public class WordsCursorAdapter extends ResourceCursorAdapter {
         TextView wordA = (TextView) v.findViewById(R.id.wordA);
         TextView wordB = (TextView) v.findViewById(R.id.wordB);
 
-        index.setText(String.valueOf(cursor.getPosition()));
+        index.setText(String.valueOf(cursor.getPosition() + 1));
         wordA.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)));
         wordB.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB)));
     }

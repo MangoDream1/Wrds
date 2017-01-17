@@ -9,8 +9,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/edit_button"
-        android:title="edit"
+        android:id="@+id/modify_button"
+        android:title="modify"
         app:showAsAction="ifRoom" />
 
     <item

@@ -38,12 +38,20 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private String title;
 
-    private List<Long> selectedItemsList = new ArrayList<>();
+    private ArrayList<Long> selectedItemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        // If there is a savedInstanceState get data from it, otherwise create empty list
+        if (savedInstanceState == null) {
+            selectedItemsList = new ArrayList<>();
+        } else {
+            selectedItemsList = (ArrayList<Long>) savedInstanceState
+                    .getSerializable("selectedItemsList");
+        }
 
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);
@@ -114,6 +122,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         currentMenu = menu;
 
+        // If instance is restored and there are selections show correct menu
+        if (!selectedItemsList.isEmpty()) {
+            showEditToolbar();
+        }
+
         return true;
     }
 
@@ -182,10 +195,18 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("selectedItemsList", selectedItemsList);
+    }
+
     public void dataChange() {
         adapter.swapCursor(dbm.getListWords(listId));
         adapter.notifyDataSetChanged();
     }
 
-
+    public ArrayList<Long> getSelectedItemsList() {
+        return selectedItemsList;
+    }
 }

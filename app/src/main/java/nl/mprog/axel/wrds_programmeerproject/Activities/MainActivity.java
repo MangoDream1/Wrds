@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseManager dbm = DatabaseManager.getInstance();
     private WordListsCursorAdapter adapter;
 
-    private ArrayList<Long> selectedItemsList = new ArrayList<>();
+    private ArrayList<Long> selectedItemsList;
 
     private Toolbar toolbar;
 
@@ -39,6 +39,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // If there is a savedInstanceState get data from it, otherwise create empty list
+        if (savedInstanceState == null) {
+            selectedItemsList = new ArrayList<>();
+        } else {
+            selectedItemsList = (ArrayList<Long>) savedInstanceState
+                    .getSerializable("selectedItemsList");
+        }
 
         try {
             dbm.open(this);
@@ -146,6 +154,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         currentMenu = menu;
 
+        // If instance is restored and there are selections show correct menu
+        if (!selectedItemsList.isEmpty()) {
+            showEditToolbar();
+        }
+
         return true;
     }
 
@@ -166,6 +179,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbm.close();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("selectedItemsList", selectedItemsList);
     }
 
     public void dataChange() {

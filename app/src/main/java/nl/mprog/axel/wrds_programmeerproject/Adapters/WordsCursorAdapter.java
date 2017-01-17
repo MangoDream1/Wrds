@@ -2,10 +2,15 @@ package nl.mprog.axel.wrds_programmeerproject.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import nl.mprog.axel.wrds_programmeerproject.Activities.ListActivity;
+import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
@@ -21,6 +26,9 @@ public class WordsCursorAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View v, Context context, Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.pk_listId));
+        ArrayList<Long> selectedItemsList = ((ListActivity) context).getSelectedItemsList();
+
         TextView index = (TextView) v.findViewById(R.id.index);
         TextView wordA = (TextView) v.findViewById(R.id.wordA);
         TextView wordB = (TextView) v.findViewById(R.id.wordB);
@@ -28,5 +36,11 @@ public class WordsCursorAdapter extends ResourceCursorAdapter {
         index.setText(String.valueOf(cursor.getPosition() + 1));
         wordA.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)));
         wordB.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB)));
+
+        if (selectedItemsList.contains(id)) {
+            v.setBackgroundColor(Color.LTGRAY);
+        } else {
+            v.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 }

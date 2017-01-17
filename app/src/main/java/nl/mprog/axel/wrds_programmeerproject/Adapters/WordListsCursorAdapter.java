@@ -57,6 +57,8 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
 
         if (selectedItemsList.contains(id)) {
             v.setBackgroundColor(Color.LTGRAY);
+        } else {
+            v.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 }

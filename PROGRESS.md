@@ -56,4 +56,18 @@
 
 ## Day 1
 
-- Continued AnswerComparison, still has a bug need to be fixed.
+- Fixed bug in AnswerComparison
+- Finished AnswerComparison, should work now
+- Created ResultActivity
+- Created a way to reach ResultActivity
+- ResultActivity now shows a score
+- Finished initial design of ResultActivity
+- Display number of words and date in MainActivity per list
+- Added progress bar to ExamActivity
+
+## Day 2
+
+- Added way to modify lists and words, new dialogs and ways to open them and database support
+- Added new toolbar that only shows when words or lists are selected
+- start counting at 1 not 0
+- save instance state of selected items

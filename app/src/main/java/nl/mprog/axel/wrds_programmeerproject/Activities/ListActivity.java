@@ -111,6 +111,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         currentMenu.clear();
         toolbar.setTitle(title);
         getMenuInflater().inflate(R.menu.main_menu, currentMenu);
+        currentMenu.findItem(R.id.play_button).setVisible(true);
+
     }
 
     @Override

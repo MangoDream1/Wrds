@@ -1,5 +1,6 @@
 package nl.mprog.axel.wrds_programmeerproject.Activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -16,11 +17,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import nl.mprog.axel.wrds_programmeerproject.Adapters.WordsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.ModifyWordDialog;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener,
@@ -101,9 +102,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         currentMenu.findItem(R.id.share_button).setVisible(false);
 
         if (selectedItemsList.size() > 1) {
-            currentMenu.findItem(R.id.edit_button).setVisible(false);
+            currentMenu.findItem(R.id.modify_button).setVisible(false);
         } else {
-            currentMenu.findItem(R.id.edit_button).setVisible(true);
+            currentMenu.findItem(R.id.modify_button).setVisible(true);
         }
     }
 
@@ -177,7 +178,16 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 return true;
 
-            case R.id.edit_button:
+            case R.id.modify_button:
+                // Edit button is only available if size of selectedItemsList is 1 thus first item
+                // is to be edited
+                Bundle arguments = new Bundle();
+                arguments.putLong("id", selectedItemsList.get(0));
+
+                ModifyWordDialog mwd = new ModifyWordDialog();
+                mwd.setArguments(arguments);
+                mwd.show(getFragmentManager(), "ModifyWordDialog");
+
                 return true;
 
             case R.id.delete_button:

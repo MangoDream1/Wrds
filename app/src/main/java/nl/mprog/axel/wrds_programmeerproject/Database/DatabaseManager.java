@@ -91,13 +91,13 @@ public class DatabaseManager {
         return getUserLists(10);
     }
 
-    public Cursor getUserListTitle(long id) {
+    public Cursor getUserListTitle(long listId) {
         String[] columns = new String[]{DatabaseHelper.str_title,
                 DatabaseHelper.str_languageA, DatabaseHelper.str_languageB};
 
 
         Cursor cursor = database.query(DatabaseHelper.listTable, columns, DatabaseHelper.pk_listId
-                + " = " + String.valueOf(id), null, null, null, null);
+                + " = " + String.valueOf(listId), null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -106,9 +106,9 @@ public class DatabaseManager {
         return cursor;
     }
 
-    public Cursor getSingleList(long id) {
+    public Cursor getSingleList(long listId) {
         Cursor cursor = database.query(DatabaseHelper.listTable, null,
-                DatabaseHelper.pk_listId + " = " + String.valueOf(id), null, null, null, null);
+                DatabaseHelper.pk_listId + " = " + String.valueOf(listId), null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -117,9 +117,9 @@ public class DatabaseManager {
         return cursor;
     }
 
-    public long countListWords(long id) {
+    public long countListWords(long listId) {
         return DatabaseUtils.queryNumEntries(database, DatabaseHelper.wordTable,
-                DatabaseHelper.fk_listId + " = " + String.valueOf(id));
+                DatabaseHelper.fk_listId + " = " + String.valueOf(listId));
     }
 
     public ContentValues createListContentValues(String title, String desc, String creator,
@@ -182,5 +182,16 @@ public class DatabaseManager {
 
         return cursor;
 
+    }
+
+    public Cursor getSingleWord(long wordId) {
+        Cursor cursor = database.query(DatabaseHelper.wordTable, null,
+                DatabaseHelper.pk_wordId + " = " + String.valueOf(wordId), null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
     }
 }

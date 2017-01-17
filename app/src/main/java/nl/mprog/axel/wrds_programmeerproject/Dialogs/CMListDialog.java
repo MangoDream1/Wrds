@@ -39,7 +39,7 @@ public class CMListDialog extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.cm_dialog, null);
+        View view = inflater.inflate(R.layout.cm_list_dialog, null);
 
         dbm = DatabaseManager.getInstance();
 

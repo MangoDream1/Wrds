@@ -69,5 +69,6 @@
 
 - Added way to modify lists and words, new dialogs and ways to open them and database support
 - Added new toolbar that only shows when words or lists are selected
-- start counting at 1 not 0
-- save instance state of selected items
+- Start counting at 1 not 0
+- Save instance state of selected items
+- Rearranged code files into folders

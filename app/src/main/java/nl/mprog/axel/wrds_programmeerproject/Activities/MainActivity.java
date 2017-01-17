@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (selectedItemsList.size() > 1) {
             currentMenu.findItem(R.id.share_button).setVisible(false);
-            currentMenu.findItem(R.id.edit_button).setVisible(false);
+            currentMenu.findItem(R.id.modify_button).setVisible(false);
         } else {
             currentMenu.findItem(R.id.share_button).setVisible(true);
-            currentMenu.findItem(R.id.edit_button).setVisible(true);
+            currentMenu.findItem(R.id.modify_button).setVisible(true);
 
         }
 
@@ -125,16 +125,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 return true;
 
-            case R.id.edit_button:
-                CMListDialog cmListDialog = new CMListDialog();
-                cmListDialog.show(getFragmentManager(), "CMListDialog");
-
+            case R.id.modify_button:
                 // Edit button is only available if size of selectedItemsList is 1 thus first item
                 // is to be edited
                 Bundle bundle = new Bundle();
                 bundle.putLong("id", selectedItemsList.get(0));
 
+                CMListDialog cmListDialog = new CMListDialog();
                 cmListDialog.setArguments(bundle);
+                cmListDialog.show(getFragmentManager(), "CMListDialog");
 
                 return true;
 

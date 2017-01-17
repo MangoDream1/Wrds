@@ -126,6 +126,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.edit_button:
+                CMListDialog cmListDialog = new CMListDialog();
+                cmListDialog.show(getFragmentManager(), "CMListDialog");
+
+                // Edit button is only available if size of selectedItemsList is 1 thus first item
+                // is to be edited
+                Bundle bundle = new Bundle();
+                bundle.putLong("id", selectedItemsList.get(0));
+
+                cmListDialog.setArguments(bundle);
+
                 return true;
 
             case R.id.delete_button:

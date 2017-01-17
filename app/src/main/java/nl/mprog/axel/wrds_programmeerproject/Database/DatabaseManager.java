@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * Created by axel on 10-1-17.
@@ -97,6 +98,17 @@ public class DatabaseManager {
 
         Cursor cursor = database.query(DatabaseHelper.listTable, columns, DatabaseHelper.pk_listId
                 + " = " + String.valueOf(id), null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
+    }
+
+    public Cursor getSingleList(long id) {
+        Cursor cursor = database.query(DatabaseHelper.listTable, null,
+                DatabaseHelper.pk_listId + " = " + String.valueOf(id), null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();

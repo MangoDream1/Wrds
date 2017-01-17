@@ -173,8 +173,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.return_button:
                 selectedItemsList.clear();
-                dataChange();
                 hideEditToolbar();
+                dataChange();
 
                 return true;
 
@@ -188,6 +188,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 mwd.setArguments(arguments);
                 mwd.show(getFragmentManager(), "ModifyWordDialog");
 
+                selectedItemsList.clear();
+                hideEditToolbar();
+
                 return true;
 
             case R.id.delete_button:
@@ -197,6 +200,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     dbm.deleteWord(id);
                 }
 
+                selectedItemsList.clear();
+                hideEditToolbar();
                 dataChange();
                 return true;
 

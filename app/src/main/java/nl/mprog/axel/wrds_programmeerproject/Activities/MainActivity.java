@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dbm.deleteList(id);
                 }
 
+                selectedItemsList.clear();
+                hideEditToolbar();
                 dataChange();
                 return true;
 

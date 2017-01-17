@@ -31,7 +31,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseManager dbm;
     private WordsCursorAdapter adapter;
 
-    private Button addWordButton;
     private EditText wordAEditText;
     private EditText wordBEditText;
 
@@ -85,7 +84,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         listView.addFooterView(footer);
 
         // Set onClick
-        addWordButton = (Button) footer.findViewById(R.id.add_word_button);
+        Button addWordButton = (Button) footer.findViewById(R.id.add_word_button);
         addWordButton.setOnClickListener(this);
 
         // Find editTexts

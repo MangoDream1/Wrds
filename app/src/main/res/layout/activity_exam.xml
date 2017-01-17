@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_exam"
     android:layout_width="match_parent"
@@ -11,61 +11,133 @@
     tools:context="nl.mprog.axel.wrds_programmeerproject.Activities.ExamActivity"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <Button
-            android:text="X"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cancel_button"
-            style="@style/Widget.AppCompat.Button.Small" />
-
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/feedback_incorrect"
+            android:layout_centerInParent="true"
+            android:background="@android:color/holo_red_dark"
+            android:visibility="gone">
 
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
+            <TextView
+                android:text="Incorrect  answer!"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-        </RelativeLayout>
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Correct answer:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="correction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/correction_textView" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_light"
+            android:id="@+id/feedback_correct"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <TextView
+                android:text="Correct  answer!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textAlignment="center" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="X"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancel_button"
+                style="@style/Widget.AppCompat.Button.Small" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:text="Translate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:text="translate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/translate" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:inputType="textMultiLine"
+            android:id="@+id/editText"
+            android:gravity="top|start"
+            android:hint="Type the translation here"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="Check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_button" />
+
+        <Button
+            android:text="continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/continue_button" />
 
     </LinearLayout>
 
-    <TextView
-        android:text="Translate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:textSize="24sp"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:text="translate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/translate" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:id="@+id/editText"
-        android:layout_weight="1"
-        android:textAlignment="viewStart"
-        android:hint="Type the translation here" />
-
-    <Button
-        android:text="Check"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/check_button" />
-</LinearLayout>
+</FrameLayout>

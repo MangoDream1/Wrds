@@ -3,14 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/play"
+        android:id="@+id/play_button"
         android:title="PLAY"
         android:visible="false"
         app:showAsAction="ifRoom"/>
-
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/add_list"
-        android:title="Delete lists" />
-
 
 </menu>

@@ -2,12 +2,14 @@ package nl.mprog.axel.wrds_programmeerproject;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -22,6 +24,9 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View v, Context context, Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.pk_listId));
+        ArrayList<Long> selectedItemsList = ((MainActivity) context).getSelectedItemsList();
+
         // Finds views
         TextView title = (TextView) v.findViewById(R.id.title_textView);
         TextView nWords = (TextView) v.findViewById(R.id.nWords_textView);
@@ -45,8 +50,11 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
         language.setText(languageText);
 
         // Count nWords of the list
-        nWords.setText(" (" + String.valueOf(DatabaseManager.getInstance().countListWords(
-                cursor.getLong(cursor.getColumnIndex(DatabaseHelper.pk_listId)))) + ")");
-    }
+        nWords.setText(" (" + String.valueOf(DatabaseManager.getInstance()
+                .countListWords(id)) + ")");
 
+        if (selectedItemsList.contains(id)) {
+            v.setBackgroundColor(Color.LTGRAY);
+        }
+    }
 }

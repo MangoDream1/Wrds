@@ -3,24 +3,33 @@ package nl.mprog.axel.wrds_programmeerproject;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private DatabaseManager dbm = DatabaseManager.getInstance();
     private WordListsCursorAdapter adapter;
+
+    private ArrayList<Long> selectedItemsList = new ArrayList<>();
+
+    private Toolbar toolbar;
+
+    private Menu currentMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // Creates toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_menu);
+        toolbar = (Toolbar) findViewById(R.id.main_menu);
         setSupportActionBar(toolbar);
 
         Button add_button = (Button) findViewById(R.id.add_button);
@@ -48,7 +57,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listView.setAdapter(adapter);
         // TODO set empty listView.setEmptyView()
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 
+    }
+
+    private void showEditToolbar() {
+        currentMenu.clear();
+        toolbar.setTitle("");
+        getMenuInflater().inflate(R.menu.edit_menu, currentMenu);
+
+        if (selectedItemsList.size() > 1) {
+            currentMenu.findItem(R.id.share_button).setVisible(false);
+            currentMenu.findItem(R.id.edit_button).setVisible(false);
+        } else {
+            currentMenu.findItem(R.id.share_button).setVisible(true);
+            currentMenu.findItem(R.id.edit_button).setVisible(true);
+
+        }
+
+    }
+
+    private void hideEditToolbar() {
+        currentMenu.clear();
+        toolbar.setTitle(R.string.app_name);
+        getMenuInflater().inflate(R.menu.main_menu, currentMenu);
     }
 
     @Override
@@ -64,15 +96,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("Test id:", String.valueOf(id));
-        Log.d("Test pos:", String.valueOf(position));
-
         Context context = view.getContext();
         Intent intent = new Intent(context, ListActivity.class);
         intent.putExtra("id", id);
 
         context.startActivity(intent);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.return_button:
+                selectedItemsList.clear();
+                dataChange();
+                hideEditToolbar();
+
+                return true;
+
+            case R.id.edit_button:
+                return true;
+
+            case R.id.delete_button:
+                // TODO add are you sure dialog
+
+                for (long id: selectedItemsList) {
+                    dbm.deleteList(id);
+                }
+
+                dataChange();
+                return true;
+
+            case R.id.share_button:
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -80,12 +139,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Create menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        currentMenu = menu;
+
+        return true;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        if (selectedItemsList.contains(id)) {
+            selectedItemsList.remove(id);
+            view.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            selectedItemsList.add(id);
+            view.setBackgroundColor(Color.LTGRAY);
+        }
+
+        if (!selectedItemsList.isEmpty()) {
+            showEditToolbar();
+        } else {
+            hideEditToolbar();
+        }
+
         return true;
     }
 
     public void dataChange() {
         adapter.swapCursor(dbm.getUserLists());
         adapter.notifyDataSetChanged();
+    }
+
+    public ArrayList<Long> getSelectedItemsList() {
+        return selectedItemsList;
     }
 }
 

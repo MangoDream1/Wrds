@@ -1,4 +1,4 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +17,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.mprog.axel.wrds_programmeerproject.Adapters.WordsCursorAdapter;
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener {

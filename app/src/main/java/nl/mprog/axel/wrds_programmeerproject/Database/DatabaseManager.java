@@ -1,11 +1,10 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.database.DatabaseUtilsCompat;
 
 import java.sql.SQLException;
 
@@ -31,17 +30,17 @@ public class DatabaseManager {
         return instance;
     }
 
-    protected void open(Context context) throws SQLException {
+    public void open(Context context) throws SQLException {
         /* Open database from context */
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.getWritableDatabase();
     }
 
-    protected void close() {
+    public void close() {
         dbHelper.close();
     }
 
-    protected void insertList(String title, String desc, String creator,
+    public void insertList(String title, String desc, String creator,
                               String languageA, String languageB) {
         /* Inserts new list into database */
 
@@ -52,7 +51,7 @@ public class DatabaseManager {
 
     }
 
-    protected int updateList(long listId, String title, String desc, String creator,
+    public int updateList(long listId, String title, String desc, String creator,
                              String languageA, String languageB) {
         /* Updates values in a list using listId to find the list */
 
@@ -64,7 +63,7 @@ public class DatabaseManager {
 
     }
 
-    protected void deleteList(long listId) {
+    public void deleteList(long listId) {
         /* Delete list from database */
 
         database.delete(DatabaseHelper.listTable, DatabaseHelper.pk_listId + " = " + listId, null);
@@ -73,7 +72,7 @@ public class DatabaseManager {
         database.delete(DatabaseHelper.wordTable, DatabaseHelper.fk_listId + " = " + listId, null);
     }
 
-    protected Cursor getUserLists(int limit) {
+    public Cursor getUserLists(int limit) {
         /* Get all lists with all the attributes of the user ordered by time */
 
         Cursor cursor = database.query(DatabaseHelper.listTable, null, null,
@@ -87,11 +86,11 @@ public class DatabaseManager {
 
     }
 
-    protected Cursor getUserLists() {
+    public Cursor getUserLists() {
         return getUserLists(10);
     }
 
-    protected Cursor getUserListTitle(long id) {
+    public Cursor getUserListTitle(long id) {
         String[] columns = new String[]{DatabaseHelper.str_title,
                 DatabaseHelper.str_languageA, DatabaseHelper.str_languageB};
 
@@ -111,7 +110,7 @@ public class DatabaseManager {
                 DatabaseHelper.fk_listId + " = " + String.valueOf(id));
     }
 
-    private ContentValues createListContentValues(String title, String desc, String creator,
+    public ContentValues createListContentValues(String title, String desc, String creator,
                                                   String languageA, String languageB) {
         /* Fills in the contentValues for lists in the database */
 
@@ -127,7 +126,7 @@ public class DatabaseManager {
 
     }
 
-    protected void insertWord(long listId, String wordA, String wordB) {
+    public void insertWord(long listId, String wordA, String wordB) {
         /* Inserts new word in database connecting with correct list */
 
         ContentValues contentValues = new ContentValues();
@@ -140,7 +139,7 @@ public class DatabaseManager {
 
     }
 
-    protected int updateWord(long wordId, String wordA, String wordB) {
+    public int updateWord(long wordId, String wordA, String wordB) {
         /* Updates a word in the database */
 
         ContentValues contentValues = new ContentValues();
@@ -152,11 +151,11 @@ public class DatabaseManager {
 
     }
 
-    protected void deleteWord(long wordId) {
+    public void deleteWord(long wordId) {
         database.delete(DatabaseHelper.wordTable, DatabaseHelper.pk_wordId + " = " + wordId, null);
     }
 
-    protected Cursor getListWords(long listId) {
+    public Cursor getListWords(long listId) {
         /* Get all the words of a list */
 
         String[] columns = new String[]{DatabaseHelper.pk_wordId, DatabaseHelper.str_wordA,

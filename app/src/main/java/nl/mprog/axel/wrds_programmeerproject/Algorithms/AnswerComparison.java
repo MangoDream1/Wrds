@@ -1,4 +1,4 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Algorithms;
 
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;

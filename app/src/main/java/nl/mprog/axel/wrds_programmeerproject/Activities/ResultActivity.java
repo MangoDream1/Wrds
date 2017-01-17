@@ -1,4 +1,4 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Activities;
 
 import android.content.Intent;
 import android.icu.text.DecimalFormat;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class ResultActivity extends AppCompatActivity {
 

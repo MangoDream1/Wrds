@@ -1,4 +1,4 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 11-1-17.

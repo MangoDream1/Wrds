@@ -1,16 +1,18 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
+
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 11-01-17.

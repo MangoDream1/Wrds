@@ -1,4 +1,4 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

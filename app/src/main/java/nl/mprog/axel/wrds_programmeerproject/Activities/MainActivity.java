@@ -1,4 +1,4 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,11 @@ import android.widget.ListView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import nl.mprog.axel.wrds_programmeerproject.Adapters.WordListsCursorAdapter;
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.CMListDialog;
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {

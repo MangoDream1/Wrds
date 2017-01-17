@@ -1,18 +1,21 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import nl.mprog.axel.wrds_programmeerproject.Algorithms.AnswerComparison;
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class ExamActivity extends AppCompatActivity implements View.OnClickListener {
 

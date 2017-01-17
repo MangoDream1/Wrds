@@ -1,10 +1,13 @@
-package nl.mprog.axel.wrds_programmeerproject;
+package nl.mprog.axel.wrds_programmeerproject.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
+import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 12-1-17.

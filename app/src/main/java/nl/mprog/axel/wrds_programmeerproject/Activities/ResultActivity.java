@@ -29,6 +29,8 @@ public class ResultActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.score);
         score.setText(calculateScore(sizeList, nMistakes));
 
+        ((TextView) findViewById(R.id.nMistakes)).setText(String.valueOf(nMistakes));
+
         ((TextView) findViewById(R.id.aRightFirstTime)).setText(
                 String.valueOf(dbm.getCountNumberMistakesList(listId, 1)));
 

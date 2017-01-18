@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 selectedItemsList.clear();
                 hideEditToolbar();
                 dataChange();
+
                 return true;
 
             case R.id.share_button:

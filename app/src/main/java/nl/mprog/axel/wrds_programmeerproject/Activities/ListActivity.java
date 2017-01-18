@@ -167,8 +167,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.play_button:
                 // Reset mistakes to play new
-                int test = dbm.resetWordMistakesList(listId);
-                Log.d("test", String.valueOf(test));
+                dbm.resetWordMistakesList(listId);
 
                 Intent intent = new Intent(this, ExamActivity.class);
                 intent.putExtra("id", listId);

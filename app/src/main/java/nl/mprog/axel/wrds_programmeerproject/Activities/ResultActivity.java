@@ -32,13 +32,13 @@ public class ResultActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.nMistakes)).setText(String.valueOf(nMistakes));
 
         ((TextView) findViewById(R.id.aRightFirstTime)).setText(
-                String.valueOf(dbm.getCountNumberMistakesList(listId, 1)));
+                String.valueOf(dbm.getCountNumberMistakesList(listId, 0)));
 
         ((TextView) findViewById(R.id.aRightSecondTime)).setText(
-                String.valueOf(dbm.getCountNumberMistakesList(listId, 2)));
+                String.valueOf(dbm.getCountNumberMistakesList(listId, 1)));
 
         ((TextView) findViewById(R.id.aRightThirdTime)).setText(
-                String.valueOf(dbm.getCountNumberMistakesList(listId, 3)));
+                String.valueOf(dbm.getCountNumberMistakesList(listId, 2)));
 
 
     }

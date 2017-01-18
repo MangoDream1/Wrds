@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -165,6 +166,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.play_button:
+                // Reset mistakes to play new
+                int test = dbm.resetWordMistakesList(listId);
+                Log.d("test", String.valueOf(test));
+
                 Intent intent = new Intent(this, ExamActivity.class);
                 intent.putExtra("id", listId);
 

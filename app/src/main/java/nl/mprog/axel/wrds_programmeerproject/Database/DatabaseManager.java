@@ -198,7 +198,7 @@ public class DatabaseManager {
         contentValues.put(DatabaseHelper.int_mistakes, 0);
 
         return database.update(DatabaseHelper.wordTable, contentValues,
-                DatabaseHelper.fk_listId + " = " + listId, null);
+                DatabaseHelper.fk_listId + " = " + String.valueOf(listId), null);
     }
 
     public int getSumWordMistakesList(long listId) {

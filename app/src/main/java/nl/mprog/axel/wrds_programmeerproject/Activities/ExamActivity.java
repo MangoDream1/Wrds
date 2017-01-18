@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -39,9 +40,6 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_exam);
 
         dbm = DatabaseManager.getInstance();
-
-        // Reset mistakes to start anew
-        dbm.resetWordMistakesList(listId);
 
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);

@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -46,6 +48,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         (findViewById(R.id.check_button)).setOnClickListener(this);
         (findViewById(R.id.cancel_button)).setOnClickListener(this);
+        (findViewById(R.id.continue_button)).setOnClickListener(this);
 
         Cursor cursor = dbm.getListWords(listId);
 
@@ -96,34 +99,56 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         progressBar.setProgress(progressBar.getProgress()+1);
     }
 
+    private void showFeedback(boolean isCorrect) {
+        View feedback;
+
+        if (isCorrect) {
+            feedback = findViewById(R.id.feedback_correct);
+        } else {
+            feedback = findViewById(R.id.feedback_incorrect);
+            TextView correction = (TextView) findViewById(R.id.correction_textView);
+
+            correction.setText(AnswerComparison.underlineWrongPart(wordA, wordB));
+
+        }
+
+        feedback.setVisibility(View.VISIBLE);
+
+        findViewById(R.id.continue_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.check_button).setVisibility(View.GONE);
+
+    }
+
+    private void hideFeedback() {
+        findViewById(R.id.continue_button).setVisibility(View.GONE);
+        findViewById(R.id.check_button).setVisibility(View.VISIBLE);
+
+        findViewById(R.id.feedback_incorrect).setVisibility(View.GONE);
+        findViewById(R.id.feedback_correct).setVisibility(View.GONE);
+
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.check_button:
-                AnswerComparison answerComparison = new AnswerComparison();
-
                 EditText editText = (EditText) findViewById(R.id.editText);
 
                 wordB = editText.getText().toString();
 
-                if (wordB.isEmpty() || !answerComparison.checkCorrect(wordA, wordB)) {
+                if (wordB.isEmpty() || !AnswerComparison.checkCorrect(wordA, wordB)) {
                     // Made a mistake
                     nMistakes++;
 
-                    TextView test = (TextView) findViewById(R.id.textView2);
+                    showFeedback(false);
 
-                    test.setText(answerComparison.underlineWrongPart(wordA, wordB));
-
-                    // set new random word
-                    findRandomWord();
                 } else {
                     updateProgressBar();
 
                     // Correct thus don't ask again
                     dataList.remove(randomInt);
 
-                    findRandomWord();
-
+                    showFeedback(true);
                 }
                 break;
 
@@ -131,6 +156,11 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                 // TODO check if user is sure dialog
                 finish();
                 break;
+
+            case R.id.continue_button:
+                // set new random word
+                findRandomWord();
+                hideFeedback();
         }
     }
 }

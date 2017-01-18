@@ -12,11 +12,11 @@ import java.util.List;
 
 public class AnswerComparison {
 
-    public boolean checkCorrect(String wordA, String wordB) {
+    public static boolean checkCorrect(String wordA, String wordB) {
         return wordA.equals(wordB);
     }
 
-    public SpannableString underlineWrongPart(String wordA, String wordB) {
+    public static SpannableString underlineWrongPart(String wordA, String wordB) {
         SpannableString spanString = new SpannableString(wordA);
 
         List<String> similarities = findSimilarities(wordA, wordB);
@@ -29,7 +29,7 @@ public class AnswerComparison {
         return spanString;
     }
 
-    private List<Integer> findIndexesOfSubstringsInString(String string,
+    private static List<Integer> findIndexesOfSubstringsInString(String string,
                                                           List<String> substringList) {
         int offset = 0;
         int wordALength = string.length();
@@ -54,7 +54,7 @@ public class AnswerComparison {
         return indexes;
     }
 
-    private List<String> createPartitions(String word, int size) {
+    private static List<String> createPartitions(String word, int size) {
         List<String> l = new ArrayList<>();
 
         // Create all possible substring of the given size by looping
@@ -66,7 +66,7 @@ public class AnswerComparison {
         return l;
     }
 
-    private List<String> findSimilarities(String wordA, String wordB,
+    private static List<String> findSimilarities(String wordA, String wordB,
                                           int size, List<String> result) {
 
         // If size equals 1 then quit since single letter are not a good indication of correctness
@@ -93,7 +93,7 @@ public class AnswerComparison {
         return findSimilarities(wordA, wordB, size-1, result);
     }
 
-    private List<String> findSimilarities(String wordA, String wordB) {
+    private static List<String> findSimilarities(String wordA, String wordB) {
         return findSimilarities(wordA, wordB, wordB.length(), new ArrayList<String>());
     }
 }

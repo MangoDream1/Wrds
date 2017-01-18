@@ -66,3 +66,4 @@ The word table has the following attributes:
 - Search function to search your lists
 - See which letters you have written correct and what wrong
 - Create a list out of the words the user has incorrectly entered
+- Graph in ResultActivity

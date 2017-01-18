@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     static final String DB_NAME = "wrds.db";
-    static final int DB_VERSION = 3;
+    static final int DB_VERSION = 1;
 
     // Table names
     public static final String listTable = "ListTable";

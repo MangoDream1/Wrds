@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String fk_listId = "list_id";
     public static final String str_wordA = "wordA";
     public static final String str_wordB = "wordB";
+    public static final String int_mistakes = "mistakes";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -49,7 +50,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             pk_wordId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             fk_listId + " INTEGER NOT NULL, " +
             str_wordA + " TEXT NOT NULL, " +
-            str_wordB + " TEXT NOT NULL);";
+            str_wordB + " TEXT NOT NULL, " +
+            int_mistakes + "INTEGER DEFAULT 0);";
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

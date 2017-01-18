@@ -121,7 +121,24 @@ public class DatabaseManager {
                 DatabaseHelper.fk_listId + " = " + String.valueOf(listId));
     }
 
-    public ContentValues createListContentValues(String title, String desc, String creator,
+    public Cursor getListWords(long listId) {
+        /* Get all the words of a list */
+
+        String[] columns = new String[]{DatabaseHelper.pk_wordId, DatabaseHelper.str_wordA,
+                DatabaseHelper.str_wordB};
+
+        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, DatabaseHelper.fk_listId
+                + " = " + String.valueOf(listId), null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
+
+    }
+
+    private ContentValues createListContentValues(String title, String desc, String creator,
                                                   String languageA, String languageB) {
         /* Fills in the contentValues for lists in the database */
 
@@ -162,29 +179,33 @@ public class DatabaseManager {
 
     }
 
+    public int incrementWordMistake(long wordId) {
+        Cursor cursor = getSingleWord(wordId, new String[]{DatabaseHelper.int_mistakes});
+
+        int mistake = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.int_mistakes));
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.int_mistakes, mistake);
+
+        return database.update(DatabaseHelper.wordTable, contentValues,
+                DatabaseHelper.pk_wordId + " = " + wordId, null);
+
+    }
+
+    public int resetWordMistakesList(long listId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.int_mistakes, 0);
+
+        return database.update(DatabaseHelper.wordTable, contentValues,
+                DatabaseHelper.fk_listId + " = " + listId, null);
+    }
+
     public void deleteWord(long wordId) {
         database.delete(DatabaseHelper.wordTable, DatabaseHelper.pk_wordId + " = " + wordId, null);
     }
 
-    public Cursor getListWords(long listId) {
-        /* Get all the words of a list */
-
-        String[] columns = new String[]{DatabaseHelper.pk_wordId, DatabaseHelper.str_wordA,
-                DatabaseHelper.str_wordB};
-
-        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, DatabaseHelper.fk_listId
-                        + " = " + String.valueOf(listId), null, null, null, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        return cursor;
-
-    }
-
-    public Cursor getSingleWord(long wordId) {
-        Cursor cursor = database.query(DatabaseHelper.wordTable, null,
+    public Cursor getSingleWord(long wordId, String[] columns ) {
+        Cursor cursor = database.query(DatabaseHelper.wordTable, columns,
                 DatabaseHelper.pk_wordId + " = " + String.valueOf(wordId), null, null, null, null);
 
         if (cursor != null) {
@@ -192,5 +213,10 @@ public class DatabaseManager {
         }
 
         return cursor;
+    }
+
+    public Cursor getSingleWord(long wordId) {
+        /* Get all of single word */
+        return getSingleWord(wordId, null);
     }
 }

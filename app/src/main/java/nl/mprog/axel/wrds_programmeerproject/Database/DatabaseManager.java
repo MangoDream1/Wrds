@@ -122,21 +122,31 @@ public class DatabaseManager {
                 DatabaseHelper.fk_listId + " = " + String.valueOf(listId));
     }
 
-    public Cursor getListWords(long listId) {
+    public Cursor getListWords(String where) {
         /* Get all the words of a list */
-
         String[] columns = new String[]{DatabaseHelper.pk_wordId, DatabaseHelper.str_wordA,
-                DatabaseHelper.str_wordB};
+                DatabaseHelper.str_wordB, DatabaseHelper.int_mistakes};
 
-        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, DatabaseHelper.fk_listId
-                + " = " + String.valueOf(listId), null, null, null, null);
+        Cursor cursor = database.query(DatabaseHelper.wordTable, columns, where, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         return cursor;
+    }
 
+    public Cursor getListWords(long listId) {
+        String where = DatabaseHelper.fk_listId + " = " + String.valueOf(listId);
+
+        return getListWords(where);
+    }
+
+    public Cursor getRetryWords(long listId) {
+        String where = DatabaseHelper.fk_listId + " = " + String.valueOf(listId) + " AND " +
+                DatabaseHelper.int_mistakes + " != 0";
+
+        return getListWords(where);
     }
 
     private ContentValues createListContentValues(String title, String desc, String creator,

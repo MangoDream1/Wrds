@@ -166,9 +166,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.play_button:
-                // Reset mistakes to play new
-                dbm.resetWordMistakesList(listId);
-
                 Intent intent = new Intent(this, ExamActivity.class);
                 intent.putExtra("id", listId);
 

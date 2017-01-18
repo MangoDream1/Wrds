@@ -42,13 +42,23 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);
+        boolean isRetryMistakes = intent.getBooleanExtra("isRetryMistakes", false);
 
         (findViewById(R.id.check_button)).setOnClickListener(this);
         (findViewById(R.id.cancel_button)).setOnClickListener(this);
         (findViewById(R.id.continue_button)).setOnClickListener(this);
 
         if (savedInstanceState == null) {
-            Cursor cursor = dbm.getListWords(listId);
+            Cursor cursor;
+
+            if (isRetryMistakes) {
+                cursor = dbm.getRetryWords(listId);
+            } else {
+                cursor = dbm.getListWords(listId);
+            }
+
+            // Reset mistakes to play new
+            dbm.resetWordMistakesList(listId);
 
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 dataList.add(new String[]{

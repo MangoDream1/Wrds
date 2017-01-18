@@ -64,9 +64,6 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.retry_all_button:
-                // Reset mistakes to play new
-                dbm.resetWordMistakesList(listId);
-
                 Intent intent = new Intent(this, ExamActivity.class);
                 intent.putExtra("id", listId);
 
@@ -76,8 +73,6 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.retry_mistakes_button:
-                dbm.resetWordMistakesList(listId);
-
                 // TODO make it work retryMistakes
 
                 intent = new Intent(this, ExamActivity.class);

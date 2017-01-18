@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -101,6 +100,8 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     private void showFeedback(boolean isCorrect) {
         View feedback;
 
+        findViewById(R.id.feedbacks_linearLayout).bringToFront();
+
         if (isCorrect) {
             feedback = findViewById(R.id.feedback_correct);
         } else {
@@ -111,6 +112,10 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         feedback.setVisibility(View.VISIBLE);
+
+        // Disable editText. User should not be able to edit now
+        EditText editText = (EditText) findViewById(R.id.editText);
+        editText.setEnabled(false);
 
         findViewById(R.id.continue_button).setVisibility(View.VISIBLE);
         findViewById(R.id.check_button).setVisibility(View.GONE);
@@ -123,6 +128,11 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.feedback_incorrect).setVisibility(View.GONE);
         findViewById(R.id.feedback_correct).setVisibility(View.GONE);
+
+        // Enable editText and reset content
+        EditText editText = (EditText) findViewById(R.id.editText);
+        editText.setEnabled(true);
+        editText.setText("");
 
     }
 

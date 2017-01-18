@@ -145,21 +145,21 @@
             android:text="retry mistakes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/retryMistakesButton"
+            android:id="@+id/retry_mistakes_button"
             android:layout_weight="1" />
 
         <Button
             android:text="retry all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/retryAllButton"
+            android:id="@+id/retry_all_button"
             android:layout_weight="1" />
 
         <Button
             android:text="Continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/continueButton"
+            android:id="@+id/continue_button"
             android:layout_weight="1" />
     </LinearLayout>
 

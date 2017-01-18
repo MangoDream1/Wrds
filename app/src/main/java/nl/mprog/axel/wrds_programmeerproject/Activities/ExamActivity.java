@@ -109,7 +109,6 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
             TextView correction = (TextView) findViewById(R.id.correction_textView);
 
             correction.setText(AnswerComparison.underlineWrongPart(wordA, wordB));
-
         }
 
         feedback.setVisibility(View.VISIBLE);

@@ -47,20 +47,35 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         (findViewById(R.id.cancel_button)).setOnClickListener(this);
         (findViewById(R.id.continue_button)).setOnClickListener(this);
 
-        Cursor cursor = dbm.getListWords(listId);
+        if (savedInstanceState == null) {
+            Cursor cursor = dbm.getListWords(listId);
 
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            dataList.add(new String[]{
-                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.pk_wordId)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB))
-            });
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                dataList.add(new String[]{
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.pk_wordId)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB))
+                });
+            }
+
+            dataListSize = dataList.size();
+
+            createProgressBar();
+            createRandomInt();
+            setWord();
+
+        } else {
+            dataList = (ArrayList<String[]>) savedInstanceState.getSerializable("dataList");
+            dataListSize = savedInstanceState.getInt("dataListSize");
+
+            wordA = savedInstanceState.getString("wordA");
+            wordB = savedInstanceState.getString("wordB");
+            randomInt = savedInstanceState.getInt("randomInt");
+
+            setWord();
+            createProgressBar();
+            updateProgressBar();
         }
-
-        dataListSize = dataList.size();
-
-        createProgressBar();
-        findRandomWord();
     }
 
     private void startResultActivity() {
@@ -72,14 +87,19 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-    private void findRandomWord() {
+    private void createRandomInt() {
+        if (dataList.isEmpty()) {
+            return;
+        }
+        randomInt = new Random().nextInt(dataList.size());
+    }
+
+    private void setWord() {
         // If empty then exam is finished
         if (dataList.isEmpty()) {
             startResultActivity();
             return;
         }
-
-        randomInt = new Random().nextInt(dataList.size());
 
         wordId = Integer.parseInt(dataList.get(randomInt)[0]);
         String translate = dataList.get(randomInt)[1];
@@ -137,6 +157,17 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("dataList", dataList);
+        outState.putInt("dataListSize", dataListSize);
+
+        outState.putString("wordA", wordA);
+        outState.putString("wordB", wordB);
+        outState.putInt("randomInt", randomInt);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.check_button:
@@ -168,7 +199,8 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.continue_button:
                 // set new random word
-                findRandomWord();
+                createRandomInt();
+                setWord();
                 hideFeedback();
         }
     }

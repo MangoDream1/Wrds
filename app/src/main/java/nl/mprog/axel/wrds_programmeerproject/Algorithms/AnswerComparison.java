@@ -19,6 +19,12 @@ public class AnswerComparison {
     public static SpannableString underlineWrongPart(String wordA, String wordB) {
         SpannableString spanString = new SpannableString(wordA);
 
+        // If the wordB is empty then return all underlined otherwise will crash later
+        if (wordB.isEmpty()) {
+            spanString.setSpan(new UnderlineSpan(), 0, wordA.length(), 0);
+            return spanString;
+        }
+
         List<String> similarities = findSimilarities(wordA, wordB);
         List<Integer> indexes = findIndexesOfSubstringsInString(wordA, similarities);
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.sql.SQLException;
 
@@ -185,7 +186,7 @@ public class DatabaseManager {
         int mistake = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.int_mistakes));
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseHelper.int_mistakes, mistake);
+        contentValues.put(DatabaseHelper.int_mistakes, mistake + 1);
 
         return database.update(DatabaseHelper.wordTable, contentValues,
                 DatabaseHelper.pk_wordId + " = " + wordId, null);
@@ -198,6 +199,22 @@ public class DatabaseManager {
 
         return database.update(DatabaseHelper.wordTable, contentValues,
                 DatabaseHelper.fk_listId + " = " + listId, null);
+    }
+
+    public int getSumWordMistakesList(long listId) {
+        int sum = 0;
+
+        Cursor cursor = database.rawQuery("SELECT SUM(" + DatabaseHelper.int_mistakes + ") FROM " +
+                DatabaseHelper.wordTable + " WHERE " + DatabaseHelper.fk_listId +
+                " = " + String.valueOf(listId), null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            sum = cursor.getInt(0);
+            cursor.close();
+        }
+
+        return sum;
     }
 
     public void deleteWord(long wordId) {

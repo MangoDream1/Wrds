@@ -24,8 +24,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
     private int randomInt;
 
-    private int nMistakes;
-
+    private long wordId;
     private long listId;
     private DatabaseManager dbm;
 
@@ -41,6 +40,9 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         dbm = DatabaseManager.getInstance();
 
+        // Reset mistakes to start anew
+        dbm.resetWordMistakesList(listId);
+
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);
 
@@ -52,6 +54,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             dataList.add(new String[]{
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.pk_wordId)),
                     cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)),
                     cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB))
             });
@@ -65,8 +68,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startResultActivity() {
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("nMistakes", nMistakes);
-        intent.putExtra("sizeList", dataListSize);
+        intent.putExtra("listId", listId);
 
         startActivity(intent);
 
@@ -82,8 +84,9 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
         randomInt = new Random().nextInt(dataList.size());
 
-        String translate = dataList.get(randomInt)[0];
-        wordA = dataList.get(randomInt)[1];
+        wordId = Integer.parseInt(dataList.get(randomInt)[0]);
+        String translate = dataList.get(randomInt)[1];
+        wordA = dataList.get(randomInt)[2];
 
         ((TextView) this.findViewById(R.id.translate)).setText(translate);
     }
@@ -135,7 +138,8 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (wordB.isEmpty() || !AnswerComparison.checkCorrect(wordA, wordB)) {
                     // Made a mistake
-                    nMistakes++;
+
+                    dbm.incrementWordMistake(wordId);
 
                     showFeedback(false);
 

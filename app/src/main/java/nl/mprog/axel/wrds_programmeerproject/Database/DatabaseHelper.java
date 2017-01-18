@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             fk_listId + " INTEGER NOT NULL, " +
             str_wordA + " TEXT NOT NULL, " +
             str_wordB + " TEXT NOT NULL, " +
-            int_mistakes + "INTEGER DEFAULT 0);";
+            int_mistakes + " INTEGER DEFAULT 0);";
 
 
     @Override

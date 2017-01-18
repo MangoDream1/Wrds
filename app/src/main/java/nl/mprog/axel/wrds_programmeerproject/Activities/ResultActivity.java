@@ -5,25 +5,32 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class ResultActivity extends AppCompatActivity {
+
+    DatabaseManager dbm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        dbm = DatabaseManager.getInstance();
+
         Intent intent = getIntent();
-        int nMistakes = intent.getIntExtra("nMistakes", 0);
-        int sizeList = intent.getIntExtra("sizeList", 0);
+
+        long listId = intent.getLongExtra("listId", 0L);
+        long sizeList = dbm.countListWords(listId);
+        int nMistakes = dbm.getSumWordMistakesList(listId);
 
         TextView score = (TextView) findViewById(R.id.score);
         score.setText(calculateScore(sizeList, nMistakes));
 
     }
 
-    private String calculateScore(int total, int nMistakes) {
+    private String calculateScore(long total, int nMistakes) {
         if (nMistakes > total) {
             return "1";
         }

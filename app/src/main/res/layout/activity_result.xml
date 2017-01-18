@@ -133,25 +133,6 @@
                     android:layout_marginStart="10dp"/>
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:text="Amount right >3rd time:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat"/>
-
-                <TextView
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/aRightThirdPlusTime"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"/>
-            </TableRow>
         </TableLayout>
     </RelativeLayout>
 

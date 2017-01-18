@@ -217,6 +217,24 @@ public class DatabaseManager {
         return sum;
     }
 
+    public int getCountNumberMistakesList(long listId, int nMistakes) {
+        int count = 0;
+
+        Cursor cursor = database.rawQuery("SELECT COUNT(" + DatabaseHelper.int_mistakes + ") FROM " +
+                DatabaseHelper.wordTable + " WHERE " + DatabaseHelper.fk_listId + " = " +
+                String.valueOf(listId) + " AND " + DatabaseHelper.int_mistakes + " = " +
+                String.valueOf(nMistakes), null);
+
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            count = cursor.getInt(0);
+            cursor.close();
+        }
+
+        return count;
+    }
+
     public void deleteWord(long wordId) {
         database.delete(DatabaseHelper.wordTable, DatabaseHelper.pk_wordId + " = " + wordId, null);
     }

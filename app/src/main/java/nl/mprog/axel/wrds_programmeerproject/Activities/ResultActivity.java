@@ -3,6 +3,7 @@ package nl.mprog.axel.wrds_programmeerproject.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
@@ -27,6 +28,16 @@ public class ResultActivity extends AppCompatActivity {
 
         TextView score = (TextView) findViewById(R.id.score);
         score.setText(calculateScore(sizeList, nMistakes));
+
+        ((TextView) findViewById(R.id.aRightFirstTime)).setText(
+                String.valueOf(dbm.getCountNumberMistakesList(listId, 1)));
+
+        ((TextView) findViewById(R.id.aRightSecondTime)).setText(
+                String.valueOf(dbm.getCountNumberMistakesList(listId, 2)));
+
+        ((TextView) findViewById(R.id.aRightThirdTime)).setText(
+                String.valueOf(dbm.getCountNumberMistakesList(listId, 3)));
+
 
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.axel.wrds_programmeerproject.nl.example.axel.wrds_programmeerproject.MainActivity">
+    tools:context="nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_menu"

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import nl.mprog.axel.wrds_programmeerproject.Activities.ListActivity;
-import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
 import nl.mprog.axel.wrds_programmeerproject.R;
 

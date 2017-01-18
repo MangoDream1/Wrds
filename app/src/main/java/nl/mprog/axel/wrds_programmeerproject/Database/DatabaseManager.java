@@ -7,7 +7,6 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 
 /**
  * Created by axel on 10-1-17.

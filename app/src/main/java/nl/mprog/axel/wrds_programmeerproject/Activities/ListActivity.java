@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -157,12 +158,24 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         int color = Color.RED;
 
+        String toastMessage = null;
+
         if (wordA.isEmpty()) {
             wordAView.setBackgroundColor(color);
+            toastMessage = "Please enter Word A";
         }
 
         if (wordB.isEmpty()) {
             wordBView.setBackgroundColor(color);
+            toastMessage = "Please enter Word B";
+        }
+
+        if (wordA.isEmpty() && wordB.isEmpty()) {
+            toastMessage = "Please enter Word A and Word B";
+        }
+
+        if (toastMessage != null) {
+            Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
         }
     }
 

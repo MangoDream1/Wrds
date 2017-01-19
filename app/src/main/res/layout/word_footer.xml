@@ -15,26 +15,45 @@
         android:id="@+id/editTexts">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:padding="10dp" />
+
+        <View
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#BDBDBD" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:id="@+id/wordA_editText"
-            android:layout_weight="10"
-            android:hint="Word A" />
+            android:layout_weight="4"
+            android:hint="Word A"
+            android:textSize="14sp"
+            android:singleLine="true" />
+
+        <View
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#BDBDBD" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:id="@+id/wordB_editText"
-            android:layout_weight="10"
-            android:hint="Word B" />
+            android:layout_weight="4"
+            android:hint="Word B"
+            android:singleLine="true"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <Button

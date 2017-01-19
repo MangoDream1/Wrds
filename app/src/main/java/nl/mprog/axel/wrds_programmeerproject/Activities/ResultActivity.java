@@ -73,13 +73,12 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.retry_mistakes_button:
-                // TODO make it work retryMistakes
-
                 intent = new Intent(this, ExamActivity.class);
                 intent.putExtra("id", listId);
                 intent.putExtra("isRetryMistakes", true);
 
                 startActivity(intent);
+                finish();
 
                 break;
         }

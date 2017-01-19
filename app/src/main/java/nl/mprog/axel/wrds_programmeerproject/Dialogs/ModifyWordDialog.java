@@ -71,6 +71,9 @@ public class ModifyWordDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // User cancelled the dialog
                         // Empty since this does nothing except close
+
+                        ((ListActivity) activity).dataChange();
+
                     }
                 });
 

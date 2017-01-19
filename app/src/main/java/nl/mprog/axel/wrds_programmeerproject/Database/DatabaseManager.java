@@ -224,7 +224,7 @@ public class DatabaseManager {
 
     }
 
-    public int resetWordTriesList(long listId) {
+    public int resetWordTries(long listId) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.INT_TRIES, 0);
 
@@ -232,7 +232,7 @@ public class DatabaseManager {
                 DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId), null);
     }
 
-    public int getNumberOfMistakesList(long listId) {
+    public int getNumberOfMistakes(long listId) {
         int sum = 0;
         int count = 0;
 
@@ -259,7 +259,7 @@ public class DatabaseManager {
         return sum - count;
     }
 
-    public int countNumberTriesList(long listId, int nTries) {
+    public int countNumberTries(long listId, int nTries) {
         int count = 0;
 
         Cursor cursor = database.rawQuery("SELECT COUNT(" + DatabaseHelper.INT_TRIES + ") FROM " +
@@ -275,5 +275,21 @@ public class DatabaseManager {
         }
 
         return count;
+    }
+
+    public int getHighestTries(long listId) {
+        int max = 0;
+
+        Cursor cursor = database.rawQuery("SELECT MAX(" + DatabaseHelper.INT_TRIES + ") FROM " +
+                DatabaseHelper.WORD_TABLE + " WHERE " + DatabaseHelper.FK_LIST_ID + " = " +
+                String.valueOf(listId), null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            max = cursor.getInt(0);
+            cursor.close();
+        }
+
+        return max;
     }
 }

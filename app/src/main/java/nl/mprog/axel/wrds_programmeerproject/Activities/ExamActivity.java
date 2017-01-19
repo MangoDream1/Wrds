@@ -58,7 +58,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             // Reset mistakes to play new
-            dbm.resetWordTriesList(listId);
+            dbm.resetWordTries(listId);
 
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 dataList.add(new String[]{

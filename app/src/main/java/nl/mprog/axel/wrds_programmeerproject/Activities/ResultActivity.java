@@ -62,8 +62,6 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         DataPoint[] dataPoints = new DataPoint[max];
 
         for (int i = 1; i <= max; i++) {
-            Log.d("test i", String.valueOf(i));
-
             int count = dbm.countNumberTries(listId, i);
 
             dataPoints[i-1] = new DataPoint(i, count);
@@ -73,10 +71,12 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
+        // Set Y-axis
         barGraphView.getViewport().setYAxisBoundsManual(true);
         barGraphView.getViewport().setMinY(0);
         barGraphView.getViewport().setMaxY(highest + highest * 0.1);
 
+        // Set X-axis
         barGraphView.getViewport().setXAxisBoundsManual(true);
         barGraphView.getViewport().setMinX(0);
         barGraphView.getViewport().setMaxX(max + 0.5);

@@ -25,7 +25,7 @@ public class WordsCursorAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View v, Context context, Cursor cursor) {
-        long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.pk_listId));
+        long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.PK_LIST_ID));
         ArrayList<Long> selectedItemsList = ((ListActivity) context).getSelectedItemsList();
 
         TextView index = (TextView) v.findViewById(R.id.index);
@@ -33,8 +33,8 @@ public class WordsCursorAdapter extends ResourceCursorAdapter {
         TextView wordB = (TextView) v.findViewById(R.id.wordB);
 
         index.setText(String.valueOf(cursor.getPosition() + 1));
-        wordA.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)));
-        wordB.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB)));
+        wordA.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)));
+        wordB.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_B)));
 
         if (selectedItemsList.contains(id)) {
             v.setBackgroundColor(Color.LTGRAY);

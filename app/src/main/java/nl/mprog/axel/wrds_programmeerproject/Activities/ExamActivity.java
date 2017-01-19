@@ -58,13 +58,13 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             // Reset mistakes to play new
-            dbm.resetWordMistakesList(listId);
+            dbm.resetWordTriesList(listId);
 
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 dataList.add(new String[]{
-                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.pk_wordId)),
-                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)),
-                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB))
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.PK_WORD_ID)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_B))
                 });
             }
 
@@ -184,12 +184,10 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                 EditText editText = (EditText) findViewById(R.id.editText);
 
                 wordB = editText.getText().toString();
+                dbm.incrementWordTry(wordId);
 
                 if (wordB.isEmpty() || !AnswerComparison.checkCorrect(wordA, wordB)) {
                     // Made a mistake
-
-                    dbm.incrementWordMistake(wordId);
-
                     showFeedback(false);
 
                 } else {

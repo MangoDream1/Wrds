@@ -26,7 +26,7 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View v, Context context, Cursor cursor) {
-        long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.pk_listId));
+        long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.PK_LIST_ID));
         ArrayList<Long> selectedItemsList = ((MainActivity) context).getSelectedItemsList();
 
         // Finds views
@@ -39,15 +39,15 @@ public class WordListsCursorAdapter extends ResourceCursorAdapter {
         TextView language = (TextView) v.findViewById(R.id.language_textView);
 
         // Set views
-        title.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_title)));
-        desc.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_desc)));
+        title.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_TITLE)));
+        desc.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_DESC)));
 
-        date.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.dt_createdAt)));
-        creator.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_creator)));
+        date.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.DT_CREATED_AT)));
+        creator.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_CREATOR)));
 
         // Add languages into one string
-        String languageText = cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_languageA))
-                + " - " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_languageB));
+        String languageText = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A))
+                + " - " + cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B));
 
         language.setText(languageText);
 

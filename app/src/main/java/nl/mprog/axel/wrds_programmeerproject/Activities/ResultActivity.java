@@ -25,7 +25,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
 
         listId = intent.getLongExtra("listId", 0L);
         long sizeList = dbm.countListWords(listId);
-        int nMistakes = dbm.getSumWordMistakesList(listId);
+        int nMistakes = dbm.getNumberOfMistakesList(listId);
 
         findViewById(R.id.continue_button).setOnClickListener(this);
         findViewById(R.id.retry_all_button).setOnClickListener(this);
@@ -37,13 +37,13 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         ((TextView) findViewById(R.id.nMistakes)).setText(String.valueOf(nMistakes));
 
         ((TextView) findViewById(R.id.aRightFirstTime)).setText(
-                String.valueOf(dbm.getCountNumberMistakesList(listId, 0)));
+                String.valueOf(dbm.countNumberTriesList(listId, 1)));
 
         ((TextView) findViewById(R.id.aRightSecondTime)).setText(
-                String.valueOf(dbm.getCountNumberMistakesList(listId, 1)));
+                String.valueOf(dbm.countNumberTriesList(listId, 2)));
 
         ((TextView) findViewById(R.id.aRightThirdTime)).setText(
-                String.valueOf(dbm.getCountNumberMistakesList(listId, 2)));
+                String.valueOf(dbm.countNumberTriesList(listId, 3)));
 
 
     }

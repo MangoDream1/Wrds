@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,9 +58,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         dbm = DatabaseManager.getInstance();
 
         Cursor listCursor = dbm.getUserListTitle(listId);
-        title = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_title));
-        String lanA  = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_languageA));
-        String lanB  = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.str_languageB));
+        title = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.STR_TITLE));
+        String lanA  = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A));
+        String lanB  = listCursor.getString(listCursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B));
 
         title = String.format("%s (%s - %s)", title, lanA, lanB);
 

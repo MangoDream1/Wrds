@@ -64,10 +64,10 @@ public class CMListDialog extends DialogFragment {
             listId = arguments.getLong("id");
             Cursor cursor = dbm.getSingleList(listId);
 
-            nameEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_title)));
-            descEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_desc)));
-            lanAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_languageA)));
-            lanBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_languageB)));
+            nameEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_TITLE)));
+            descEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_DESC)));
+            lanAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A)));
+            lanBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
         }
 
         builder.setMessage(message)

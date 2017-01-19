@@ -51,8 +51,8 @@ public class ModifyWordDialog extends DialogFragment {
         wordId = arguments.getLong("id");
         Cursor cursor = dbm.getSingleWord(wordId);
 
-        wordAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordA)));
-        wordBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.str_wordB)));
+        wordAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)));
+        wordBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_B)));
 
         builder.setMessage("Modify word")
                 .setPositiveButton("Modify", new DialogInterface.OnClickListener() {

@@ -10,60 +10,60 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     static final String DB_NAME = "wrds.db";
-    static final int DB_VERSION = 1;
+    static final int DB_VERSION = 2;
 
     // Table names
-    public static final String listTable = "ListTable";
-    public static final String wordTable = "WordTable";
+    public static final String LIST_TABLE = "ListTable";
+    public static final String WORD_TABLE = "WordTable";
 
     // List table columns
-    public static final String pk_listId = "_id";
-    public static final String str_title = "title";
-    public static final String str_desc = "desc";
-    public static final String dt_createdAt = "createdAt";
-    public static final String str_creator = "creator";
-    public static final String str_languageA = "languageA";
-    public static final String str_languageB = "languageB";
+    public static final String PK_LIST_ID = "_id";
+    public static final String STR_TITLE = "title";
+    public static final String STR_DESC = "desc";
+    public static final String DT_CREATED_AT = "createdAt";
+    public static final String STR_CREATOR = "creator";
+    public static final String STR_LANGUAGE_A = "languageA";
+    public static final String STR_LANGUAGE_B = "languageB";
 
     // Word table columns
-    public static final String pk_wordId = "_id";
-    public static final String fk_listId = "list_id";
-    public static final String str_wordA = "wordA";
-    public static final String str_wordB = "wordB";
-    public static final String int_mistakes = "mistakes";
+    public static final String PK_WORD_ID = "_id";
+    public static final String FK_LIST_ID = "list_id";
+    public static final String STR_WORD_A = "wordA";
+    public static final String STR_WORD_B = "wordB";
+    public static final String INT_TRIES = "tries";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     // Create database queries
-    public static final String createListTable = "create table " + listTable + " (" +
-            pk_listId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            str_title + " TEXT NOT NULL, " +
-            str_desc + " TEXT, " +
-            dt_createdAt + " DATETIME DEFAULT CURRENT_DATE, " +
-            str_creator + " TEXT NOT NULL, " +
-            str_languageA + " TEXT NOT NULL, " +
-            str_languageB + " TEXT NOT NULL);";
+    public static final String CREATE_LIST_TABLE = "create table " + LIST_TABLE + " (" +
+            PK_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            STR_TITLE + " TEXT NOT NULL, " +
+            STR_DESC + " TEXT, " +
+            DT_CREATED_AT + " DATETIME DEFAULT CURRENT_DATE, " +
+            STR_CREATOR + " TEXT NOT NULL, " +
+            STR_LANGUAGE_A + " TEXT NOT NULL, " +
+            STR_LANGUAGE_B + " TEXT NOT NULL);";
 
-    public static final String createWordTable = "create table " + wordTable + " (" +
-            pk_wordId + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            fk_listId + " INTEGER NOT NULL, " +
-            str_wordA + " TEXT NOT NULL, " +
-            str_wordB + " TEXT NOT NULL, " +
-            int_mistakes + " INTEGER DEFAULT 0);";
+    public static final String CREATE_WORD_TABLE = "create table " + WORD_TABLE + " (" +
+            PK_WORD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            FK_LIST_ID + " INTEGER NOT NULL, " +
+            STR_WORD_A + " TEXT NOT NULL, " +
+            STR_WORD_B + " TEXT NOT NULL, " +
+            INT_TRIES + " INTEGER DEFAULT 0);";
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(createListTable);
-        db.execSQL(createWordTable);
+        db.execSQL(CREATE_LIST_TABLE);
+        db.execSQL(CREATE_WORD_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + listTable);
-        db.execSQL("DROP TABLE IF EXISTS " + wordTable);
+        db.execSQL("DROP TABLE IF EXISTS " + LIST_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + WORD_TABLE);
         onCreate(db);
     }
 }

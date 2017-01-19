@@ -150,23 +150,20 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void giveWarningNotFilledIn(String wordA, String wordB) {
-        View wordAView = findViewById(R.id.wordA_editText);
-        View wordBView = findViewById(R.id.wordB_editText);
-
-        wordAView.setBackgroundColor(Color.TRANSPARENT);
-        wordBView.setBackgroundColor(Color.TRANSPARENT);
+        wordAEditText.setBackgroundColor(Color.TRANSPARENT);
+        wordBEditText.setBackgroundColor(Color.TRANSPARENT);
 
         int color = Color.RED;
 
         String toastMessage = null;
 
         if (wordA.isEmpty()) {
-            wordAView.setBackgroundColor(color);
+            wordAEditText.setBackgroundColor(color);
             toastMessage = "Please enter Word A";
         }
 
         if (wordB.isEmpty()) {
-            wordBView.setBackgroundColor(color);
+            wordBEditText.setBackgroundColor(color);
             toastMessage = "Please enter Word B";
         }
 
@@ -186,9 +183,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 String wordA = wordAEditText.getText().toString();
                 String wordB = wordBEditText.getText().toString();
 
+
                 if (!wordA.isEmpty() && !wordB.isEmpty()) {
                     dbm.insertWord(listId, wordA, wordB);
                     dataChange();
+
+                    // Reset
+                    wordAEditText.setText("");
+                    wordBEditText.setText("");
                 }
 
                 giveWarningNotFilledIn(wordA, wordB);

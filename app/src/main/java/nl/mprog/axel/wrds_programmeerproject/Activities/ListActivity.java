@@ -132,19 +132,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_word_button:
-                String wordA = wordAEditText.getText().toString();
-                String wordB = wordBEditText.getText().toString();
-
-                dbm.insertWord(listId, wordA, wordB);
-                dataChange();
-                break;
-        }
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (selectedItemsList.contains(id)) {
             selectedItemsList.remove(id);
@@ -158,6 +145,42 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             showEditToolbar();
         } else {
             hideEditToolbar();
+        }
+    }
+
+    private void giveWarningNotFilledIn(String wordA, String wordB) {
+        View wordAView = findViewById(R.id.wordA_editText);
+        View wordBView = findViewById(R.id.wordB_editText);
+
+        wordAView.setBackgroundColor(Color.TRANSPARENT);
+        wordBView.setBackgroundColor(Color.TRANSPARENT);
+
+        int color = Color.RED;
+
+        if (wordA.isEmpty()) {
+            wordAView.setBackgroundColor(color);
+        }
+
+        if (wordB.isEmpty()) {
+            wordBView.setBackgroundColor(color);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.add_word_button:
+                String wordA = wordAEditText.getText().toString();
+                String wordB = wordBEditText.getText().toString();
+
+                if (!wordA.isEmpty() && !wordB.isEmpty()) {
+                    dbm.insertWord(listId, wordA, wordB);
+                    dataChange();
+                }
+
+                giveWarningNotFilledIn(wordA, wordB);
+
+                break;
         }
     }
 

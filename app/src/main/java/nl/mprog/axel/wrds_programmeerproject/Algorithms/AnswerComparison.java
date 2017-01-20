@@ -2,6 +2,7 @@ package nl.mprog.axel.wrds_programmeerproject.Algorithms;
 
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,6 @@ public class AnswerComparison {
 
     private static List<Integer> findIndexesOfSubstringsInString(String string,
                                                           List<String> substringList) {
-        int offset = 0;
         int wordALength = string.length();
 
         // Create index and add 0 for start
@@ -48,11 +48,10 @@ public class AnswerComparison {
         for (String substring: substringList) {
             int start = string.indexOf(substring);
 
-            indexes.add(start + offset);
-            indexes.add(start + substring.length() + offset);
+            indexes.add(start);
+            indexes.add(start + substring.length());
 
-            offset = offset + substring.length();
-            string = string.replaceFirst(substring, "~");
+            string = string.replaceFirst(substring, new String(new char[substring.length()]));
         }
 
         indexes.add(wordALength);
@@ -90,8 +89,8 @@ public class AnswerComparison {
 
                 // Replace partition with nonsense so that the coming smaller partitions
                 // are not found in this larger partition
-                wordA = wordA.replaceFirst(bPartition, "~");
-                wordB = wordB.replaceFirst(bPartition, "~");
+                wordA = wordA.replaceFirst(bPartition, "\0");
+                wordB = wordB.replaceFirst(bPartition, "\0");
             }
         }
 

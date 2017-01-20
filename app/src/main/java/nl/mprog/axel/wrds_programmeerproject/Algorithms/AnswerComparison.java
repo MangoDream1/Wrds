@@ -51,6 +51,7 @@ public class AnswerComparison {
             indexes.add(start);
             indexes.add(start + substring.length());
 
+            // Replace substring with an empty string the same length as the substring
             string = string.replaceFirst(substring, new String(new char[substring.length()]));
         }
 

@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
+
+import java.util.Objects;
 
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
@@ -38,8 +41,14 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.retry_all_button).setOnClickListener(this);
         findViewById(R.id.retry_mistakes_button).setOnClickListener(this);
 
-        TextView score = (TextView) findViewById(R.id.score);
-        score.setText(calculateScore(sizeList, nMistakes));
+        String score = calculateScore(sizeList, nMistakes);
+
+        ((TextView) findViewById(R.id.score)).setText(score);
+
+        // If max score cannot retry mistakes
+        if (score.equals("10")) {
+            findViewById(R.id.retry_mistakes_button).setEnabled(false);
+        }
 
         createBarGraph();
 
@@ -56,8 +65,13 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
     private void createBarGraph() {
         GraphView barGraphView = (GraphView) findViewById(R.id.barGraph);
 
-        int max = dbm.getHighestTries(listId);
         int highest = 0;
+        int max = dbm.getHighestTries(listId);
+
+        // Set max to min 4 for better presentation
+        if (max < 4) {
+            max = 4;
+        }
 
         DataPoint[] dataPoints = new DataPoint[max];
 
@@ -70,6 +84,10 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 highest = count;
             }
         }
+
+        barGraphView.setTitle("Results");
+        barGraphView.getGridLabelRenderer().setHorizontalAxisTitle("Number of tries");
+        barGraphView.getGridLabelRenderer().setVerticalAxisTitle("Number of words");
 
         // Set Y-axis
         barGraphView.getViewport().setYAxisBoundsManual(true);

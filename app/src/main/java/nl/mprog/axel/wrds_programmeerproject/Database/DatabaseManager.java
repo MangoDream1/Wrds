@@ -224,12 +224,22 @@ public class DatabaseManager {
 
     }
 
-    public int resetWordTries(long listId) {
+    private int resetWordTries(long listId, String where) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.INT_TRIES, 0);
 
         return database.update(DatabaseHelper.WORD_TABLE, contentValues,
-                DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId), null);
+                where, null);
+    }
+
+    public int resetWordTries(long listId, boolean isReset) {
+        String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId);
+
+        if (isReset) {
+            where = where + " AND " + DatabaseHelper.INT_TRIES + " > 1 ";
+        }
+
+        return resetWordTries(listId, where);
     }
 
     public int getNumberOfMistakes(long listId) {

@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.share_button:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+
                 return true;
 
             default:

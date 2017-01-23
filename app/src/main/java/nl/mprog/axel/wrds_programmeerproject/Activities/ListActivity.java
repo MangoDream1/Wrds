@@ -152,20 +152,16 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void giveWarningNotFilledIn(String wordA, String wordB) {
-        View editTexts = findViewById(R.id.editTexts);
-
-        editTexts.setBackgroundColor(Color.TRANSPARENT);
-
-        int color = Color.RED;
-
         String toastMessage = null;
 
         if (wordA.isEmpty()) {
             toastMessage = "Please enter Word A";
+            ((EditText) findViewById(R.id.wordA_editText)).setError("");
         }
 
         if (wordB.isEmpty()) {
             toastMessage = "Please enter Word B";
+            ((EditText) findViewById(R.id.wordB_editText)).setError("");
         }
 
         if (wordA.isEmpty() && wordB.isEmpty()) {
@@ -173,7 +169,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (toastMessage != null) {
-            editTexts.setBackgroundColor(color);
             Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
         }
     }

@@ -48,6 +48,10 @@ public class AnswerComparison {
         for (String substring: substringList) {
             int start = string.indexOf(substring);
 
+            if (start == -1) {
+                continue;
+            }
+
             indexes.add(start);
             indexes.add(start + substring.length());
 
@@ -91,10 +95,9 @@ public class AnswerComparison {
                 // Replace partition with nonsense so that the coming smaller partitions
                 // are not found in this larger partition
                 wordA = wordA.replaceFirst(bPartition, "\0");
-                wordB = wordB.replaceFirst(bPartition, "\0");
+                wordB = wordB.replaceFirst(bPartition, "\1");
             }
         }
-
         // Recursion to find all similarities regardless of size
         return findSimilarities(wordA, wordB, size-1, result);
     }

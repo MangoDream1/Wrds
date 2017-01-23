@@ -224,7 +224,7 @@ public class DatabaseManager {
 
     }
 
-    private int resetWordTries(long listId, String where) {
+    private int resetWordTries(String where) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.INT_TRIES, 0);
 
@@ -239,34 +239,24 @@ public class DatabaseManager {
             where = where + " AND " + DatabaseHelper.INT_TRIES + " > 1 ";
         }
 
-        return resetWordTries(listId, where);
+        return resetWordTries(where);
     }
 
     public int getNumberOfMistakes(long listId) {
-        int sum = 0;
         int count = 0;
 
-        Cursor sCursor = database.rawQuery("SELECT SUM(" + DatabaseHelper.INT_TRIES + ") FROM " +
-                DatabaseHelper.WORD_TABLE + " WHERE " + DatabaseHelper.FK_LIST_ID + " = " +
-                String.valueOf(listId) + " AND " + DatabaseHelper.INT_TRIES + " > 1", null);
-
-        Cursor cCursor = database.query(DatabaseHelper.WORD_TABLE,
+        Cursor cursor = database.query(DatabaseHelper.WORD_TABLE,
                 new String[]{DatabaseHelper.INT_TRIES}, DatabaseHelper.FK_LIST_ID + " = " +
-                        String.valueOf(listId) + " AND " + DatabaseHelper.INT_TRIES + " > 1",
+                        String.valueOf(listId) + " AND " + DatabaseHelper.INT_TRIES + " != 1",
                 null, null, null, null);
 
 
-        if (sCursor != null && cCursor != null) {
-            sCursor.moveToFirst();
-
-            sum = sCursor.getInt(0);
-            count = cCursor.getCount();
-
-            sCursor.close();
-            cCursor.close();
+        if (cursor != null) {
+            count = cursor.getCount();
+            cursor.close();
         }
 
-        return sum - count;
+        return count;
     }
 
     public int countNumberTries(long listId, int nTries) {

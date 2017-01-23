@@ -112,6 +112,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setTitle(title);
         getMenuInflater().inflate(R.menu.main_menu, currentMenu);
         currentMenu.findItem(R.id.play_button).setVisible(true);
+        currentMenu.findItem(R.id.results_button).setVisible(true);
 
     }
 
@@ -120,13 +121,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         // Create menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.play_button).setVisible(true);
 
         currentMenu = menu;
 
         // If instance is restored and there are selections show correct menu
         if (!selectedItemsList.isEmpty()) {
             showEditToolbar();
+        } else {
+            hideEditToolbar();
         }
 
         return true;
@@ -206,6 +208,20 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.play_button:
                 Intent intent = new Intent(this, ExamActivity.class);
+                intent.putExtra("id", listId);
+
+                startActivity(intent);
+                return true;
+
+            case R.id.results_button:
+
+                if (dbm.getHighestTries(listId) == 0L) {
+                    Toast.makeText(getApplicationContext(), "This list has no results"
+                            , Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                intent = new Intent(this, ResultActivity.class);
                 intent.putExtra("id", listId);
 
                 startActivity(intent);

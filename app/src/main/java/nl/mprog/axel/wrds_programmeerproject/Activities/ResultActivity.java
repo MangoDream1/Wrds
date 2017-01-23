@@ -33,7 +33,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
 
         Intent intent = getIntent();
 
-        listId = intent.getLongExtra("listId", 0L);
+        listId = intent.getLongExtra("id", 0L);
         long sizeList = dbm.countListWords(listId);
         int nMistakes = dbm.getNumberOfMistakes(listId);
 
@@ -85,19 +85,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        barGraphView.setTitle("Results");
-        barGraphView.getGridLabelRenderer().setHorizontalAxisTitle("Number of tries");
-        barGraphView.getGridLabelRenderer().setVerticalAxisTitle("Number of words");
-
-        // Set Y-axis
-        barGraphView.getViewport().setYAxisBoundsManual(true);
-        barGraphView.getViewport().setMinY(0);
-        barGraphView.getViewport().setMaxY(highest + highest * 0.1);
-
-        // Set X-axis
-        barGraphView.getViewport().setXAxisBoundsManual(true);
-        barGraphView.getViewport().setMinX(0);
-        barGraphView.getViewport().setMaxX(max + 0.5);
+        barGraphView = styleGraph(barGraphView, max, highest);
 
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
         barGraphView.addSeries(series);
@@ -109,6 +97,24 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
             }
         });
+    }
+
+    private GraphView styleGraph(GraphView graphView, int max, int highest) {
+        graphView.setTitle("Results");
+        graphView.getGridLabelRenderer().setHorizontalAxisTitle("Number of tries");
+        graphView.getGridLabelRenderer().setVerticalAxisTitle("Number of words");
+
+        // Set Y-axis
+        graphView.getViewport().setYAxisBoundsManual(true);
+        graphView.getViewport().setMinY(0);
+        graphView.getViewport().setMaxY(highest);
+
+        // Set X-axis
+        graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getViewport().setMinX(0);
+        graphView.getViewport().setMaxX(max + 0.5);
+
+        return graphView;
     }
 
     @Override

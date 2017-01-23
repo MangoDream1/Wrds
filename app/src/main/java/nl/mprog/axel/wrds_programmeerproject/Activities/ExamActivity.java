@@ -90,7 +90,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startResultActivity() {
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("listId", listId);
+        intent.putExtra("id", listId);
 
         startActivity(intent);
 

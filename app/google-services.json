@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "599182281044",
+    "firebase_url": "https://wrds-programmeer-project.firebaseio.com",
+    "project_id": "wrds-programmeer-project",
+    "storage_bucket": "wrds-programmeer-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599182281044:android:ee18f3359b9a8a8f",
+        "android_client_info": {
+          "package_name": "nl.mprog.axel.wrds_programmeerproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599182281044-vtkl91g5iq17a9l6tcruruk58bcgia2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA9dkmieBego8dpNhKUQ87MoDsY4JMlSs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

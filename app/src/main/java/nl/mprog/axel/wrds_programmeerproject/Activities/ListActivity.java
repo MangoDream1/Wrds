@@ -191,6 +191,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     // Reset
                     wordAEditText.setText("");
                     wordBEditText.setText("");
+
+                    wordAEditText.requestFocus();
                 }
 
                 giveWarningNotFilledIn(wordA, wordB);

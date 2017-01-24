@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import nl.mprog.axel.wrds_programmeerproject.Adapters.WordListsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.CMListDialog;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
@@ -187,6 +188,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     // Uploads selected list
+
+                    FirebaseDBManager.getInstance().uploadList(selectedItemsList.get(0),
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+
                 } else {
                     // Not logged in thus goto login
                     Intent intent = new Intent(this, LoginActivity.class);

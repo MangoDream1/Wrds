@@ -2,7 +2,10 @@ package nl.mprog.axel.wrds_programmeerproject.Database;
 
 import android.database.Cursor;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +40,31 @@ public class FirebaseDBManager {
         firebaseDB.getReference().child("usernames").child(username).setValue(id);
     }
 
-    public String uploadList(long listId) {
-        HashMap<String, Object> data = createListHashTable(listId);
+    public String uploadList(final long listId, String userId) {
+        final String key = firebaseDB.getReference().child("lists").push().getKey();
 
-        String key = firebaseDB.getReference().child("lists").push().getKey();
-        firebaseDB.getReference().child("lists").child(key).setValue(data);
+        firebaseDB.getReference().child("users").child(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
+                            uploadList(listId, key, dataSnapshot.getValue(String.class));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
         return key;
+    }
+
+    private void uploadList(long listId, String key, String username) {
+        HashMap<String, Object> data = createListHashTable(listId, username);
+        firebaseDB.getReference().child("lists").child(key).setValue(data);
+
     }
 
     private HashMap<String, Object> createListHashTable(long listId, String username) {
@@ -76,14 +97,6 @@ public class FirebaseDBManager {
         hashMap.put("words", wordList);
 
         return hashMap;
-
-    }
-
-    private HashMap<String, Object> createListHashTable(long listId) {
-
-
-
-        return createListHashTable(listId, "Test");
 
     }
 }

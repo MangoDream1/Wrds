@@ -122,10 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null ) {
             currentMenu.findItem(R.id.logout_button).setVisible(true);
-            currentMenu.findItem(R.id.login_button).setVisible(false);
         } else {
             currentMenu.findItem(R.id.logout_button).setVisible(false);
-            currentMenu.findItem(R.id.login_button).setVisible(true);
         }
     }
 
@@ -184,9 +182,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 return true;
 
-            case R.id.login_button:
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
+            case R.id.share_button:
+                long listId = selectedItemsList.get(0);
+
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    // Uploads selected list
+                } else {
+                    // Not logged in thus goto login
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra("id", listId);
+                    startActivity(intent);
+                }
 
                 return true;
 

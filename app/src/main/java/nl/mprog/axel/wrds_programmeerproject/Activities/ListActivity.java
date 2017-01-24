@@ -114,7 +114,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         currentMenu.findItem(R.id.play_button).setVisible(true);
         currentMenu.findItem(R.id.results_button).setVisible(true);
-        currentMenu.findItem(R.id.login_button).setVisible(false);
     }
 
     @Override

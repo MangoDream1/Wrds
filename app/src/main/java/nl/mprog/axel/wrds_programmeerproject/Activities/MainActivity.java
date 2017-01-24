@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -89,10 +91,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void hideEditToolbar() {
+    private void showMainToolbar() {
         currentMenu.clear();
         toolbar.setTitle(R.string.app_name);
+
         getMenuInflater().inflate(R.menu.main_menu, currentMenu);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null ) {
+            currentMenu.findItem(R.id.logout_button).setVisible(true);
+            currentMenu.findItem(R.id.login_button).setVisible(false);
+        } else {
+            currentMenu.findItem(R.id.logout_button).setVisible(false);
+            currentMenu.findItem(R.id.login_button).setVisible(true);
+        }
     }
 
     @Override
@@ -121,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.return_button:
                 selectedItemsList.clear();
                 dataChange();
-                hideEditToolbar();
+                showMainToolbar();
 
                 return true;
 
@@ -145,16 +156,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 selectedItemsList.clear();
-                hideEditToolbar();
+                showMainToolbar();
                 dataChange();
 
                 return true;
 
-            case R.id.share_button:
+            case R.id.login_button:
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
 
                 return true;
+
+            case R.id.logout_button:
+                FirebaseAuth.getInstance().signOut();
+
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -190,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!selectedItemsList.isEmpty()) {
             showEditToolbar();
         } else {
-            hideEditToolbar();
+            showMainToolbar();
         }
 
         return true;

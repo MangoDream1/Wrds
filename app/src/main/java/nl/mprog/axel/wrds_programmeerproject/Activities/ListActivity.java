@@ -107,13 +107,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void hideEditToolbar() {
+    private void showMainToolbar() {
         currentMenu.clear();
         toolbar.setTitle(title);
         getMenuInflater().inflate(R.menu.main_menu, currentMenu);
+
         currentMenu.findItem(R.id.play_button).setVisible(true);
         currentMenu.findItem(R.id.results_button).setVisible(true);
-
+        currentMenu.findItem(R.id.login_button).setVisible(false);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         if (!selectedItemsList.isEmpty()) {
             showEditToolbar();
         } else {
-            hideEditToolbar();
+            showMainToolbar();
         }
 
         return true;
@@ -147,7 +148,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         if (!selectedItemsList.isEmpty()) {
             showEditToolbar();
         } else {
-            hideEditToolbar();
+            showMainToolbar();
         }
     }
 
@@ -224,7 +225,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.return_button:
                 selectedItemsList.clear();
-                hideEditToolbar();
+                showMainToolbar();
                 dataChange();
 
                 return true;
@@ -240,7 +241,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 mwd.show(getFragmentManager(), "ModifyWordDialog");
 
                 selectedItemsList.clear();
-                hideEditToolbar();
+                showMainToolbar();
 
                 return true;
 
@@ -252,7 +253,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 selectedItemsList.clear();
-                hideEditToolbar();
+                showMainToolbar();
                 dataChange();
                 return true;
 

@@ -170,9 +170,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "usernameTaken:"+dataSnapshot.getValue());
+                        Log.d(TAG, "usernameTaken:" + dataSnapshot.getValue());
 
-                        if (dataSnapshot.getValue() == null) {
+                        if (dataSnapshot.getValue() != null) {
                             validateUsername(true);
                         } else {
                             createAccount();

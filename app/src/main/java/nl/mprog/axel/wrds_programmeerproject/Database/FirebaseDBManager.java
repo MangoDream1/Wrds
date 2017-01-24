@@ -32,7 +32,8 @@ public class FirebaseDBManager {
         return instance;
     }
 
-    public void addUsername(String username, String id) {
+    public void createUser(String username, String id) {
+        firebaseDB.getReference().child("users").child(id).setValue(username);
         firebaseDB.getReference().child("usernames").child(username).setValue(id);
     }
 
@@ -45,7 +46,7 @@ public class FirebaseDBManager {
         return key;
     }
 
-    private HashMap<String, Object> createListHashTable(long listId) {
+    private HashMap<String, Object> createListHashTable(long listId, String username) {
         Cursor lCursor = dbm.getSingleList(listId);
         Cursor wCursor = dbm.getListWords(listId);
 
@@ -59,7 +60,7 @@ public class FirebaseDBManager {
                 lCursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A)));
         hashMap.put("languageB", lCursor.getString(
                 lCursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
-        // TODO add username
+        hashMap.put("username", username);
 
         ArrayList<HashMap<String, String>> wordList = new ArrayList<>();
 
@@ -75,6 +76,14 @@ public class FirebaseDBManager {
         hashMap.put("words", wordList);
 
         return hashMap;
+
+    }
+
+    private HashMap<String, Object> createListHashTable(long listId) {
+
+
+
+        return createListHashTable(listId, "Test");
 
     }
 }

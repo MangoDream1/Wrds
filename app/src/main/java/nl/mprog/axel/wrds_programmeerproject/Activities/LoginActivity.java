@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             showLogin();
                             signIn();
 
-                            fdbm.addUsername(username,
+                            fdbm.createUser(username,
                                     FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                         }

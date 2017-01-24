@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDB;
+    private FirebaseDBManager fdbm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +44,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         firebaseDB = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        fdbm = FirebaseDBManager.getInstance();
 
         findViewById(R.id.register_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
+
 
     }
 
@@ -106,8 +110,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             showLogin();
                             signIn();
 
-                            firebaseDB.getReference().child("users")
-                                    .child(username).setValue(createUserHashmap());
+                            fdbm.addUsername(username,
+                                    FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                         }
                     }
@@ -139,15 +143,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    private HashMap<String, Object> createUserHashmap(){
-        HashMap<String, Object> user = new HashMap<>();
-
-        user.put("id", firebaseAuth.getCurrentUser().getUid());
-        user.put("email", email);
-
-        return user;
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -171,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void usernameTaken() {
-        firebaseDB.getReference().child(username)
+        firebaseDB.getReference().child("usernames").child(username)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

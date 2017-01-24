@@ -14,6 +14,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 import nl.mprog.axel.wrds_programmeerproject.R;
 
@@ -27,12 +34,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseDatabase firebaseDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        firebaseDB = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.register_button).setOnClickListener(this);
@@ -68,58 +77,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private boolean validateForm() {
-        boolean isValid = true;
-
-        EditText emailEditText = (EditText) findViewById(R.id.email_editText);
-        EditText usernameEditText = (EditText) findViewById(R.id.username_editText);
-        EditText passwordEditText = (EditText) findViewById(R.id.password_editText);
-        EditText password2EditText = (EditText) findViewById(R.id.password2_editText);
-
-        email = emailEditText.getText().toString();
-        username = usernameEditText.getText().toString();
-        password = passwordEditText.getText().toString();
-        String password2 = password2EditText.getText().toString();
-
-        if (email.isEmpty()) {
-            emailEditText.setError("Required.");
-            isValid = false;
-        }
-
-        if (usernameEditText.isEnabled()) {
-            if (username.isEmpty()) {
-                usernameEditText.setError("Required.");
-                isValid = false;
-            } else if (!usernameValid(username)) {
-                usernameEditText.setError("Username taken");
-                isValid = false;
-            }
-        }
-
-        if (password.isEmpty()) {
-            passwordEditText.setError("Required.");
-            isValid = false;
-        }
-
-        if (password2EditText.isEnabled()) {
-            if (password2.isEmpty()) {
-                password2EditText.setError("Required");
-                isValid = false;
-            } else if (!password.equals(password2)) {
-                passwordEditText.setError("Passwords are not equal");
-                isValid = false;
-            }
-        }
-
-        return isValid;
-    }
-
-    private boolean usernameValid(String username) {
-        // TODO check if username already exists
-
-        return true;
-    }
-
     private void showLogin() {
         ((TextView) findViewById(R.id.title_textView)).setText("Log in");
 
@@ -133,7 +90,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password2EditText.setVisibility(View.GONE);
 
         findViewById(R.id.login_button).setVisibility(View.VISIBLE);
-        findViewById(R.id.register_button).setVisibility(View.GONE);
     }
 
     private void showRegister() {
@@ -155,30 +111,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void createAccount() {
         Log.d(TAG, "createAccount:" + email);
 
-        if (!validateForm()) {
-            return;
-        }
-
-        // [START create_user_with_email]
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "createUserWithEmail:failed", task.getException());
-                            Toast.makeText(LoginActivity.this, "Log in failed",
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             showLogin();
+                            signIn();
+
+                            firebaseDB.getReference().child("users")
+                                    .child(username).setValue(createUserHashmap());
+
                         }
                     }
                 });
-        // [END create_user_with_email]
     }
 
     private void signIn() {
@@ -188,19 +140,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        // [START sign_in_with_email]
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(LoginActivity.this, "Login Failed",
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             finish();
@@ -208,12 +156,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }
                 });
-        // [END sign_in_with_email]
     }
 
     private void signOut() {
         firebaseAuth.signOut();
         showLogin();
+    }
+
+    private HashMap<String, Object> createUserHashmap(){
+        HashMap<String, Object> user = new HashMap<>();
+
+        user.put("id", firebaseAuth.getCurrentUser().getUid());
+        user.put("email", email);
+
+        return user;
     }
 
     @Override
@@ -227,9 +183,105 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.register_button:
                 showRegister();
-                createAccount();
+
+                // If reset is valid check if username is taken
+                // if not taken it will start createAccount()
+                if (validateForm()) {
+                    usernameTaken();
+                }
 
                 break;
         }
+    }
+
+    private void usernameTaken() {
+        firebaseDB.getReference().child(username)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "usernameTaken:"+dataSnapshot.getValue());
+
+                        if (dataSnapshot.getValue() == null) {
+                            validateUsername(true);
+                        } else {
+                            createAccount();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private boolean validateForm() {
+        // If statement is lazy thus not possible thus check all first then find false
+        Boolean[] isValid = new Boolean[]{validateEmail(), validatePassword(), validateUsername()};
+
+        return !Arrays.asList(isValid).contains(false);
+    }
+
+    private boolean validateEmail() {
+        EditText emailEditText = (EditText) findViewById(R.id.email_editText);
+        email = emailEditText.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            emailEditText.setError("Required.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateUsername(boolean usernameTaken) {
+        EditText usernameEditText = (EditText) findViewById(R.id.username_editText);
+        username = usernameEditText.getText().toString().trim().toLowerCase();
+
+        if (usernameEditText.isEnabled()) {
+            if (username.isEmpty()) {
+                usernameEditText.setError("Required.");
+                return false;
+            } else if (username.contains(" ")) {
+                usernameEditText.setError("Username contains space");
+                return false;
+            } else if (usernameTaken) {
+                usernameEditText.setError("Username taken");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateUsername() {
+        return validateUsername(false);
+    }
+
+    private boolean validatePassword() {
+        boolean valid = true;
+
+        EditText passwordEditText = (EditText) findViewById(R.id.password_editText);
+        EditText password2EditText = (EditText) findViewById(R.id.password2_editText);
+
+        password = passwordEditText.getText().toString();
+        String password2 = password2EditText.getText().toString();
+
+        if (password.isEmpty()) {
+            passwordEditText.setError("Required.");
+            valid = false;
+        }
+
+        if (password2EditText.isEnabled()) {
+            if (password2.isEmpty()) {
+                password2EditText.setError("Required");
+                valid = false;
+            } else if (!password.equals(password2)) {
+                passwordEditText.setError("Passwords are not equal");
+                valid = false;
+            }
+        }
+
+        return valid;
     }
 }

@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
 
     private Menu currentMenu;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("TEST", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("TEST", "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
     }
 
     private void showEditToolbar() {
@@ -92,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showMainToolbar() {
+        // TODO show log out right after log in
+
         currentMenu.clear();
         toolbar.setTitle(R.string.app_name);
 
@@ -169,6 +192,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.logout_button:
                 FirebaseAuth.getInstance().signOut();
+                showMainToolbar();
+
+                return true;
 
 
             default:
@@ -213,14 +239,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        dbm.close();
         super.onDestroy();
+        dbm.close();
     }
 
     @Override
     protected void onResume() {
-        dataChange();
         super.onResume();
+        dataChange();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (authStateListener != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
+        }
     }
 
     @Override

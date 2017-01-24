@@ -183,7 +183,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.check_button:
                 EditText editText = (EditText) findViewById(R.id.editText);
 
-                wordB = editText.getText().toString();
+                wordB = editText.getText().toString().trim();
                 dbm.incrementWordTry(wordId);
 
                 if (wordB.isEmpty() || !AnswerComparison.checkCorrect(wordA, wordB)) {

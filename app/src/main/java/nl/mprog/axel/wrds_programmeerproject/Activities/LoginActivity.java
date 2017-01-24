@@ -158,11 +158,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    private void signOut() {
-        firebaseAuth.signOut();
-        showLogin();
-    }
-
     private HashMap<String, Object> createUserHashmap(){
         HashMap<String, Object> user = new HashMap<>();
 

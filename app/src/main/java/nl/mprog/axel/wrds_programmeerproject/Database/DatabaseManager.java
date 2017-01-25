@@ -73,11 +73,11 @@ public class DatabaseManager {
         database.delete(DatabaseHelper.WORD_TABLE, DatabaseHelper.FK_LIST_ID + " = " + listId, null);
     }
 
-    public Cursor getUserLists(int limit) {
+    public Cursor getUserLists() {
         /* Get all lists with all the attributes of the user ordered by time */
 
         Cursor cursor = database.query(DatabaseHelper.LIST_TABLE, null, null,
-                null, null, null, DatabaseHelper.DT_CREATED_AT, Integer.toString(limit));
+                null, null, null, DatabaseHelper.DT_CREATED_AT, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -85,10 +85,6 @@ public class DatabaseManager {
 
         return cursor;
 
-    }
-
-    public Cursor getUserLists() {
-        return getUserLists(10);
     }
 
     public Cursor getUserListTitle(long listId) {

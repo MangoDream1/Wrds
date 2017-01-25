@@ -8,6 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by axel on 10-1-17.
@@ -90,7 +95,8 @@ public class DatabaseManager {
         Cursor cursor = queryListTable(columns, where);
         String firebaseId = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_FB_ID));
 
-        FirebaseDBManager.getInstance().deleteList(firebaseId);
+        // TODO delete in firebase
+        //FirebaseDBManager.getInstance().deleteList(firebaseId);
 
         // Delete list
         database.delete(DatabaseHelper.LIST_TABLE, DatabaseHelper.PK_LIST_ID + " = " + listId, null);
@@ -295,9 +301,25 @@ public class DatabaseManager {
         return max;
     }
 
-    public void insertFromFirebase(Object object) {
+    public void insertFromFirebase(Map<String, Object> map) {
         // TODO write into local database
-        Log.d("test object", object.toString());
+
+        ContentValues contentValues = createListContentValues(
+                (String) map.get("title"),
+                (String) map.get("desc"),
+                (String) map.get("username"),
+                (String) map.get("languageA"),
+                (String) map.get("languageB"));
+
+        contentValues.put(DatabaseHelper.DT_CREATED_AT, (String) map.get("createdAt"));
+
+        long listId = database.insert(DatabaseHelper.LIST_TABLE, null, contentValues);
+
+        ArrayList<Map<String, String>> wordList = (ArrayList<Map<String, String>>) map.get("words");
+
+        for (Map<String, String> words: wordList) {
+            insertWord(listId, words.get("wordA"), words.get("wordB"));
+        }
     }
 
     int updateFirebaseId(long listId, String firebaseId) {

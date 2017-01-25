@@ -27,6 +27,7 @@ import nl.mprog.axel.wrds_programmeerproject.Adapters.WordListsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.CMListDialog;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.ShareDialog;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
@@ -186,11 +187,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.share_button:
                 long listId = selectedItemsList.get(0);
 
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (user != null) {
                     // Uploads selected list
 
-                    FirebaseDBManager.getInstance().uploadList(selectedItemsList.get(0),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    String key = FirebaseDBManager.getInstance()
+                            .uploadList(selectedItemsList.get(0), user.getUid());
+
+                    bundle = new Bundle();
+                    bundle.putString("key", key);
+
+                    ShareDialog shareDialog = new ShareDialog();
+                    shareDialog.setArguments(bundle);
+                    shareDialog.show(getFragmentManager(), "ShareDialog");
 
                 } else {
                     // Not logged in thus goto login

@@ -40,9 +40,20 @@ public class FirebaseDBManager {
         firebaseDB.getReference().child("usernames").child(username).setValue(id);
     }
 
-    public String uploadList(final long listId, String userId) {
-        final String key = firebaseDB.getReference().child("lists").push().getKey();
+    public String uploadList(long listId, String userId) {
+        String key = dbm.getFirebaseId(listId);
 
+        if (key == null) {
+            key = firebaseDB.getReference().child("lists").push().getKey();
+        }
+
+        uploadList(key, listId, userId);
+
+        return key;
+    }
+
+
+    private void uploadList(final String key, final long listId, String userId) {
         firebaseDB.getReference().child("users").child(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -57,13 +68,12 @@ public class FirebaseDBManager {
 
                     }
                 });
-
-        return key;
     }
 
     private void uploadList(long listId, String key, String username) {
         HashMap<String, Object> data = createListHashTable(listId, username);
         firebaseDB.getReference().child("lists").child(key).setValue(data);
+        dbm.updateFirebaseId(listId, key);
 
     }
 
@@ -97,6 +107,7 @@ public class FirebaseDBManager {
         hashMap.put("words", wordList);
 
         return hashMap;
-
     }
+
+
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.sql.SQLException;
 
@@ -64,88 +63,6 @@ public class DatabaseManager {
 
     }
 
-    public void deleteList(long listId) {
-        /* Delete list from database */
-
-        database.delete(DatabaseHelper.LIST_TABLE, DatabaseHelper.PK_LIST_ID + " = " + listId, null);
-
-        // Also delete all words in list
-        database.delete(DatabaseHelper.WORD_TABLE, DatabaseHelper.FK_LIST_ID + " = " + listId, null);
-    }
-
-    public Cursor getUserLists() {
-        /* Get all lists with all the attributes of the user ordered by time */
-
-        Cursor cursor = database.query(DatabaseHelper.LIST_TABLE, null, null,
-                null, null, null, DatabaseHelper.DT_CREATED_AT, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        return cursor;
-
-    }
-
-    public Cursor getUserListTitle(long listId) {
-        String[] columns = new String[]{DatabaseHelper.STR_TITLE,
-                DatabaseHelper.STR_LANGUAGE_A, DatabaseHelper.STR_LANGUAGE_B};
-
-
-        Cursor cursor = database.query(DatabaseHelper.LIST_TABLE, columns, DatabaseHelper.PK_LIST_ID
-                + " = " + String.valueOf(listId), null, null, null, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        return cursor;
-    }
-
-    public Cursor getSingleList(long listId) {
-        Cursor cursor = database.query(DatabaseHelper.LIST_TABLE, null,
-                DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId), null, null, null, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        return cursor;
-    }
-
-    public long countListWords(long listId) {
-        return DatabaseUtils.queryNumEntries(database, DatabaseHelper.WORD_TABLE,
-                DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId));
-    }
-
-    public Cursor getListWords(String where) {
-        /* Get all the words of a list */
-        String[] columns = new String[]{DatabaseHelper.PK_WORD_ID, DatabaseHelper.STR_WORD_A,
-                DatabaseHelper.STR_WORD_B, DatabaseHelper.INT_TRIES};
-
-        Cursor cursor = database.query(DatabaseHelper.WORD_TABLE, columns, where, null, null,
-                null, null);
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        return cursor;
-    }
-
-    public Cursor getListWords(long listId) {
-        String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId);
-
-        return getListWords(where);
-    }
-
-    public Cursor getRetryWords(long listId) {
-        String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId) + " AND " +
-                DatabaseHelper.INT_TRIES + " != 1";
-
-        return getListWords(where);
-    }
-
     private ContentValues createListContentValues(String title, String desc, String creator,
                                                   String languageA, String languageB) {
         /* Fills in the contentValues for lists in the database */
@@ -159,6 +76,63 @@ public class DatabaseManager {
         contentValues.put(DatabaseHelper.STR_LANGUAGE_B, languageB);
 
         return contentValues;
+
+    }
+
+    public void deleteList(long listId) {
+        /* Delete list from database */
+
+        database.delete(DatabaseHelper.LIST_TABLE, DatabaseHelper.PK_LIST_ID + " = " + listId, null);
+
+        // Also delete all words in list
+        database.delete(DatabaseHelper.WORD_TABLE, DatabaseHelper.FK_LIST_ID + " = " + listId, null);
+    }
+
+    private Cursor query(String table, String[] columns, String where, String sortedOn) {
+        Cursor cursor = database.query(table, columns, where, null, null, null, sortedOn, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor;
+    }
+
+    private Cursor queryListTable(String[] columns, String where, String sortedOn) {
+        return query(DatabaseHelper.LIST_TABLE, columns, where, sortedOn);
+    }
+
+    private Cursor queryListTable(String[] columns, String where) {
+        return queryListTable(columns, where, null);
+    }
+
+    private Cursor queryListTable(String where) {
+        return queryListTable(null, where);
+    }
+
+    public Cursor getUserListTitle(long listId) {
+        String[] columns = new String[]{DatabaseHelper.STR_TITLE,
+                DatabaseHelper.STR_LANGUAGE_A, DatabaseHelper.STR_LANGUAGE_B};
+
+        String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
+
+        return queryListTable(columns, where);
+    }
+
+    public Cursor getSingleList(long listId) {
+        String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
+
+        return queryListTable(where);
+    }
+
+    public long countListWords(long listId) {
+        return DatabaseUtils.queryNumEntries(database, DatabaseHelper.WORD_TABLE,
+                DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId));
+    }
+
+    public Cursor getUserLists() {
+        /* Get all lists with all the attributes of the user ordered by time */
+        return queryListTable(null, null, DatabaseHelper.DT_CREATED_AT);
 
     }
 
@@ -179,6 +153,7 @@ public class DatabaseManager {
         /* Updates a word in the database */
 
         ContentValues contentValues = new ContentValues();
+
         contentValues.put(DatabaseHelper.STR_WORD_A, wordA);
         contentValues.put(DatabaseHelper.STR_WORD_B, wordB);
 
@@ -191,15 +166,36 @@ public class DatabaseManager {
         database.delete(DatabaseHelper.WORD_TABLE, DatabaseHelper.PK_WORD_ID + " = " + wordId, null);
     }
 
+
+    public Cursor queryWordTable(String[] columns, String where) {
+        return query(DatabaseHelper.WORD_TABLE, columns, where, null);
+    }
+
+    public Cursor getListWords(String where) {
+        /* Get all the words of a list */
+        String[] columns = new String[]{DatabaseHelper.PK_WORD_ID, DatabaseHelper.STR_WORD_A,
+                DatabaseHelper.STR_WORD_B, DatabaseHelper.INT_TRIES};
+
+        return queryWordTable(columns, where);
+    }
+
+    public Cursor getListWords(long listId) {
+        String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId);
+
+        return getListWords(where);
+    }
+
+    public Cursor getRetryWords(long listId) {
+        String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId) + " AND " +
+                DatabaseHelper.INT_TRIES + " != 1";
+
+        return getListWords(where);
+    }
+
     public Cursor getSingleWord(long wordId, String[] columns ) {
-        Cursor cursor = database.query(DatabaseHelper.WORD_TABLE, columns,
-                DatabaseHelper.PK_WORD_ID + " = " + String.valueOf(wordId), null, null, null, null);
+        String where = DatabaseHelper.PK_WORD_ID + " = " + String.valueOf(wordId);
 
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        return cursor;
+        return queryWordTable(columns, where);
     }
 
     public Cursor getSingleWord(long wordId) {
@@ -241,15 +237,15 @@ public class DatabaseManager {
     public int getNumberOfMistakes(long listId) {
         int count = 0;
 
-        Cursor cursor = database.query(DatabaseHelper.WORD_TABLE,
-                new String[]{DatabaseHelper.INT_TRIES}, DatabaseHelper.FK_LIST_ID + " = " +
-                        String.valueOf(listId) + " AND " + DatabaseHelper.INT_TRIES + " != 1",
-                null, null, null, null);
+        String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId) +
+                " AND " + DatabaseHelper.INT_TRIES + " != 1";
 
+        String[] columns = new String[]{DatabaseHelper.INT_TRIES};
+
+        Cursor cursor = queryWordTable(columns, where);
 
         if (cursor != null) {
             count = cursor.getCount();
-            cursor.close();
         }
 
         return count;
@@ -262,7 +258,6 @@ public class DatabaseManager {
                 DatabaseHelper.WORD_TABLE + " WHERE " + DatabaseHelper.FK_LIST_ID + " = " +
                 String.valueOf(listId) + " AND " + DatabaseHelper.INT_TRIES + " = " +
                 String.valueOf(nTries), null);
-
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -287,5 +282,23 @@ public class DatabaseManager {
         }
 
         return max;
+    }
+
+    int updateFirebaseId(long listId, String firebaseId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.STR_FB_ID, firebaseId);
+
+        return database.update(DatabaseHelper.LIST_TABLE, contentValues,
+                DatabaseHelper.PK_LIST_ID + " = " + listId, null);
+    }
+
+    String getFirebaseId(long listId) {
+
+        String[] columns = new String[]{DatabaseHelper.STR_FB_ID};
+        String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
+
+        Cursor cursor = queryListTable(columns, where);
+
+        return cursor.getString(0);
     }
 }

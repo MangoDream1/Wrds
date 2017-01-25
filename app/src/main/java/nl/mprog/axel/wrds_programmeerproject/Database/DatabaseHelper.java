@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     static final String DB_NAME = "wrds.db";
-    static final int DB_VERSION = 2;
+    static final int DB_VERSION = 3;
 
     // Table names
     public static final String LIST_TABLE = "ListTable";
@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String STR_CREATOR = "creator";
     public static final String STR_LANGUAGE_A = "languageA";
     public static final String STR_LANGUAGE_B = "languageB";
+    public static final String STR_FB_ID = "firebase_id";
 
     // Word table columns
     public static final String PK_WORD_ID = "_id";
@@ -44,7 +45,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             DT_CREATED_AT + " DATETIME DEFAULT CURRENT_DATE, " +
             STR_CREATOR + " TEXT NOT NULL, " +
             STR_LANGUAGE_A + " TEXT NOT NULL, " +
-            STR_LANGUAGE_B + " TEXT NOT NULL);";
+            STR_LANGUAGE_B + " TEXT NOT NULL, " +
+            STR_FB_ID + " TEXT DEFAULT NULL);";
 
     public static final String CREATE_WORD_TABLE = "create table " + WORD_TABLE + " (" +
             PK_WORD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

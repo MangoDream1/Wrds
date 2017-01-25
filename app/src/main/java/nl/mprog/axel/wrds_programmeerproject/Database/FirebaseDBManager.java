@@ -74,7 +74,10 @@ public class FirebaseDBManager {
         HashMap<String, Object> data = createListHashTable(listId, username);
         firebaseDB.getReference().child("lists").child(key).setValue(data);
         dbm.updateFirebaseId(listId, key);
+    }
 
+    public void deleteList(String firebaseId) {
+        firebaseDB.getReference().child("lists").child(firebaseId).removeValue();
     }
 
     private HashMap<String, Object> createListHashTable(long listId, String username) {

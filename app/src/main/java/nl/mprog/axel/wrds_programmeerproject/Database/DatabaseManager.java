@@ -82,6 +82,16 @@ public class DatabaseManager {
     public void deleteList(long listId) {
         /* Delete list from database */
 
+        // Find firebaseId and then delete from firebase
+        String[] columns = new String[]{DatabaseHelper.STR_FB_ID};
+        String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
+
+        Cursor cursor = queryListTable(columns, where);
+        String firebaseId = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_FB_ID));
+
+        FirebaseDBManager.getInstance().deleteList(firebaseId);
+
+        // Delete list
         database.delete(DatabaseHelper.LIST_TABLE, DatabaseHelper.PK_LIST_ID + " = " + listId, null);
 
         // Also delete all words in list

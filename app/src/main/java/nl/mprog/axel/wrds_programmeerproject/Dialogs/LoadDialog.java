@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
@@ -103,12 +106,12 @@ public class LoadDialog extends DialogFragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Object object = dataSnapshot.getValue();
+                        Map<String, Object> data = (Map<String, Object>) dataSnapshot.getValue();
 
-                        if (object == null) {
+                        if (data == null) {
                             keyEditText.setError("Key not found");
                         } else {
-                            dbm.insertFromFirebase(object);
+                            dbm.insertFromFirebase(data);
 
                             ((MainActivity) getActivity()).dataChange();
                             dismiss(getDialog());

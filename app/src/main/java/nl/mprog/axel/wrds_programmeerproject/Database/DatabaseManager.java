@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.sql.SQLException;
 
@@ -292,6 +293,11 @@ public class DatabaseManager {
         }
 
         return max;
+    }
+
+    public void insertFromFirebase(Object object) {
+        // TODO write into local database
+        Log.d("test object", object.toString());
     }
 
     int updateFirebaseId(long listId, String firebaseId) {

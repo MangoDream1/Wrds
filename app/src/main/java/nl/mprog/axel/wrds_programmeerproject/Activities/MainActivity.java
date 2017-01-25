@@ -27,6 +27,7 @@ import nl.mprog.axel.wrds_programmeerproject.Adapters.WordListsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.CMListDialog;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.LoadDialog;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.ShareDialog;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
@@ -122,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         getMenuInflater().inflate(R.menu.main_menu, currentMenu);
 
+        currentMenu.findItem(R.id.load_list_button).setVisible(true);
+
         if (FirebaseAuth.getInstance().getCurrentUser() != null ) {
             currentMenu.findItem(R.id.logout_button).setVisible(true);
         } else {
@@ -211,6 +214,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 return true;
 
+            case R.id.load_list_button:
+                LoadDialog loadDialog = new LoadDialog();
+                loadDialog.show(getFragmentManager(), "LoadDialog");
+
+                return true;
+
             case R.id.logout_button:
                 FirebaseAuth.getInstance().signOut();
                 showMainToolbar();
@@ -234,6 +243,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // If instance is restored and there are selections show correct menu
         if (!selectedItemsList.isEmpty()) {
             showEditToolbar();
+        } else {
+            showMainToolbar();
         }
 
         return true;

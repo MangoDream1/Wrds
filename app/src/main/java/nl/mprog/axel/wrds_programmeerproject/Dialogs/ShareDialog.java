@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
@@ -50,10 +51,16 @@ public class ShareDialog extends DialogFragment {
                         clipboardManager.setPrimaryClip(clip);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Continue", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                })
+                .setNeutralButton("Stop share", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseDBManager.getInstance().deleteList(key);
                     }
                 });
 

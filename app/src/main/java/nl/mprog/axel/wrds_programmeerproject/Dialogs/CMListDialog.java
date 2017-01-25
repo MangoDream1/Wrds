@@ -29,6 +29,8 @@ public class CMListDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        dbm = DatabaseManager.getInstance();
+
         final Activity activity = getActivity();
 
         // Use the Builder class for convenient dialog construction
@@ -40,9 +42,6 @@ public class CMListDialog extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.cm_list_dialog, null);
-
-        dbm = DatabaseManager.getInstance();
-
         builder.setView(view);
 
 

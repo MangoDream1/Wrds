@@ -31,7 +31,6 @@ public class ShareDialog extends DialogFragment {
         LayoutInflater inflater = activity.getLayoutInflater();
 
         View view = inflater.inflate(R.layout.share_dialog, null);
-
         builder.setView(view);
 
         TextView keyTextView = (TextView) view.findViewById(R.id.key_editText);

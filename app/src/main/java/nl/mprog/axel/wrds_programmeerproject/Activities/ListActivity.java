@@ -156,12 +156,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         if (wordA.isEmpty()) {
             toastMessage = "Please enter Word A";
-            ((EditText) findViewById(R.id.wordA_editText)).setError("");
+            ((EditText) findViewById(R.id.wordA_editText)).setError("Required.");
         }
 
         if (wordB.isEmpty()) {
             toastMessage = "Please enter Word B";
-            ((EditText) findViewById(R.id.wordB_editText)).setError("");
+            ((EditText) findViewById(R.id.wordB_editText)).setError("Required.");
         }
 
         if (wordA.isEmpty() && wordB.isEmpty()) {

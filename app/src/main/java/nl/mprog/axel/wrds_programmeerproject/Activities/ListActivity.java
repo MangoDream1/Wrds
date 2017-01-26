@@ -21,11 +21,13 @@ import java.util.ArrayList;
 import nl.mprog.axel.wrds_programmeerproject.Adapters.WordsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.DefaultDialog;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.ModifyWordDialog;
+import nl.mprog.axel.wrds_programmeerproject.Interfaces.DefaultDialogInterface;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class ListActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, DefaultDialogInterface {
 
     private long listId;
     private DatabaseManager dbm;
@@ -114,6 +116,17 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         currentMenu.findItem(R.id.play_button).setVisible(true);
         currentMenu.findItem(R.id.results_button).setVisible(true);
+    }
+
+    @Override
+    public void dialogPositive() {
+        for (long id: selectedItemsList) {
+            dbm.deleteWord(id);
+        }
+
+        selectedItemsList.clear();
+        showMainToolbar();
+        dataChange();
     }
 
     @Override
@@ -245,15 +258,17 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.delete_button:
-                // TODO add are you sure dialog
+                DefaultDialog defaultDialog = new DefaultDialog();
 
-                for (long id: selectedItemsList) {
-                    dbm.deleteWord(id);
-                }
+                Bundle bundle = new Bundle();
 
-                selectedItemsList.clear();
-                showMainToolbar();
-                dataChange();
+                bundle.putString("title", "Are you sure?");
+                bundle.putString("positive", "Yes");
+                bundle.putString("negative", "No");
+
+                defaultDialog.setArguments(bundle);
+                defaultDialog.show(getFragmentManager(), "DefaultDialog");
+
                 return true;
 
             default:

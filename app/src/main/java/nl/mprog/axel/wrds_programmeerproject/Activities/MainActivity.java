@@ -1,6 +1,8 @@
 package nl.mprog.axel.wrds_programmeerproject.Activities;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -28,12 +30,15 @@ import nl.mprog.axel.wrds_programmeerproject.Adapters.WordListsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.CMListDialog;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.DefaultDialog;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.LoadDialog;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.ShareDialog;
+import nl.mprog.axel.wrds_programmeerproject.Interfaces.DefaultDialogInterface;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
+        DefaultDialogInterface{
 
     private DatabaseManager dbm = DatabaseManager.getInstance();
     private WordListsCursorAdapter adapter;
@@ -132,12 +137,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void dialogPositive() {
+        // Reached when user is sure it wants to delete
+
+        for (long id: selectedItemsList) {
+            dbm.deleteList(id);
+        }
+
+        selectedItemsList.clear();
+        showMainToolbar();
+        dataChange();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_button:
                 CMListDialog cmListDialog = new CMListDialog();
                 cmListDialog.show(getFragmentManager(), "CMListDialog");
-
                 break;
         }
     }
@@ -174,15 +191,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.delete_button:
-                // TODO add are you sure dialog
+                DefaultDialog defaultDialog = new DefaultDialog();
 
-                for (long id: selectedItemsList) {
-                    dbm.deleteList(id);
-                }
+                bundle = new Bundle();
 
-                selectedItemsList.clear();
-                showMainToolbar();
-                dataChange();
+                bundle.putString("title", "Are you sure?");
+                bundle.putString("message", "Shared lists will be deleted from cloud.");
+                bundle.putString("positive", "Yes");
+                bundle.putString("negative", "No");
+
+                defaultDialog.setArguments(bundle);
+                defaultDialog.show(getFragmentManager(), "DefaultDialog");
 
                 return true;
 

@@ -15,9 +15,12 @@ import java.util.Random;
 import nl.mprog.axel.wrds_programmeerproject.Algorithms.AnswerComparison;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Dialogs.DefaultDialog;
+import nl.mprog.axel.wrds_programmeerproject.Interfaces.DefaultDialogInterface;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
-public class ExamActivity extends AppCompatActivity implements View.OnClickListener {
+public class ExamActivity extends AppCompatActivity implements View.OnClickListener,
+        DefaultDialogInterface{
 
     private String wordA;
     private String wordB;
@@ -167,6 +170,11 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void dialogPositive() {
+        finish();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("dataList", dataList);
@@ -201,8 +209,19 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.cancel_button:
-                // TODO check if user is sure dialog
-                finish();
+                DefaultDialog defaultDialog = new DefaultDialog();
+
+                Bundle bundle = new Bundle();
+
+                bundle.putString("title", "Are you sure you want to quit?");
+                bundle.putString("message", "You can continue where you left of by pressing " +
+                        "results and then retry mistakes");
+                bundle.putString("positive", "Quit");
+                bundle.putString("negative", "Cancel");
+
+                defaultDialog.setArguments(bundle);
+                defaultDialog.show(getFragmentManager(), "DefaultDialog");
+
                 break;
 
             case R.id.continue_button:

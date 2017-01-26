@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
@@ -25,8 +26,9 @@ public class ShareDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Activity activity = getActivity();
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        DatabaseManager dbm = DatabaseManager.getInstance();
 
         LayoutInflater inflater = activity.getLayoutInflater();
 
@@ -37,6 +39,7 @@ public class ShareDialog extends DialogFragment {
 
         Bundle arguments = getArguments();
         final String key = arguments.getString("key");
+        final long listId = arguments.getLong("id");
 
         keyTextView.setText(key);
 
@@ -55,13 +58,16 @@ public class ShareDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
-                })
-                .setNeutralButton("Stop share", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDBManager.getInstance().deleteList(key);
-                    }
                 });
+
+        if (dbm.isListOwner(listId)) {
+            builder.setNeutralButton("Stop share", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    FirebaseDBManager.getInstance().deleteList(key);
+                }
+            });
+        }
 
         return builder.create();
     }

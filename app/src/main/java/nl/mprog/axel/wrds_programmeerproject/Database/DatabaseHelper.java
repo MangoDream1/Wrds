@@ -9,8 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper{
-    static final String DB_NAME = "wrds.db";
-    static final int DB_VERSION = 3;
+    private static final String DB_NAME = "wrds.db";
+    private static final int DB_VERSION = 5;
 
     // Table names
     public static final String LIST_TABLE = "ListTable";
@@ -24,21 +24,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String STR_CREATOR = "creator";
     public static final String STR_LANGUAGE_A = "languageA";
     public static final String STR_LANGUAGE_B = "languageB";
-    public static final String STR_FB_ID = "firebase_id";
+    public static final String STR_FB_ID = "firebaseId";
+    public static final String BOOL_IS_OWNER = "isOwner";
 
     // Word table columns
     public static final String PK_WORD_ID = "_id";
-    public static final String FK_LIST_ID = "list_id";
+    public static final String FK_LIST_ID = "listId";
     public static final String STR_WORD_A = "wordA";
     public static final String STR_WORD_B = "wordB";
     public static final String INT_TRIES = "tries";
 
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     // Create database queries
-    public static final String CREATE_LIST_TABLE = "create table " + LIST_TABLE + " (" +
+    private static final String CREATE_LIST_TABLE = "create table " + LIST_TABLE + " (" +
             PK_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             STR_TITLE + " TEXT NOT NULL, " +
             STR_DESC + " TEXT, " +
@@ -46,9 +47,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             STR_CREATOR + " TEXT NOT NULL, " +
             STR_LANGUAGE_A + " TEXT NOT NULL, " +
             STR_LANGUAGE_B + " TEXT NOT NULL, " +
-            STR_FB_ID + " TEXT DEFAULT NULL);";
+            STR_FB_ID + " TEXT DEFAULT NULL, " +
+            BOOL_IS_OWNER +  " INTEGER DEFAULT 0);";
 
-    public static final String CREATE_WORD_TABLE = "create table " + WORD_TABLE + " (" +
+    private static final String CREATE_WORD_TABLE = "create table " + WORD_TABLE + " (" +
             PK_WORD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             FK_LIST_ID + " INTEGER NOT NULL, " +
             STR_WORD_A + " TEXT NOT NULL, " +

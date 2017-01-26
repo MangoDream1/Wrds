@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     bundle = new Bundle();
                     bundle.putString("key", key);
+                    bundle.putLong("id", listId);
 
                     ShareDialog shareDialog = new ShareDialog();
                     shareDialog.setArguments(bundle);

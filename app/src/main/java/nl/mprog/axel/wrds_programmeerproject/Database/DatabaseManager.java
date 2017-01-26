@@ -53,6 +53,9 @@ public class DatabaseManager {
         ContentValues contentValues = createListContentValues(title, desc, creator,
                 languageA, languageB);
 
+        // Creator is owner
+        contentValues.put(DatabaseHelper.BOOL_IS_OWNER, 1);
+
         database.insert(DatabaseHelper.LIST_TABLE, null, contentValues);
 
     }
@@ -89,14 +92,18 @@ public class DatabaseManager {
         /* Delete list from database */
 
         // Find firebaseId and then delete from firebase
-        String[] columns = new String[]{DatabaseHelper.STR_FB_ID};
+        String[] columns = new String[]{DatabaseHelper.STR_FB_ID, DatabaseHelper.BOOL_IS_OWNER};
         String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
 
         Cursor cursor = queryListTable(columns, where);
         String firebaseId = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_FB_ID));
+        Boolean isCreator = (cursor.getInt(
+                cursor.getColumnIndex(DatabaseHelper.BOOL_IS_OWNER)) == 1);
 
-        // TODO delete in firebase
-        //FirebaseDBManager.getInstance().deleteList(firebaseId);
+        // Delete from firebase if the user is the owner
+        if (isCreator && firebaseId != null) {
+            FirebaseDBManager.getInstance().deleteList(firebaseId);
+        }
 
         // Delete list
         database.delete(DatabaseHelper.LIST_TABLE, DatabaseHelper.PK_LIST_ID + " = " + listId, null);
@@ -151,6 +158,15 @@ public class DatabaseManager {
         /* Get all lists with all the attributes of the user ordered by time */
         return queryListTable(null, null, DatabaseHelper.DT_CREATED_AT);
 
+    }
+
+    public boolean isListOwner(long listId) {
+        String[] columns = new String[]{DatabaseHelper.BOOL_IS_OWNER};
+        String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
+
+        Cursor cursor = queryListTable(columns, where);
+
+        return cursor.getInt(cursor.getColumnIndex(DatabaseHelper.BOOL_IS_OWNER)) == 1;
     }
 
     public void insertWord(long listId, String wordA, String wordB) {
@@ -301,9 +317,7 @@ public class DatabaseManager {
         return max;
     }
 
-    public void insertFromFirebase(Map<String, Object> map) {
-        // TODO write into local database
-
+    public void insertFromFirebase(Map<String, Object> map, String firebaseId) {
         ContentValues contentValues = createListContentValues(
                 (String) map.get("title"),
                 (String) map.get("desc"),
@@ -312,6 +326,7 @@ public class DatabaseManager {
                 (String) map.get("languageB"));
 
         contentValues.put(DatabaseHelper.DT_CREATED_AT, (String) map.get("createdAt"));
+        contentValues.put(DatabaseHelper.STR_FB_ID, firebaseId);
 
         long listId = database.insert(DatabaseHelper.LIST_TABLE, null, contentValues);
 

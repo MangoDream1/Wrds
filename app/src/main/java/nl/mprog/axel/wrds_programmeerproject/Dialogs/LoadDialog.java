@@ -101,7 +101,7 @@ public class LoadDialog extends DialogFragment {
         return dialog;
     }
 
-    private void getListFirebase(String key) {
+    private void getListFirebase(final String key) {
         firebaseDB.getReference().child("lists").child(key)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -111,7 +111,7 @@ public class LoadDialog extends DialogFragment {
                         if (data == null) {
                             keyEditText.setError("Key not found");
                         } else {
-                            dbm.insertFromFirebase(data);
+                            dbm.insertFromFirebase(data, key);
 
                             ((MainActivity) getActivity()).dataChange();
                             dismiss(getDialog());

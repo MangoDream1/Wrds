@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme">
 
 
     <item
         android:id="@+id/return_button"
         android:title="return"
-        app:showAsAction="ifRoom" />
-
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:gravity="left"/>
     <item
         android:id="@+id/modify_button"
         android:title="modify"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_edit_black_24dp"/>
 
     <item
         android:id="@+id/delete_button"
         android:title="delete"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_delete_black_24dp"/>
     <item
         android:id="@+id/share_button"
+        android:icon="@drawable/ic_file_upload_black_24dp"
         android:title="share"
         app:showAsAction="ifRoom"/>
 

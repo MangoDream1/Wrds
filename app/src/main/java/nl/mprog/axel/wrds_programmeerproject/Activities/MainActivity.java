@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
-        // TODO set empty listView.setEmptyView()
+        listView.setEmptyView(findViewById(R.id.emptyView));
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
 
@@ -117,8 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showMainToolbar() {
-        // TODO show log out right after log in
-
         currentMenu.clear();
         toolbar.setTitle(R.string.app_name);
 

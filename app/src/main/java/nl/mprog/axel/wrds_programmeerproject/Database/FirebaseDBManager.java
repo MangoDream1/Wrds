@@ -43,7 +43,7 @@ public class FirebaseDBManager {
     public String uploadList(long listId, String userId) {
         String key = dbm.getFirebaseId(listId);
 
-        if (key == null) {
+        if (key == null && dbm.isListOwner(listId)) {
             key = firebaseDB.getReference().child("lists").push().getKey();
         }
 

@@ -112,8 +112,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             fdbm.createUser(username,
                                     FirebaseAuth.getInstance().getCurrentUser().getUid());
-
                         }
+
+                        hideProgressBar();
                     }
                 });
     }
@@ -139,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                         }
 
+                        hideProgressBar();
                     }
                 });
     }
@@ -147,12 +149,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_button:
+                showProgressBar();
                 showLogin();
                 signIn();
 
                 break;
 
             case R.id.register_button:
+                showProgressBar();
                 showRegister();
 
                 // If reset is valid check if username is taken
@@ -184,6 +188,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }
                 });
+    }
+
+    private void showProgressBar() {
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+
     }
 
     private boolean validateForm() {

@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bundle = new Bundle();
 
                 bundle.putString("title", "Are you sure?");
-                bundle.putString("message", "Shared lists will be deleted from cloud.");
+                bundle.putString("message", "Shared lists will be deleted from cloud if its yours.");
                 bundle.putString("positive", "Yes");
                 bundle.putString("negative", "No");
 

@@ -9,7 +9,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.Arrays;
 
 import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseHelper;
@@ -25,6 +28,12 @@ public class CMListDialog extends DialogFragment {
     private DatabaseManager dbm;
     private Boolean isModify = false;
     private long listId;
+
+
+    private EditText titleEditText;
+    private EditText lanAEditText;
+    private EditText lanBEditText;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,10 +54,10 @@ public class CMListDialog extends DialogFragment {
         builder.setView(view);
 
 
-        final EditText nameEditText = (EditText) view.findViewById(R.id.list_name_editText);
+        titleEditText = (EditText) view.findViewById(R.id.list_name_editText);
         final EditText descEditText = (EditText) view.findViewById(R.id.list_description_editText);
-        final EditText lanAEditText = (EditText) view.findViewById(R.id.list_languageA_editText);
-        final EditText lanBEditText = (EditText) view.findViewById(R.id.list_languageB_editText);
+        lanAEditText = (EditText) view.findViewById(R.id.list_languageA_editText);
+        lanBEditText = (EditText) view.findViewById(R.id.list_languageB_editText);
 
         final Bundle arguments = getArguments();
 
@@ -63,31 +72,18 @@ public class CMListDialog extends DialogFragment {
             listId = arguments.getLong("id");
             Cursor cursor = dbm.getSingleList(listId);
 
-            nameEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_TITLE)));
-            descEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_DESC)));
-            lanAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A)));
-            lanBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
+            titleEditText.setText(cursor.getString(
+                    cursor.getColumnIndex(DatabaseHelper.STR_TITLE)));
+            descEditText.setText(cursor.getString(
+                    cursor.getColumnIndex(DatabaseHelper.STR_DESC)));
+            lanAEditText.setText(cursor.getString(
+                    cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A)));
+            lanBEditText.setText(cursor.getString(
+                    cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
         }
 
         builder.setMessage(message)
-                .setPositiveButton(positiveButtonString, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String name = nameEditText.getText().toString();
-                        String desc = descEditText.getText().toString();
-                        String lanA = lanAEditText.getText().toString();
-                        String lanB = lanBEditText.getText().toString();
-
-                        if (isModify) {
-                            dbm.updateList(listId, name, desc, "you", lanA, lanB);
-                        } else {
-                            dbm.insertList(name, desc, "you", lanA, lanB);
-                        }
-
-                        ((MainActivity) activity).dataChange();
-
-                    }
-                })
+                .setPositiveButton(positiveButtonString, null)
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -96,6 +92,76 @@ public class CMListDialog extends DialogFragment {
                     }
                 });
 
-        return builder.create();
+        final Dialog dialog = builder.create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String name = titleEditText.getText().toString();
+                        String desc = descEditText.getText().toString();
+                        String lanA = lanAEditText.getText().toString();
+                        String lanB = lanBEditText.getText().toString();
+
+                        if (validateForm()) {
+                            if (isModify) {
+                                dbm.updateList(listId, name, desc, "you", lanA, lanB);
+                            } else {
+                                dbm.insertList(name, desc, "you", lanA, lanB);
+                            }
+
+                            ((MainActivity) activity).dataChange();
+
+                            dismiss();
+
+                        }
+                    }
+                });
+
+            }
+        });
+
+        return dialog;
+    }
+
+    private boolean validateForm() {
+        // If statement is lazy thus not possible thus check all first then find false
+        Boolean[] isValid = new Boolean[]{validateTitle(), validateLanA(), validateLanB()};
+
+        return !Arrays.asList(isValid).contains(false);
+    }
+
+    private boolean validateTitle() {
+        String title = titleEditText.getText().toString();
+
+        if (title.isEmpty()) {
+            titleEditText.setError("Required.");
+            return false;
+        } else if (title.length() < 2) {
+            titleEditText.setError("Title needs to have more than 2 letters.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateLanguage(EditText lanEditText) {
+        if (lanEditText.getText().toString().isEmpty()) {
+            lanEditText.setError("Required.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateLanA() {
+        return validateLanguage(lanAEditText);
+    }
+
+    private boolean validateLanB() {
+        return validateLanguage(lanBEditText);
     }
 }

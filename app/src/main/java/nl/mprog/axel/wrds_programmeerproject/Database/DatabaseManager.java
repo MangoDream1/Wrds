@@ -330,11 +330,14 @@ public class DatabaseManager {
 
         long listId = database.insert(DatabaseHelper.LIST_TABLE, null, contentValues);
 
-        ArrayList<Map<String, String>> wordList = (ArrayList<Map<String, String>>) map.get("words");
+        if (map.containsKey("words")) {
+            ArrayList<Map<String, String>> wordList =
+                    (ArrayList<Map<String, String>>) map.get("words");
 
-        for (Map<String, String> words: wordList) {
-            insertWord(listId, words.get("wordA"), words.get("wordB"));
-        }
+            for (Map<String, String> words: wordList) {
+                insertWord(listId, words.get("wordA"), words.get("wordB"));
+            }
+        };
     }
 
     int updateFirebaseId(long listId, String firebaseId) {

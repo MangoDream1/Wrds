@@ -43,15 +43,16 @@ public class FirebaseDBManager {
     public String uploadList(long listId, String userId) {
         String key = dbm.getFirebaseId(listId);
 
-        if (key == null && dbm.isListOwner(listId)) {
+        if (key == null) {
             key = firebaseDB.getReference().child("lists").push().getKey();
         }
 
-        uploadList(key, listId, userId);
+        if (dbm.isListOwner(listId)) {
+            uploadList(key, listId, userId);
+        }
 
         return key;
     }
-
 
     private void uploadList(final String key, final long listId, String userId) {
         firebaseDB.getReference().child("users").child(userId)
@@ -82,7 +83,6 @@ public class FirebaseDBManager {
 
     private HashMap<String, Object> createListHashTable(long listId, String username) {
         Cursor lCursor = dbm.getSingleList(listId);
-        Cursor wCursor = dbm.getListWords(listId);
 
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -95,6 +95,12 @@ public class FirebaseDBManager {
         hashMap.put("languageB", lCursor.getString(
                 lCursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
         hashMap.put("username", username);
+
+        return addWordsHashMap(listId, hashMap);
+    }
+
+    private HashMap<String, Object> addWordsHashMap(long listId, HashMap<String, Object> hashMap) {
+        Cursor wCursor = dbm.getListWords(listId);
 
         ArrayList<HashMap<String, String>> wordList = new ArrayList<>();
 
@@ -111,6 +117,5 @@ public class FirebaseDBManager {
 
         return hashMap;
     }
-
 
 }

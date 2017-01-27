@@ -73,3 +73,65 @@
 - Save instance state of selected items
 - Rearranged code files into folders
 - Added XML of feedback view for ExamActivity
+
+## Day 3
+
+- Corrected feedback and added continue button
+- Improved looks of layouts
+- Fixed bug if input is empty
+- Created STYLE_GUIDE.md
+- Count the number of mistakes made per word in database
+- Added increment and reset functions for mistake in DatabaseManager
+- In the ResultActivity show the number of mistakes that have been made
+- Save instance state in ExamActivity
+- Updated DESIGN.md
+- Can retry lists
+
+## Day 4
+
+- Renamed Database constants
+- Also now count tries not mistakes
+- Changed old functions for mistakes into tries
+- Give warning if user hasn't filled in both or a single word when adding words
+- Added padding to dialogs
+- Added maxLines and scoll in TextView in ListActivity and MainActivity
+- Improved ListLayout
+- Added BarGraph to ResultActivity
+
+## Day 5
+
+- Fixed bug in AnswerComparison now should work if there are multiple faults
+
+# Week 3
+
+## Day 1
+
+- Improved graph with titles, and labels
+- Disable retry if max score
+- Removed bug in underline in AnswerComparison
+- Added Firebase
+- Set focus on WordA after adding word
+- Added padding to graph
+- Can continue to retry mistakes until user has correctly answered everything right once
+- Can now goto ResultActivity from ListActivity
+- Added landscape xml for ResultActivity
+- Improved warning
+- Started login activity with Firebase
+- Downgraded firebase version so that it works with emulator (!! stupid bug)
+
+## Day 2
+
+- Added trim to word enter
+- Can now login and checks if username is taken
+- Added account creation, also create username
+- Added log in and log out button
+- Moved firebase auth instance creation over to MainActivity
+- Removed login button. Now goto LoginActivity if user is not logged in when share is pressed
+- Changed firebase layout and started FirebaseDBManager
+- Fixed check if username is taken
+- Able to upload list to Firebase
+
+## Day 3
+
+- 
+

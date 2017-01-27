@@ -156,12 +156,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.register_button:
-                showProgressBar();
                 showRegister();
 
                 // If reset is valid check if username is taken
                 // if not taken it will start createAccount()
                 if (validateForm()) {
+                    showProgressBar();
                     usernameTaken();
                 }
 

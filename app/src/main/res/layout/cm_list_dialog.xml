@@ -12,10 +12,10 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapWords"
         android:ems="10"
         android:id="@+id/list_name_editText"
-        android:hint="List name" />
+        android:hint="List name"
+        android:inputType="textCapSentences" />
 
     <MultiAutoCompleteTextView
         android:layout_width="match_parent"

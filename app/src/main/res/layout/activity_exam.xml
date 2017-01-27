@@ -135,16 +135,19 @@
             android:text="translate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/translate" />
+            android:id="@+id/translate"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:inputType="textMultiLine"
             android:id="@+id/editText"
             android:gravity="top|start"
             android:hint="Type the translation here"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="text" />
 
         <Button
             android:text="Check"

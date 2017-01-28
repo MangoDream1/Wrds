@@ -340,15 +340,7 @@ public class DatabaseManager {
         };
     }
 
-    int updateFirebaseId(long listId, String firebaseId) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseHelper.STR_FB_ID, firebaseId);
-
-        return database.update(DatabaseHelper.LIST_TABLE, contentValues,
-                DatabaseHelper.PK_LIST_ID + " = " + listId, null);
-    }
-
-    String getFirebaseId(long listId) {
+    public String getFirebaseId(long listId) {
 
         String[] columns = new String[]{DatabaseHelper.STR_FB_ID};
         String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
@@ -356,5 +348,13 @@ public class DatabaseManager {
         Cursor cursor = queryListTable(columns, where);
 
         return cursor.getString(0);
+    }
+
+    int updateFirebaseId(long listId, String firebaseId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.STR_FB_ID, firebaseId);
+
+        return database.update(DatabaseHelper.LIST_TABLE, contentValues,
+                DatabaseHelper.PK_LIST_ID + " = " + listId, null);
     }
 }

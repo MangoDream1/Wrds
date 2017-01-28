@@ -1,6 +1,7 @@
 package nl.mprog.axel.wrds_programmeerproject.Database;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -9,6 +10,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import nl.mprog.axel.wrds_programmeerproject.Interfaces.FirebaseKeyInterface;
 
 /**
  * Created by axel on 24-1-17.
@@ -52,6 +55,25 @@ public class FirebaseDBManager {
         }
 
         return key;
+    }
+
+    public void listIdExists(final String firebaseId, final Object callback) {
+        firebaseDB.getReference().child("lists")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d("test", "test2");
+
+                        ((FirebaseKeyInterface) callback)
+                                .keyStillExists(firebaseId, dataSnapshot.hasChild(firebaseId));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
     }
 
     private void uploadList(final String key, final long listId, String userId) {

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ public class FirebaseDBManager {
         if (instance == null) {
             dbm = DatabaseManager.getInstance();
             firebaseDB = FirebaseDatabase.getInstance();
-
             instance = new FirebaseDBManager();
         }
 
@@ -44,14 +44,12 @@ public class FirebaseDBManager {
     }
 
     public void listIdExists(final String firebaseId, final Object callback) {
-        firebaseDB.getReference().child("lists")
+        firebaseDB.getReference().child("lists").child(firebaseId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("test", "test2");
-
                         ((FirebaseKeyInterface) callback)
-                                .keyStillExists(firebaseId, dataSnapshot.hasChild(firebaseId));
+                                .keyStillExists(firebaseId, dataSnapshot.hasChild("deletedOn"));
                     }
 
                     @Override
@@ -101,7 +99,14 @@ public class FirebaseDBManager {
 
     public void deleteList(long listId, String firebaseId) {
         dbm.updateFirebaseId(listId, null);
+
         firebaseDB.getReference().child("lists").child(firebaseId).removeValue();
+
+        // Keep id in list in the case it gets reused and others will share wrong lists
+        // Save date deletion so that old lists can be deleted at a later stage
+        firebaseDB.getReference().child("lists").child(firebaseId)
+                .child("deletedOn").setValue(ServerValue.TIMESTAMP);
+
     }
 
     private HashMap<String, Object> createListHashTable(long listId, String username) {

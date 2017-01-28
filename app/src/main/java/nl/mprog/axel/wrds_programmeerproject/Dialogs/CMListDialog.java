@@ -101,10 +101,10 @@ public class CMListDialog extends DialogFragment {
                 positiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String name = titleEditText.getText().toString();
-                        String desc = descEditText.getText().toString();
-                        String lanA = lanAEditText.getText().toString();
-                        String lanB = lanBEditText.getText().toString();
+                        String name = titleEditText.getText().toString().trim();
+                        String desc = descEditText.getText().toString().trim();
+                        String lanA = lanAEditText.getText().toString().trim();
+                        String lanB = lanBEditText.getText().toString().trim();
 
                         if (validateForm()) {
                             if (isModify) {

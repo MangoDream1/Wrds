@@ -43,20 +43,6 @@ public class FirebaseDBManager {
         firebaseDB.getReference().child("usernames").child(username).setValue(id);
     }
 
-    public String uploadList(long listId, String userId) {
-        String key = dbm.getFirebaseId(listId);
-
-        if (key == null) {
-            key = firebaseDB.getReference().child("lists").push().getKey();
-        }
-
-        if (dbm.isListOwner(listId)) {
-            uploadList(key, listId, userId);
-        }
-
-        return key;
-    }
-
     public void listIdExists(final String firebaseId, final Object callback) {
         firebaseDB.getReference().child("lists")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -74,6 +60,21 @@ public class FirebaseDBManager {
                     }
                 });
 
+    }
+
+    public String uploadList(long listId, String userId) {
+        String key = dbm.getFirebaseId(listId);
+
+        if (key == null) {
+            key = firebaseDB.getReference().child("lists").push().getKey();
+            dbm.updateFirebaseId(listId, key);
+        }
+
+        if (dbm.isListOwner(listId)) {
+            uploadList(key, listId, userId);
+        }
+
+        return key;
     }
 
     private void uploadList(final String key, final long listId, String userId) {
@@ -96,10 +97,10 @@ public class FirebaseDBManager {
     private void uploadList(long listId, String key, String username) {
         HashMap<String, Object> data = createListHashTable(listId, username);
         firebaseDB.getReference().child("lists").child(key).setValue(data);
-        dbm.updateFirebaseId(listId, key);
     }
 
-    public void deleteList(String firebaseId) {
+    public void deleteList(long listId, String firebaseId) {
+        dbm.updateFirebaseId(listId, null);
         firebaseDB.getReference().child("lists").child(firebaseId).removeValue();
     }
 

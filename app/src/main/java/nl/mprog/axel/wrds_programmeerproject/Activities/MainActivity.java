@@ -213,11 +213,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (user != null) {
                     // Uploads selected list
 
-                    String key = FirebaseDBManager.getInstance()
-                            .uploadList(selectedItemsList.get(0), user.getUid());
-
                     bundle = new Bundle();
-                    bundle.putString("key", key);
+                    bundle.putString("userId", user.getUid());
                     bundle.putLong("id", listId);
 
                     ShareDialog shareDialog = new ShareDialog();

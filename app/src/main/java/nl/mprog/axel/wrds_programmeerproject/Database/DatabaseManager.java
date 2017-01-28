@@ -97,12 +97,10 @@ public class DatabaseManager {
 
         Cursor cursor = queryListTable(columns, where);
         String firebaseId = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_FB_ID));
-        Boolean isCreator = (cursor.getInt(
-                cursor.getColumnIndex(DatabaseHelper.BOOL_IS_OWNER)) == 1);
 
         // Delete from firebase if the user is the owner
-        if (isCreator && firebaseId != null) {
-            FirebaseDBManager.getInstance().deleteList(firebaseId);
+        if (isListOwner(listId) && firebaseId != null) {
+            FirebaseDBManager.getInstance().deleteList(listId, firebaseId);
         }
 
         // Delete list
@@ -347,7 +345,7 @@ public class DatabaseManager {
 
         Cursor cursor = queryListTable(columns, where);
 
-        return cursor.getString(0);
+        return cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_FB_ID));
     }
 
     int updateFirebaseId(long listId, String firebaseId) {

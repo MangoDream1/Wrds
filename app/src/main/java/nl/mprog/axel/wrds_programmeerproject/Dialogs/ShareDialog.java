@@ -91,7 +91,8 @@ public class ShareDialog extends DialogFragment
             view.findViewById(R.id.progressBar).setVisibility(View.GONE);
             builder.setTitle("Upload list")
                     .setPositiveButton("Upload", null)
-                    .setNegativeButton("Cancel", null);
+                    .setNegativeButton("Cancel", null)
+                    .setMessage("Upload your list and share the key with your friends");
         } else if (isShared && isOwner) {
             builder.setTitle("Shared list")
                     .setPositiveButton("Update", null)

@@ -31,7 +31,7 @@ import nl.mprog.axel.wrds_programmeerproject.R;
  * Created by axel on 25-1-17.
  */
 
-public class LoadDialog extends DialogFragment {
+public class LoadDialog extends DialogFragment implements View.OnClickListener {
 
     private DatabaseManager dbm;
     private FirebaseDatabase firebaseDB;
@@ -50,10 +50,11 @@ public class LoadDialog extends DialogFragment {
 
         keyEditText = (EditText) view.findViewById(R.id.key_editText);
 
+        view.findViewById(R.id.paste_button).setOnClickListener(this);
+
         final AlertDialog dialog = new AlertDialog.Builder(activity).setView(view)
                 .setMessage("Paste the key in the box below")
                 .setPositiveButton("Load list", null)
-                .setNeutralButton("Paste", null)
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -76,25 +77,6 @@ public class LoadDialog extends DialogFragment {
 
                     }
                 });
-
-                Button neutralButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
-                neutralButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ClipboardManager clipboard = (ClipboardManager)
-                                activity.getSystemService(Context.CLIPBOARD_SERVICE);
-
-                        if (!clipboard.hasPrimaryClip()) {
-                            Toast.makeText(activity, "Empty Clipboard", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                        keyEditText.setText(item.getText().toString());
-
-                    }
-                });
-
             }
         });
 
@@ -129,4 +111,22 @@ public class LoadDialog extends DialogFragment {
         dialog.dismiss();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.paste_button:
+                ClipboardManager clipboard = (ClipboardManager)
+                        getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+
+                if (!clipboard.hasPrimaryClip()) {
+                    Toast.makeText(getActivity(), "Empty Clipboard", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                keyEditText.setText(item.getText().toString());
+
+                break;
+        }
+    }
 }

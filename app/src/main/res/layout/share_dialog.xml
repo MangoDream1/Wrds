@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:paddingBottom="20dp"
     android:paddingEnd="20dp"
-    android:paddingLeft="20dp"
+    android:paddingLeft="30dp"
     android:paddingRight="20dp"
-    android:paddingStart="20dp">
+    android:paddingStart="30dp">
 
     <ProgressBar
         style="?android:attr/progressBarStyleSmall"
@@ -18,8 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/key_layout"
-        android:visibility="gone">
+        android:id="@+id/key_layout">
 
         <LinearLayout
             android:orientation="horizontal"

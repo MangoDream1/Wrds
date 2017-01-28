@@ -63,6 +63,8 @@ public class FirebaseDBManager {
     public String uploadList(long listId, String userId) {
         String key = dbm.getFirebaseId(listId);
 
+        //TODO create small key
+
         if (key == null) {
             key = firebaseDB.getReference().child("lists").push().getKey();
             dbm.updateFirebaseId(listId, key);

@@ -50,6 +50,8 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
             findViewById(R.id.retry_mistakes_button).setEnabled(false);
         }
 
+
+        // TODO Replace bargraph with piechart
         createBarGraph();
 
     }

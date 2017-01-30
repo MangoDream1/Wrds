@@ -12,10 +12,6 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.ValueDependentColor;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,61 +60,6 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         return String.valueOf(Math.round(100 + 900 / ((double) total / (total - nMistakes)))/100);
-    }
-
-    private void createBarGraph() {
-        GraphView barGraphView = (GraphView) findViewById(R.id.barGraph);
-
-        int highest = 0;
-        int max = dbm.getHighestTries(listId);
-
-        // Set max to min 4 for better presentation
-        if (max < 4) {
-            max = 4;
-        }
-
-        DataPoint[] dataPoints = new DataPoint[max];
-
-        for (int i = 1; i <= max; i++) {
-            int count = dbm.countNumberTries(listId, i);
-
-            dataPoints[i-1] = new DataPoint(i, count);
-
-            if (count > highest) {
-                highest = count;
-            }
-        }
-
-        barGraphView = styleGraph(barGraphView, max, highest);
-
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-        barGraphView.addSeries(series);
-
-        // styling
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-            }
-        });
-    }
-
-    private GraphView styleGraph(GraphView graphView, int max, int highest) {
-        graphView.setTitle("Results");
-        graphView.getGridLabelRenderer().setHorizontalAxisTitle("Number of tries");
-        graphView.getGridLabelRenderer().setVerticalAxisTitle("Number of words");
-
-        // Set Y-axis
-        graphView.getViewport().setYAxisBoundsManual(true);
-        graphView.getViewport().setMinY(0);
-        graphView.getViewport().setMaxY(highest);
-
-        // Set X-axis
-        graphView.getViewport().setXAxisBoundsManual(true);
-        graphView.getViewport().setMinX(0);
-        graphView.getViewport().setMaxX(max + 0.5);
-
-        return graphView;
     }
 
     private void createPieChart() {

@@ -63,13 +63,6 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"/>
 
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:id="@+id/barGraph"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:visibility="gone"/>
         </LinearLayout>
 
     </LinearLayout>

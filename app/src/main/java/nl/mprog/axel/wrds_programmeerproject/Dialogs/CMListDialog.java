@@ -61,12 +61,12 @@ public class CMListDialog extends DialogFragment {
 
         final Bundle arguments = getArguments();
 
-        String message = "Create list";
-        String positiveButtonString = "Create";
+        int title = R.string.dialog_create_list_title;
+        int  positiveButtonString = R.string.button_create;
 
         if (arguments != null) {
-            message = "Modify list";
-            positiveButtonString = "Modify";
+            title = R.string.dialog_modify_list_title;
+            positiveButtonString = R.string.button_modify;
             isModify = true;
 
             listId = arguments.getLong("id");
@@ -82,9 +82,9 @@ public class CMListDialog extends DialogFragment {
                     cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
         }
 
-        builder.setMessage(message)
+        builder.setTitle(title)
                 .setPositiveButton(positiveButtonString, null)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // User cancelled the dialog
@@ -138,10 +138,10 @@ public class CMListDialog extends DialogFragment {
         String title = titleEditText.getText().toString();
 
         if (title.isEmpty()) {
-            titleEditText.setError("Required.");
+            titleEditText.setError(getString(R.string.error_required));
             return false;
         } else if (title.length() < 2) {
-            titleEditText.setError("Title needs to have more than 2 letters.");
+            titleEditText.setError(getString(R.string.error_title_short));
             return false;
         }
 
@@ -150,7 +150,7 @@ public class CMListDialog extends DialogFragment {
 
     private boolean validateLanguage(EditText lanEditText) {
         if (lanEditText.getText().toString().isEmpty()) {
-            lanEditText.setError("Required.");
+            lanEditText.setError(getString(R.string.error_required));
             return false;
         }
 

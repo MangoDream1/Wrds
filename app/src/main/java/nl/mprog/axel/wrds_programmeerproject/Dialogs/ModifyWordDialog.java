@@ -54,8 +54,8 @@ public class ModifyWordDialog extends DialogFragment {
         wordAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)));
         wordBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_B)));
 
-        builder.setMessage("Modify word")
-                .setPositiveButton("Modify", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.dialog_modify_word_title)
+                .setPositiveButton(R.string.button_modify, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String wordA = wordAEditText.getText().toString();
@@ -66,7 +66,7 @@ public class ModifyWordDialog extends DialogFragment {
                         ((ListActivity) activity).dataChange();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // User cancelled the dialog

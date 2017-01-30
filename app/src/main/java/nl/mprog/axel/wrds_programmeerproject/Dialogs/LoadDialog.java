@@ -53,9 +53,9 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener {
         view.findViewById(R.id.paste_button).setOnClickListener(this);
 
         final AlertDialog dialog = new AlertDialog.Builder(activity).setView(view)
-                .setMessage("Paste the key in the box below")
-                .setPositiveButton("Load list", null)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.dialog_load_title)
+                .setPositiveButton(R.string.button_load_list, null)
+                .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -91,7 +91,7 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener {
                         Map<String, Object> data = (Map<String, Object>) dataSnapshot.getValue();
 
                         if (data == null) {
-                            keyEditText.setError("Key not found");
+                            keyEditText.setError(getString(R.string.error_key_missing));
                         } else {
                             dbm.insertFromFirebase(data, key);
 
@@ -102,7 +102,7 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        keyEditText.setError("Error");
+                        keyEditText.setError(getString(R.string.error_database));
                     }
                 });
     }
@@ -119,7 +119,8 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener {
                         getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
 
                 if (!clipboard.hasPrimaryClip()) {
-                    Toast.makeText(getActivity(), "Empty Clipboard", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.toast_empty_clipboard,
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 

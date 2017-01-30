@@ -2,7 +2,6 @@ package nl.mprog.axel.wrds_programmeerproject.Algorithms;
 
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

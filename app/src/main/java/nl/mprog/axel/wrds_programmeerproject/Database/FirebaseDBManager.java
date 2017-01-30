@@ -1,7 +1,6 @@
 package nl.mprog.axel.wrds_programmeerproject.Database;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

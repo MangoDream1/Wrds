@@ -217,6 +217,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.play_button:
+                if (dbm.countListWords(listId) == 0) {
+                    Toast.makeText(this, "First add a word", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
                 Intent intent = new Intent(this, ExamActivity.class);
                 intent.putExtra("id", listId);
 

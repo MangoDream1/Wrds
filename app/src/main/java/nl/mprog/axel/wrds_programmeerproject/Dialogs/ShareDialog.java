@@ -40,8 +40,6 @@ public class ShareDialog extends DialogFragment
     boolean isShared;
     boolean isOwner;
 
-    // TODO move string to string.xml
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)  {
         activity = getActivity();
@@ -91,18 +89,18 @@ public class ShareDialog extends DialogFragment
     private AlertDialog.Builder createCorrectDialog(AlertDialog.Builder builder) {
         if (!isShared && isOwner) {
             view.findViewById(R.id.progressBar).setVisibility(View.GONE);
-            builder.setTitle("Upload list")
-                    .setPositiveButton("Upload", null)
-                    .setNegativeButton("Cancel", null)
-                    .setMessage("Upload your list and share the key with your friends");
+            builder.setTitle(R.string.dialog_share_upload_title)
+                    .setPositiveButton(R.string.button_upload, null)
+                    .setNegativeButton(R.string.button_cancel, null)
+                    .setMessage(R.string.dialog_share_message);
         } else if (isShared && isOwner) {
-            builder.setTitle("Shared list")
-                    .setPositiveButton("Update", null)
-                    .setNegativeButton("Continue", null)
-                    .setNeutralButton("Stop share", null);
+            builder.setTitle(R.string.dialog_share_title)
+                    .setPositiveButton(R.string.button_update, null)
+                    .setNegativeButton(R.string.button_continue, null)
+                    .setNeutralButton(R.string.button_stop_share, null);
         } else {
-            builder.setTitle("Shared list")
-                    .setNegativeButton("Continue", null);
+            builder.setTitle(R.string.dialog_share_title)
+                    .setNegativeButton(R.string.button_continue, null);
         }
 
         return builder;
@@ -113,7 +111,7 @@ public class ShareDialog extends DialogFragment
         if (keyExists) {
             showKey(firebaseId);
         } else {
-            showKey("List is deleted by the owner thus cannot be shared");
+            showKey(getString(R.string.error_list_id_deleted));
             view.findViewById(R.id.copy_button).setVisibility(View.GONE);
         }
     }
@@ -135,7 +133,7 @@ public class ShareDialog extends DialogFragment
                 ClipData clip = ClipData.newPlainText("wrds list key", firebaseId);
                 clipboardManager.setPrimaryClip(clip);
 
-                Toast.makeText(activity, "Key copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.toast_key_copied, Toast.LENGTH_SHORT).show();
 
                 break;
         }
@@ -147,7 +145,8 @@ public class ShareDialog extends DialogFragment
                     @Override
                     public void onClick(View view) {
                         if (!isShared && isOwner) {
-                            Toast.makeText(activity, "List uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, R.string.toast_list_uploaded,
+                                    Toast.LENGTH_SHORT).show();
                             fdbm.uploadList(listId, userId);
 
                             Bundle bundle = new Bundle();
@@ -159,7 +158,8 @@ public class ShareDialog extends DialogFragment
 
                             dismiss();
                         } else {
-                            Toast.makeText(activity, "List updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, R.string.toast_list_updated,
+                                    Toast.LENGTH_SHORT).show();
                             fdbm.uploadList(listId, userId);
                         }
                     }
@@ -183,7 +183,8 @@ public class ShareDialog extends DialogFragment
                     public void onClick(View view) {
                         String firebaseId = dbm.getFirebaseId(listId);
                         fdbm.deleteList(listId, firebaseId);
-                        Toast.makeText(activity, "Stopped share", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, R.string.toast_stopped_share,
+                                Toast.LENGTH_SHORT).show();
                         dismiss();
                     }
                 });

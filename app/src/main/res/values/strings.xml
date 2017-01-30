@@ -6,7 +6,8 @@
         results and then retry mistakes</string>
 
     <string name="dialog_delete_title">Are you sure?</string>
-    <string name="dialog_delete_list_message">Shared lists will be deleted from cloud if its yours.</string>
+    <string name="dialog_delete_list_message">Shared lists will be deleted
+        from cloud if its yours.</string>
 
     <string name="dialog_create_list_title">Create list</string>
     <string name="dialog_modify_list_title">Modify list</string>
@@ -14,6 +15,12 @@
     <string name="dialog_load_title">Paste the key in the box below</string>
 
     <string name="dialog_modify_word_title">Modify word</string>
+
+    <string name="dialog_share_upload_title">Upload list</string>
+    <string name="dialog_share_title">Shared list</string>
+    <string name="dialog_share_message">Upload your list and share the
+        key with your friends</string>
+
 
     <string name="button_quit">Quit</string>
     <string name="button_cancel">Cancel</string>
@@ -23,6 +30,10 @@
     <string name="button_create">Create</string>
     <string name="button_modify">Modify</string>
     <string name="button_load_list">Load list</string>
+    <string name="button_upload">Upload</string>
+    <string name="button_update">Update</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_stop_share">Stop share</string>
 
     <string name="error_required">Required</string>
     <string name="error_username_space">Username contains space</string>
@@ -31,12 +42,17 @@
     <string name="error_title_short">Title needs to have more than 2 letters.</string>
     <string name="error_database">Database error</string>
     <string name="error_key_missing">Key not found</string>
+    <string name="error_list_id_deleted">List is deleted by the owner thus cannot be shared</string>
 
     <string name="toast_no_words">First add word</string>
     <string name="toast_list_no_results">This list has no results</string>
     <string name="toast_modify_not_owner">Cannot modify, not your list</string>
     <string name="toast_delete_not_owner">Cannot delete, not your list</string>
     <string name="toast_empty_clipboard">Empty Clipboard</string>
+    <string name="toast_key_copied">Key copied</string>
+    <string name="toast_list_uploaded">List uploaded</string>
+    <string name="toast_list_updated">List updated</string>
+    <string name="toast_stopped_share">List uploaded</string>
 
     <string name="title_log_in">Log in</string>
     <string name="title_register">Register</string>

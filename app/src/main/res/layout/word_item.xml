@@ -7,7 +7,6 @@
     android:layout_weight="1">
 
     <TextView
-        android:text="0"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/index"
@@ -23,7 +22,6 @@
         android:background="#BDBDBD" />
 
     <TextView
-        android:text="wordA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/wordA"
@@ -41,7 +39,6 @@
         android:background="#BDBDBD" />
 
     <TextView
-        android:text="wordB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/wordB"

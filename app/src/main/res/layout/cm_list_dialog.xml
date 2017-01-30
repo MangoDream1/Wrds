@@ -14,14 +14,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/list_name_editText"
-        android:hint="List name"
+        android:hint="@string/hint_list_name"
         android:inputType="textCapSentences" />
 
     <MultiAutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_description_editText"
-        android:hint="Description" />
+        android:hint="@string/hint_description" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -34,7 +34,7 @@
             android:ems="10"
             android:id="@+id/list_languageA_editText"
             android:layout_weight="1"
-            android:hint="Language A"
+            android:hint="@string/hint_language_a"
             android:inputType="textCapCharacters" />
 
         <EditText
@@ -44,7 +44,7 @@
             android:ems="10"
             android:id="@+id/list_languageB_editText"
             android:layout_weight="1"
-            android:hint="Language B" />
+            android:hint="@string/hint_language_b" />
     </LinearLayout>
 
 </LinearLayout>

@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/key_layout"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -28,8 +28,7 @@
             android:layout_centerHorizontal="true">
 
             <TextView
-                android:text="Code"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/key_editText"
                 android:textAppearance="@style/TextAppearance.AppCompat"
@@ -37,7 +36,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:text="Copy"
+                android:text="@string/button_copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/copy_button"

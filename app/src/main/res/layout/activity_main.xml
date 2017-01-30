@@ -32,14 +32,14 @@
         android:layout_weight="1">
 
         <TextView
-            android:text="Add a list by pressing the button below"
+            android:text="@string/text_empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <Button
-        android:text="Add"
+        android:text="@string/button_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/add_button"/>

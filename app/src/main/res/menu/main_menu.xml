@@ -5,26 +5,26 @@
 
     <item
         android:id="@+id/play_button"
-        android:title="PLAY"
+        android:title="@string/menu_button_play"
         android:visible="false"
         android:icon="@drawable/ic_play_arrow_black_24dp"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/results_button"
-        android:title="RESULTS"
+        android:title="@string/menu_button_results"
         android:visible="false"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/load_list_button"
-        android:title="Load list"
+        android:title="@string/menu_button_load"
         android:visible="false"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/logout_button"
-        android:title="Log out"
+        android:id="@+id/log_out_button"
+        android:title="@string/menu_button_log_out"
         android:visible="false"
         app:showAsAction="never"/>
 

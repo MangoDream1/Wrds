@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:id="@+id/wordA_editText"
-        android:hint="Word A" />
+        android:hint="@string/hint_word_a" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:id="@+id/wordB_editText"
-        android:hint="Word B" />
+        android:hint="@string/hint_word_b" />
 
 </LinearLayout>

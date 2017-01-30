@@ -23,7 +23,7 @@
         android:layout_weight="0.50">
 
         <TextView
-            android:text="Your score"
+            android:text="@string/title_your_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -31,7 +31,6 @@
             android:textAlignment="center" />
 
         <TextView
-            android:text="10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/score"
@@ -60,21 +59,21 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:text="retry mistakes"
+            android:text="@string/button_improve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/retry_mistakes_button"
             android:layout_weight="1" />
 
         <Button
-            android:text="retry all"
+            android:text="@string/button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/retry_all_button"
             android:layout_weight="1" />
 
         <Button
-            android:text="Continue"
+            android:text="@string/button_continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/continue_button"

@@ -1,8 +1,8 @@
 package nl.mprog.axel.wrds_programmeerproject.Activities;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -45,9 +45,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         fdbm = FirebaseDBManager.getInstance();
 
         findViewById(R.id.register_button).setOnClickListener(this);
-        findViewById(R.id.login_button).setOnClickListener(this);
-
-
+        findViewById(R.id.log_in_button).setOnClickListener(this);
     }
 
     @Override
@@ -72,7 +70,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         password2EditText.setEnabled(false);
         password2EditText.setVisibility(View.GONE);
 
-        findViewById(R.id.login_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.log_in_button).setVisibility(View.VISIBLE);
     }
 
     private void showRegister() {
@@ -87,7 +85,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         password2EditText.setEnabled(true);
         password2EditText.setVisibility(View.VISIBLE);
 
-        findViewById(R.id.login_button).setVisibility(View.GONE);
+        findViewById(R.id.log_in_button).setVisibility(View.GONE);
         findViewById(R.id.register_button).setVisibility(View.VISIBLE);
     }
 
@@ -146,7 +144,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_button:
+            case R.id.log_in_button:
                 showProgressBar();
                 showLogin();
                 signIn();

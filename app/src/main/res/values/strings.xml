@@ -4,29 +4,24 @@
     <string name="dialog_cancel_title">Are you sure you want to quit?</string>
     <string name="dialog_cancel_message">You can continue where you left of by pressing
         results and then retry mistakes</string>
-
     <string name="dialog_delete_title">Are you sure?</string>
     <string name="dialog_delete_list_message">Shared lists will be deleted
         from cloud if its yours.</string>
-
     <string name="dialog_create_list_title">Create list</string>
     <string name="dialog_modify_list_title">Modify list</string>
-
     <string name="dialog_load_title">Paste the key in the box below</string>
-
     <string name="dialog_modify_word_title">Modify word</string>
-
     <string name="dialog_share_upload_title">Upload list</string>
     <string name="dialog_share_title">Shared list</string>
     <string name="dialog_share_message">Upload your list and share the
         key with your friends</string>
-
 
     <string name="button_quit">Quit</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_yes">Yes</string>
     <string name="button_no">No</string>
     <string name="button_register">Register</string>
+    <string name="button_log_in">Log in</string>
     <string name="button_create">Create</string>
     <string name="button_modify">Modify</string>
     <string name="button_load_list">Load list</string>
@@ -34,6 +29,22 @@
     <string name="button_update">Update</string>
     <string name="button_continue">Continue</string>
     <string name="button_stop_share">Stop share</string>
+    <string name="button_stop_exam">X</string>
+    <string name="button_check">Check</string>
+    <string name="button_add">Add</string>
+    <string name="button_retry">Retry</string>
+    <string name="button_improve">Improve</string>
+    <string name="button_paste">Paste</string>
+    <string name="button_copy">Copy</string>
+
+    <string name="menu_button_return">Return</string>
+    <string name="menu_button_modify">Modify</string>
+    <string name="menu_button_delete">Delete</string>
+    <string name="menu_button_share">Share</string>
+    <string name="menu_button_play">Play</string>
+    <string name="menu_button_results">Results</string>
+    <string name="menu_button_load">Load list</string>
+    <string name="menu_button_log_out">Log out</string>
 
     <string name="error_required">Required</string>
     <string name="error_username_space">Username contains space</string>
@@ -56,6 +67,26 @@
 
     <string name="title_log_in">Log in</string>
     <string name="title_register">Register</string>
+    <string name="title_translate">Translate</string>
+    <string name="title_your_score">Your score</string>
+
+    <string name="text_feedback_correct">Correct answer!</string>
+    <string name="text_feedback_incorrect">Incorrect answer!</string>
+    <string name="text_feedback_correct_answer">Correct answer:</string>
+    <string name="text_empty_view">Add a list by pressing the button below</string>
+
+    <string name="hint_type_translation">Type the translation here</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_password2">Repeat password</string>
+    <string name="hint_list_name">List name</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_language_a">Language A</string>
+    <string name="hint_language_b">Language B</string>
+    <string name="hint_key">Key</string>
+    <string name="hint_word_a">Word A</string>
+    <string name="hint_word_b">Word B</string>
 
 
 </resources>

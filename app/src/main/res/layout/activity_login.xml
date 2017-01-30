@@ -26,7 +26,7 @@
         android:id="@+id/form_linearLayout">
 
         <TextView
-            android:text="Log in"
+            android:text="@string/title_log_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_textView"
@@ -40,7 +40,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/email_editText"
-            android:hint="Email" />
+            android:hint="@string/hint_email" />
 
         <EditText
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:inputType="text|textPersonName"
             android:ems="10"
             android:id="@+id/username_editText"
-            android:hint="Username"
+            android:hint="@string/hint_username"
             android:visibility="gone" />
 
         <EditText
@@ -57,7 +57,7 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/password_editText"
-            android:hint="Password" />
+            android:hint="@string/hint_password" />
 
         <EditText
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/password2_editText"
-            android:hint="Repeat password"
+            android:hint="@string/hint_password2"
             android:visibility="gone" />
 
         <LinearLayout
@@ -74,17 +74,17 @@
             android:layout_height="match_parent">
 
             <Button
-                android:text="Register"
+                android:text="@string/button_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/register_button"
                 android:layout_weight="1" />
 
             <Button
-                android:text="Login"
+                android:text="@string/button_log_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/login_button"
+                android:id="@+id/log_in_button"
                 android:layout_weight="1" />
         </LinearLayout>
 

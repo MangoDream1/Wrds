@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentMenu.findItem(R.id.load_list_button).setVisible(true);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null ) {
-            currentMenu.findItem(R.id.logout_button).setVisible(true);
+            currentMenu.findItem(R.id.log_out_button).setVisible(true);
         } else {
-            currentMenu.findItem(R.id.logout_button).setVisible(false);
+            currentMenu.findItem(R.id.log_out_button).setVisible(false);
         }
     }
 
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 return true;
 
-            case R.id.logout_button:
+            case R.id.log_out_button:
                 FirebaseAuth.getInstance().signOut();
                 showMainToolbar();
 

@@ -81,13 +81,15 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-        // Set editText footer
-        View footer = getLayoutInflater().inflate(R.layout.word_footer, null);
-        listView.addFooterView(footer);
+        if (dbm.isListOwner(listId)) {
+            // Set editText footer
+            View footer = getLayoutInflater().inflate(R.layout.word_footer, null);
+            listView.addFooterView(footer);
 
-        // Set onClick
-        Button addWordButton = (Button) footer.findViewById(R.id.add_word_button);
-        addWordButton.setOnClickListener(this);
+            // Set onClick
+            Button addWordButton = (Button) footer.findViewById(R.id.add_word_button);
+            addWordButton.setOnClickListener(this);
+        }
 
         // Find editTexts
         wordAEditText = (EditText) findViewById(R.id.wordA_editText);
@@ -243,6 +245,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.modify_button:
+                if (!dbm.isListOwner(listId)) {
+                    Toast.makeText(this, "Cannot modify, not your list", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
                 // Edit button is only available if size of selectedItemsList is 1 thus first item
                 // is to be edited
                 Bundle arguments = new Bundle();
@@ -258,6 +265,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.delete_button:
+                if (!dbm.isListOwner(listId)) {
+                    Toast.makeText(this, "Cannot delete, not your list", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
                 DefaultDialog defaultDialog = new DefaultDialog();
 
                 Bundle bundle = new Bundle();

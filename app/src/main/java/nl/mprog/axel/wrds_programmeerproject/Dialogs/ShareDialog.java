@@ -40,6 +40,8 @@ public class ShareDialog extends DialogFragment
     boolean isShared;
     boolean isOwner;
 
+    // TODO move string to string.xml
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)  {
         activity = getActivity();

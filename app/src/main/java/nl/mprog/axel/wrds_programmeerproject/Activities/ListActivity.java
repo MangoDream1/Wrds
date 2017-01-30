@@ -218,7 +218,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.play_button:
                 if (dbm.countListWords(listId) == 0) {
-                    Toast.makeText(this, "First add a word", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_no_words, Toast.LENGTH_SHORT).show();
                     return true;
                 }
 
@@ -231,7 +231,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.results_button:
 
                 if (dbm.getHighestTries(listId) == 0L) {
-                    Toast.makeText(getApplicationContext(), "This list has no results"
+                    Toast.makeText(getApplicationContext(), R.string.toast_list_no_results
                             , Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -251,7 +251,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.modify_button:
                 if (!dbm.isListOwner(listId)) {
-                    Toast.makeText(this, "Cannot modify, not your list", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_modify_not_owner,
+                            Toast.LENGTH_SHORT).show();
                     return true;
                 }
 
@@ -271,7 +272,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.delete_button:
                 if (!dbm.isListOwner(listId)) {
-                    Toast.makeText(this, "Cannot delete, not your list", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_delete_not_owner,
+                            Toast.LENGTH_SHORT).show();
                     return true;
                 }
 
@@ -279,9 +281,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 Bundle bundle = new Bundle();
 
-                bundle.putString("title", "Are you sure?");
-                bundle.putString("positive", "Yes");
-                bundle.putString("negative", "No");
+                bundle.putString("title", getString(R.string.dialog_delete_title));
+                bundle.putString("positive", getString(R.string.button_yes));
+                bundle.putString("negative", getString(R.string.button_no));
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");

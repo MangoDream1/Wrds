@@ -1,8 +1,6 @@
 package nl.mprog.axel.wrds_programmeerproject.Activities;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -17,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +25,6 @@ import java.util.ArrayList;
 
 import nl.mprog.axel.wrds_programmeerproject.Adapters.WordListsCursorAdapter;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
-import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.CMListDialog;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.DefaultDialog;
 import nl.mprog.axel.wrds_programmeerproject.Dialogs.LoadDialog;
@@ -195,10 +191,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 bundle = new Bundle();
 
-                bundle.putString("title", "Are you sure?");
-                bundle.putString("message", "Shared lists will be deleted from cloud if its yours.");
-                bundle.putString("positive", "Yes");
-                bundle.putString("negative", "No");
+                bundle.putString("title", getString(R.string.dialog_delete_title));
+                bundle.putString("message", getString(R.string.dialog_delete_list_message));
+                bundle.putString("positive", getString(R.string.button_yes));
+                bundle.putString("negative", getString(R.string.button_no));
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");
@@ -223,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else {
                     // Not logged in thus goto login
-                    Intent intent = new Intent(this, LoginActivity.class);
+                    Intent intent = new Intent(this, LogInActivity.class);
                     intent.putExtra("id", listId);
                     startActivity(intent);
                 }

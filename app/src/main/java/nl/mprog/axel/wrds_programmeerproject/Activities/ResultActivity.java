@@ -63,15 +63,8 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void createPieChart() {
-        int max = dbm.getHighestTries(listId);
-        int nMistakes = 0;
-
-        for (int i = 2; i <= max; i++) {
-            nMistakes += dbm.countNumberTries(listId, i);
-        }
-
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(nMistakes, "mistakes"));
+        entries.add(new PieEntry(dbm.getNumberOfMistakes(listId), "mistakes"));
         entries.add(new PieEntry(dbm.countNumberTries(listId, 1), "correct"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");

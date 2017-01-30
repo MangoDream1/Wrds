@@ -213,10 +213,10 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
 
                 Bundle bundle = new Bundle();
 
-                bundle.putString("title", getString(R.string.dialog_cancel_title));
-                bundle.putString("message", getString(R.string.dialog_cancel_message));
-                bundle.putString("positive", getString(R.string.button_quit));
-                bundle.putString("negative", getString(R.string.button_cancel));
+                bundle.putInt("title", R.string.dialog_cancel_title);
+                bundle.putInt("message", R.string.dialog_cancel_message);
+                bundle.putInt("positive", R.string.button_quit);
+                bundle.putInt("negative", R.string.button_cancel);
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");

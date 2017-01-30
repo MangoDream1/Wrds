@@ -13,19 +13,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = "TEST";
 
@@ -63,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void showLogin() {
-        ((TextView) findViewById(R.id.title_textView)).setText("Log in");
+        ((TextView) findViewById(R.id.title_textView)).setText(getString(R.string.title_log_in));
 
         EditText usernameEditText = (EditText) findViewById(R.id.username_editText);
         EditText password2EditText = (EditText) findViewById(R.id.password2_editText);
@@ -78,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void showRegister() {
-        ((TextView) findViewById(R.id.title_textView)).setText("Register");
+        ((TextView) findViewById(R.id.title_textView)).setText(getString(R.string.title_register));
 
         EditText usernameEditText = (EditText) findViewById(R.id.username_editText);
         EditText password2EditText = (EditText) findViewById(R.id.password2_editText);
@@ -104,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "createUserWithEmail:failed", task.getException());
-                            Toast.makeText(LoginActivity.this, task.getException().getMessage(),
+                            Toast.makeText(LogInActivity.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             showLogin();
@@ -134,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(LoginActivity.this, task.getException().getMessage(),
+                            Toast.makeText(LogInActivity.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             finish();
@@ -211,7 +209,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         email = emailEditText.getText().toString().trim();
 
         if (email.isEmpty()) {
-            emailEditText.setError("Required.");
+            emailEditText.setError(getString(R.string.error_required));
             return false;
         }
 
@@ -224,13 +222,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (usernameEditText.isEnabled()) {
             if (username.isEmpty()) {
-                usernameEditText.setError("Required.");
+                usernameEditText.setError(getString(R.string.error_required));
                 return false;
             } else if (username.contains(" ")) {
-                usernameEditText.setError("Username contains space");
+                usernameEditText.setError(getString(R.string.error_username_space));
                 return false;
             } else if (usernameTaken) {
-                usernameEditText.setError("Username taken");
+                usernameEditText.setError(getString(R.string.error_username_taken));
                 return false;
             }
         }
@@ -252,16 +250,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password2 = password2EditText.getText().toString();
 
         if (password.isEmpty()) {
-            passwordEditText.setError("Required.");
+            passwordEditText.setError(getString(R.string.error_required));
             valid = false;
         }
 
         if (password2EditText.isEnabled()) {
             if (password2.isEmpty()) {
-                password2EditText.setError("Required");
+                password2EditText.setError(getString(R.string.error_required));
                 valid = false;
             } else if (!password.equals(password2)) {
-                passwordEditText.setError("Passwords are not equal");
+                passwordEditText.setError(getString(R.string.error_passwords_not_equal));
                 valid = false;
             }
         }

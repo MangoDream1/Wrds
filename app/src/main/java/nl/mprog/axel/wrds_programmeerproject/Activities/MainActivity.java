@@ -191,10 +191,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 bundle = new Bundle();
 
-                bundle.putString("title", getString(R.string.dialog_delete_title));
-                bundle.putString("message", getString(R.string.dialog_delete_list_message));
-                bundle.putString("positive", getString(R.string.button_yes));
-                bundle.putString("negative", getString(R.string.button_no));
+                bundle.putInt("title", R.string.dialog_delete_title);
+                bundle.putInt("message", R.string.dialog_delete_list_message);
+                bundle.putInt("positive", R.string.button_yes);
+                bundle.putInt("negative", R.string.button_no);
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");

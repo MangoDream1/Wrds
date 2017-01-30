@@ -22,15 +22,15 @@ public class DefaultDialog extends DialogFragment {
         final Activity activity = getActivity();
 
         Bundle arguments = getArguments();
-        String title = arguments.getString("title", null);
-        String message = arguments.getString("message", null);
-        String positiveString = arguments.getString("positive", null);
-        String negativeString = arguments.getString("negative", null);
+        int title = arguments.getInt("title", 0);
+        int message = arguments.getInt("message", 0);
+        int positiveString = arguments.getInt("positive", 0);
+        int negativeString = arguments.getInt("negative", 0);
 
         builder.setMessage(message);
         builder.setTitle(title);
 
-        if (positiveString != null) {
+        if (positiveString != 0) {
             builder.setPositiveButton(positiveString, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -39,7 +39,7 @@ public class DefaultDialog extends DialogFragment {
             });
         }
 
-        if (negativeString != null) {
+        if (negativeString != 0) {
             builder.setNegativeButton(negativeString, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

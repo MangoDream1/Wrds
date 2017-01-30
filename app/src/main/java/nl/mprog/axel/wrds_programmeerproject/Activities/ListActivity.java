@@ -281,9 +281,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
                 Bundle bundle = new Bundle();
 
-                bundle.putString("title", getString(R.string.dialog_delete_title));
-                bundle.putString("positive", getString(R.string.button_yes));
-                bundle.putString("negative", getString(R.string.button_no));
+                bundle.putInt("title", R.string.dialog_delete_title);
+                bundle.putInt("positive", R.string.button_yes);
+                bundle.putInt("negative", R.string.button_no);
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");

@@ -4,17 +4,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
@@ -50,9 +54,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
             findViewById(R.id.retry_mistakes_button).setEnabled(false);
         }
 
-
-        // TODO Replace bargraph with piechart
-        createBarGraph();
+        createPieChart();
 
     }
 
@@ -118,6 +120,46 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
 
         return graphView;
     }
+
+    private void createPieChart() {
+        int max = dbm.getHighestTries(listId);
+        int nMistakes = 0;
+
+        for (int i = 2; i <= max; i++) {
+            nMistakes += dbm.countNumberTries(listId, i);
+        }
+
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(nMistakes, "mistakes"));
+        entries.add(new PieEntry(dbm.countNumberTries(listId, 1), "correct"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        dataSet.setColors(getResources().getColor(R.color.pieChartRed),
+                getResources().getColor(R.color.pieChartGreen));
+
+        createPieChart(dataSet);
+
+    }
+
+    private void createPieChart(PieDataSet dataSet) {
+        PieChart pieChart = (PieChart) findViewById(R.id.pieChart);
+
+        PieData data = new PieData(dataSet);
+
+        pieChart.setData(data);
+        pieChart.invalidate();
+
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setEnabled(false);
+
+        Legend legend = pieChart.getLegend();
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setDrawEntryLabels(false);
+    }
+
 
     @Override
     public void onClick(View v) {

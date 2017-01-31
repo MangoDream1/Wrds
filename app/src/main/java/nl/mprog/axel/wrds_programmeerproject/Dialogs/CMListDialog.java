@@ -21,67 +21,97 @@ import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 11-1-17.
+ *
+ * Create or modify list dialog that either handles creation or modification of list, depending
+ * on content of arguments.
  */
 
-public class CMListDialog extends DialogFragment {
+public class CMListDialog extends DialogFragment implements View.OnClickListener,
+        DialogInterface.OnShowListener {
 
     private DatabaseManager dbm;
     private Boolean isModify = false;
     private long listId;
 
-
     private EditText titleEditText;
+    private EditText descEditText;
     private EditText lanAEditText;
     private EditText lanBEditText;
 
+    // Default values
+    private int title = R.string.dialog_create_list_title;
+    private int positiveButtonString = R.string.button_create;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         dbm = DatabaseManager.getInstance();
 
-        final Activity activity = getActivity();
+        Activity activity = getActivity();
 
-        // Use the Builder class for convenient dialog construction
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-        // Get the layout inflater
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.cm_list_dialog, null);
         builder.setView(view);
 
+        findViews(view);
+        changeIfModify();
+        builder = createButtons(builder);
 
+        Dialog dialog = builder.create();
+        dialog.setOnShowListener(this);
+
+        return dialog;
+    }
+
+    /**
+     * Find the view
+     * @param view view
+     */
+    private void findViews(View view) {
         titleEditText = (EditText) view.findViewById(R.id.list_name_editText);
-        final EditText descEditText = (EditText) view.findViewById(R.id.list_description_editText);
+        descEditText = (EditText) view.findViewById(R.id.list_description_editText);
         lanAEditText = (EditText) view.findViewById(R.id.list_languageA_editText);
         lanBEditText = (EditText) view.findViewById(R.id.list_languageB_editText);
+    }
 
-        final Bundle arguments = getArguments();
-
-        int title = R.string.dialog_create_list_title;
-        int  positiveButtonString = R.string.button_create;
-
-        if (arguments != null) {
+    /**
+     * Checks if it is modify instead of create and changes necessary functions.
+     */
+    private void changeIfModify() {
+        if (getArguments() != null) {
             title = R.string.dialog_modify_list_title;
             positiveButtonString = R.string.button_modify;
             isModify = true;
 
-            listId = arguments.getLong("id");
-            Cursor cursor = dbm.getSingleList(listId);
-
-            titleEditText.setText(cursor.getString(
-                    cursor.getColumnIndex(DatabaseHelper.STR_TITLE)));
-            descEditText.setText(cursor.getString(
-                    cursor.getColumnIndex(DatabaseHelper.STR_DESC)));
-            lanAEditText.setText(cursor.getString(
-                    cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A)));
-            lanBEditText.setText(cursor.getString(
-                    cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
+            setArgumentsText();
         }
+    }
 
+    /**
+     * From arguments id get database information and set text in EditTexts
+     */
+    private void setArgumentsText() {
+        listId = getArguments().getLong("id");
+        Cursor cursor = dbm.getSingleList(listId);
+
+        titleEditText.setText(cursor.getString(
+                cursor.getColumnIndex(DatabaseHelper.STR_TITLE)));
+        descEditText.setText(cursor.getString(
+                cursor.getColumnIndex(DatabaseHelper.STR_DESC)));
+        lanAEditText.setText(cursor.getString(
+                cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A)));
+        lanBEditText.setText(cursor.getString(
+                cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B)));
+    }
+
+    /**
+     * Add buttons to the builder
+     * @param builder builder without buttons
+     * @return builder with buttons
+     */
+    private AlertDialog.Builder createButtons(AlertDialog.Builder builder) {
         builder.setTitle(title)
                 .setPositiveButton(positiveButtonString, null)
                 .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
@@ -92,41 +122,47 @@ public class CMListDialog extends DialogFragment {
                     }
                 });
 
-        final Dialog dialog = builder.create();
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String name = titleEditText.getText().toString().trim();
-                        String desc = descEditText.getText().toString().trim();
-                        String lanA = lanAEditText.getText().toString().trim();
-                        String lanB = lanBEditText.getText().toString().trim();
-
-                        if (validateForm()) {
-                            if (isModify) {
-                                dbm.updateList(listId, name, desc, "you", lanA, lanB);
-                            } else {
-                                dbm.insertList(name, desc, "you", lanA, lanB);
-                            }
-
-                            ((MainActivity) activity).dataChange();
-
-                            dismiss();
-
-                        }
-                    }
-                });
-
-            }
-        });
-
-        return dialog;
+        return builder;
     }
 
+    /**
+     * onClick on positive button either update or insert list and call dataChange() in MainActivity
+     * @param v view
+     */
+    @Override
+    public void onClick(View v) {
+        String name = titleEditText.getText().toString().trim();
+        String desc = descEditText.getText().toString().trim();
+        String lanA = lanAEditText.getText().toString().trim();
+        String lanB = lanBEditText.getText().toString().trim();
+
+        if (validateForm()) {
+            if (isModify) {
+                dbm.updateList(listId, name, desc, "you", lanA, lanB);
+            } else {
+                dbm.insertList(name, desc, "you", lanA, lanB);
+            }
+
+            ((MainActivity) getActivity()).dataChange();
+
+            dismiss();
+        }
+    }
+
+    /**
+     * onShow of dialog set positiveButton to onClick listener.
+     * @param dialog dialog
+     */
+    @Override
+    public void onShow(DialogInterface dialog) {
+        Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(this);
+    }
+
+    /**
+     * Validate form
+     * @return true if valid, false if not
+     */
     private boolean validateForm() {
         // If statement is lazy thus not possible thus check all first then find false
         Boolean[] isValid = new Boolean[]{validateTitle(), validateLanA(), validateLanB()};
@@ -134,6 +170,10 @@ public class CMListDialog extends DialogFragment {
         return !Arrays.asList(isValid).contains(false);
     }
 
+    /**
+     * Validate the title, if not set error
+     * @return true if valid, false if not
+     */
     private boolean validateTitle() {
         String title = titleEditText.getText().toString();
 
@@ -148,6 +188,11 @@ public class CMListDialog extends DialogFragment {
         return true;
     }
 
+    /**
+     * Validate language, if not set error
+     * @param lanEditText language EditText
+     * @return true if valid, false if not
+     */
     private boolean validateLanguage(EditText lanEditText) {
         if (lanEditText.getText().toString().isEmpty()) {
             lanEditText.setError(getString(R.string.error_required));
@@ -157,11 +202,20 @@ public class CMListDialog extends DialogFragment {
         return true;
     }
 
+    /**
+     * Validate language A using validateLanguage(EditText lanEditText)
+     * @return validateLanguage(EditText lanEditText) result
+     */
     private boolean validateLanA() {
         return validateLanguage(lanAEditText);
     }
 
+    /**
+     * Validate language B using validateLanguage(EditText lanEditText)
+     * @return validateLanguage(EditText lanEditText) result
+     */
     private boolean validateLanB() {
         return validateLanguage(lanBEditText);
     }
+
 }

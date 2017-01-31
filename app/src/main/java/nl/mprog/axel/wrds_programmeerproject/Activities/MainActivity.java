@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (selectedItemsList.size() > 1) {
             currentMenu.findItem(R.id.share_button).setVisible(false);
             currentMenu.findItem(R.id.modify_button).setVisible(false);
+            currentMenu.findItem(R.id.copy_button).setVisible(false);
         } else {
             currentMenu.findItem(R.id.share_button).setVisible(true);
             currentMenu.findItem(R.id.modify_button).setVisible(true);
-
+            currentMenu.findItem(R.id.copy_button).setVisible(true);
         }
-
     }
 
     private void showMainToolbar() {
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void dialogPositive() {
         // Reached when user is sure it wants to delete
-
         for (long id: selectedItemsList) {
             dbm.deleteList(id);
         }
@@ -184,6 +183,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cmListDialog.setArguments(bundle);
                 cmListDialog.show(getFragmentManager(), "CMListDialog");
 
+                return true;
+
+            case R.id.copy_button:
+                dbm.copyList(selectedItemsList.get(0));
+                dataChange();
                 return true;
 
             case R.id.delete_button:

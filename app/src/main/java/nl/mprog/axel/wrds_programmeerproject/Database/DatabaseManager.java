@@ -64,7 +64,7 @@ public class DatabaseManager {
      * @param languageA     language A of list
      * @param languageB     language A of list
      */
-    public void insertList(String title, String desc, String creator,
+    public long insertList(String title, String desc, String creator,
                               String languageA, String languageB) {
 
         ContentValues contentValues = createListContentValues(title, desc, creator,
@@ -73,7 +73,7 @@ public class DatabaseManager {
         // Creator is owner
         contentValues.put(DatabaseHelper.BOOL_IS_OWNER, 1);
 
-        database.insert(DatabaseHelper.LIST_TABLE, null, contentValues);
+        return database.insert(DatabaseHelper.LIST_TABLE, null, contentValues);
 
     }
 
@@ -510,7 +510,7 @@ public class DatabaseManager {
             for (Map<String, String> words: wordList) {
                 insertWord(listId, words.get("wordA"), words.get("wordB"));
             }
-        };
+        }
     }
 
     /**
@@ -540,5 +540,38 @@ public class DatabaseManager {
 
         return database.update(DatabaseHelper.LIST_TABLE, contentValues,
                 DatabaseHelper.PK_LIST_ID + " = " + listId, null);
+    }
+
+    /**
+     * Copies list
+     * @param listId    id of list to be copied
+     */
+    public long copyList(long listId) {
+        Cursor cursor = getSingleList(listId);
+        String title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_TITLE))
+                + " - copy";
+        String desc = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_DESC));
+        String creator = "you";
+        String lanA = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_A));
+        String lanB = cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_LANGUAGE_B));
+
+        long newListId = insertList(title, desc, creator, lanA, lanB);
+        copyListWords(listId, newListId);
+
+        return newListId;
+    }
+
+    /**
+     * Copies the list word into new list
+     * @param oldListId    id of list to be copied
+     * @param newListId    id of list where the words are copied to
+     */
+    private void copyListWords(long oldListId, long newListId) {
+        Cursor cursor = getListWords(oldListId);
+
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            insertWord(newListId, cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)));
+        }
     }
 }

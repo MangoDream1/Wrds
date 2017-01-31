@@ -17,6 +17,12 @@
         android:icon="@drawable/ic_edit_black_24dp"/>
 
     <item
+        android:id="@+id/copy_button"
+        android:title="@string/menu_button_copy"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_content_copy_black_24dp"/>
+
+    <item
         android:id="@+id/delete_button"
         android:title="@string/menu_button_delete"
         app:showAsAction="ifRoom"

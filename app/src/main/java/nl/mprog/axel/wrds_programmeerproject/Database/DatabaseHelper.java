@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String DB_NAME = "wrds.db";
-    private static final int DB_VERSION = 5;
+    private static final int DB_VERSION = 1;
 
     // Table names
     public static final String LIST_TABLE = "ListTable";
@@ -58,12 +58,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             INT_TRIES + " INTEGER DEFAULT 0);";
 
 
+    /**
+     * Create database
+     * @param db database
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_LIST_TABLE);
         db.execSQL(CREATE_WORD_TABLE);
     }
 
+    /**
+     * Upgrade database
+     * @param db database
+     * @param oldVersion old version number
+     * @param newVersion new version number
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + LIST_TABLE);

@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by axel on 10-1-17.
+ *
+ * DatabaseHelper handles creation and update of the entire database. Also has the names of the
+ * columns
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper{

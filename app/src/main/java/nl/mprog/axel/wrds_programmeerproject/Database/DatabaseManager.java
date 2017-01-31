@@ -12,6 +12,9 @@ import java.util.Map;
 
 /**
  * Created by axel on 10-1-17.
+ *
+ * DatabaseManager handles all local SQL database functions. From insert, update, delete and query.
+ *
  */
 
 public class DatabaseManager {

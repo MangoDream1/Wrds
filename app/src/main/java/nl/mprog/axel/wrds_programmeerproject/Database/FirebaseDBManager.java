@@ -11,13 +11,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import nl.mprog.axel.wrds_programmeerproject.Interfaces.FirebaseKeyInterface;
+import nl.mprog.axel.wrds_programmeerproject.Interfaces.QueryFirebaseInterface;
 
 /**
  * Created by axel on 24-1-17.
  *
- * FirebaseDBManager handles most of the Firebase database functions.
+ * FirebaseDBManager handles all Firebase database functions. Query, delete, update and insert.
  */
 
 public class FirebaseDBManager {
@@ -82,6 +84,27 @@ public class FirebaseDBManager {
     }
 
     /**
+     * Gets list from Firebase. Uses QueryFirebaseInterface for callbacks.
+     * @param key key
+     * @param callback callback
+     */
+    public void getListFirebase(final String key, final Object callback) {
+        firebaseDB.getReference().child("lists").child(key)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, Object> data = (Map<String, Object>) dataSnapshot.getValue();
+                        ((QueryFirebaseInterface) callback).onDataChange(data, key);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        ((QueryFirebaseInterface) callback).onCancelled();
+                    }
+                });
+    }
+
+    /**
      * Upload list
      *
      * Creates key or finds local key and starts uploadList(final String key,
@@ -92,8 +115,6 @@ public class FirebaseDBManager {
      */
     public String uploadList(long listId, String userId) {
         String key = dbm.getFirebaseId(listId);
-
-        //TODO create small key
 
         if (key == null) {
             key = firebaseDB.getReference().child("lists").push().getKey();

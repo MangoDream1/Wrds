@@ -15,43 +15,62 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.Map;
 
 import nl.mprog.axel.wrds_programmeerproject.Activities.MainActivity;
 import nl.mprog.axel.wrds_programmeerproject.Database.DatabaseManager;
+import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
+import nl.mprog.axel.wrds_programmeerproject.Interfaces.QueryFirebaseInterface;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 25-1-17.
+ *
+ * LoadDialog takes the key given by the user and loads the corresponding list from Firebase.
+ *
  */
 
-public class LoadDialog extends DialogFragment implements View.OnClickListener {
+public class LoadDialog extends DialogFragment implements View.OnClickListener,
+        DialogInterface.OnShowListener, QueryFirebaseInterface {
 
     private DatabaseManager dbm;
-    private FirebaseDatabase firebaseDB;
+    private FirebaseDBManager fdbm;
 
     private EditText keyEditText;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Activity activity = getActivity();
-
         dbm = DatabaseManager.getInstance();
-        firebaseDB = FirebaseDatabase.getInstance();
+        fdbm = FirebaseDBManager.getInstance();
 
-        LayoutInflater inflater = activity.getLayoutInflater();
+        View view = createView();
+        AlertDialog dialog = createDialog(view);
+        dialog.setOnShowListener(this);
+
+        return dialog;
+    }
+
+
+    /**
+     * Creates view, finds EditText and sets button
+     * @return created view
+     */
+    private View createView() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.load_dialog, null);
-
         keyEditText = (EditText) view.findViewById(R.id.key_editText);
-
         view.findViewById(R.id.paste_button).setOnClickListener(this);
 
-        final AlertDialog dialog = new AlertDialog.Builder(activity).setView(view)
+        return view;
+    }
+
+    /**
+     * Create dialog with buttons
+     * @param view view
+     * @return created dialog
+     */
+    private AlertDialog createDialog(View view) {
+        return new AlertDialog.Builder(getActivity()).setView(view)
                 .setTitle(R.string.dialog_load_title)
                 .setPositiveButton(R.string.button_load_list, null)
                 .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
@@ -61,51 +80,12 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener {
                     }
                 })
                 .create();
-
-        //http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String key = keyEditText.getText().toString();
-
-                        getListFirebase(key);
-
-                    }
-                });
-            }
-        });
-
-        return dialog;
     }
 
-    private void getListFirebase(final String key) {
-        firebaseDB.getReference().child("lists").child(key)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Map<String, Object> data = (Map<String, Object>) dataSnapshot.getValue();
-
-                        if (data == null) {
-                            keyEditText.setError(getString(R.string.error_key_missing));
-                        } else {
-                            dbm.insertFromFirebase(data, key);
-
-                            ((MainActivity) getActivity()).dataChange();
-                            dismiss(getDialog());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        keyEditText.setError(getString(R.string.error_database));
-                    }
-                });
-    }
-
+    /**
+     * Dismiss given dialog
+     * @param dialog dialog to be dismissed
+     */
     private void dismiss(Dialog dialog) {
         dialog.dismiss();
     }
@@ -128,5 +108,54 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener {
 
                 break;
         }
+    }
+
+    /**
+     * onShow that sets button positive to getListFirebase(key, callback)
+     * code idea adapted from http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog
+     * -from-closing-when-a-button-is-clicked
+     * @param dialog dialog
+     */
+    @Override
+    public void onShow(DialogInterface dialog) {
+        final LoadDialog callback = this;
+
+        Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String key = keyEditText.getText().toString();
+
+                fdbm.getListFirebase(key, callback);
+
+            }
+        });
+    }
+
+    /**
+     * onDataChange called as callback from getListFirebase(key, callback) on succes
+     * Inserts data into local database or sets error is data is missing.
+     * @param data list data
+     * @param key firebase key
+     */
+
+    @Override
+    public void onDataChange(Object data, String key) {
+        if (data == null) {
+            keyEditText.setError(getString(R.string.error_key_missing));
+        } else {
+            dbm.insertFromFirebase((Map<String, Object>) data, key);
+
+            ((MainActivity) getActivity()).dataChange();
+            dismiss(getDialog());
+        }
+    }
+
+    /**
+     * If there was a firebase database errort, then set error
+     */
+    @Override
+    public void onCancelled() {
+        keyEditText.setError(getString(R.string.error_database));
     }
 }

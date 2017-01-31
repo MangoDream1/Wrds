@@ -21,6 +21,10 @@ import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 25-1-17.
+ *
+ * ShareDialog either shows upload, share owner or share. Upload asks for confirmation to upload
+ * the list. Share owner shows the key, gives the possibility to update list or stop share. Users
+ * that loaded a list can only see the key and nothing else.
  */
 
 public class ShareDialog extends DialogFragment
@@ -41,13 +45,6 @@ public class ShareDialog extends DialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)  {
         activity = getActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-        LayoutInflater inflater = activity.getLayoutInflater();
-
-        view = inflater.inflate(R.layout.share_dialog, null);
-        builder.setView(view);
-
         fdbm = FirebaseDBManager.getInstance();
         dbm = DatabaseManager.getInstance();
 
@@ -58,16 +55,39 @@ public class ShareDialog extends DialogFragment
         isShared = dbm.getFirebaseId(listId) != null;
         isOwner = dbm.isListOwner(listId);
 
+        createView();
+        AlertDialog.Builder builder = createBuilder();
+        showKey();
+
+        return createDialog(builder);
+    }
+
+    /**
+     * Create view
+     */
+    private void createView() {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        view = inflater.inflate(R.layout.share_dialog, null);
         view.findViewById(R.id.copy_button).setOnClickListener(this);
+    }
 
-        if (isShared && isOwner) {
-            showKey(dbm.getFirebaseId(listId));
-        } else if (isShared) {
-            fdbm.listIdExists(dbm.getFirebaseId(listId), this);
-        }
+    /**
+     * Create builder
+     * @return builder
+     */
+    private AlertDialog.Builder createBuilder() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view);
 
-        builder = createCorrectDialog(builder);
+        return createCorrectDialog(builder);
+    }
 
+    /**
+     * Create dialog from builder, add buttons
+     * @param builder   builder
+     * @return          dialog
+     */
+    private Dialog createDialog(AlertDialog.Builder builder) {
         Dialog dialog = builder.create();
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -84,6 +104,11 @@ public class ShareDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * Creates the correct dialog depending on the situation. With different buttons.
+     * @param builder   builder
+     * @return          builder with correct buttons
+     */
     private AlertDialog.Builder createCorrectDialog(AlertDialog.Builder builder) {
         if (!isShared && isOwner) {
             view.findViewById(R.id.progressBar).setVisibility(View.GONE);
@@ -104,6 +129,11 @@ public class ShareDialog extends DialogFragment
         return builder;
     }
 
+    /**
+     * Callback from listIdExists. Calls showKey depending on keyExists
+     * @param firebaseId firebaseId
+     * @param keyExists keyExists boolean
+     */
     @Override
     public void keyStillExists(String firebaseId, boolean keyExists) {
         if (keyExists) {
@@ -114,56 +144,103 @@ public class ShareDialog extends DialogFragment
         }
     }
 
+    /**
+     * Sets the given key in TextView and makes it visible. Also hides progressBar
+     * @param key Key to be displayed
+     */
     private void showKey(String key) {
-        ((TextView) view.findViewById(R.id.key_editText)).setText(key);
+        ((TextView) view.findViewById(R.id.key_textView)).setText(key);
         view.findViewById(R.id.progressBar).setVisibility(View.GONE);
         view.findViewById(R.id.key_layout).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Call correct showKey(String key)
+     */
+    private void showKey() {
+        if (isShared && isOwner) {
+            showKey(dbm.getFirebaseId(listId));
+        } else if (isShared) {
+            fdbm.listIdExists(dbm.getFirebaseId(listId), this);
+        }
+    }
+
+    /**
+     * onClick switch
+     * @param view view
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.copy_button:
-                String firebaseId = dbm.getFirebaseId(listId);
-
-                ClipboardManager clipboardManager = (ClipboardManager)
-                        activity.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("wrds list key", firebaseId);
-                clipboardManager.setPrimaryClip(clip);
-
-                Toast.makeText(activity, R.string.toast_key_copied, Toast.LENGTH_SHORT).show();
-
+                buttonCopy();
                 break;
         }
     }
 
+    /**
+     * Copy the key to the clipboard
+     */
+    private void buttonCopy() {
+        String firebaseId = dbm.getFirebaseId(listId);
+
+        ClipboardManager clipboardManager = (ClipboardManager)
+                activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("wrds list key", firebaseId);
+        clipboardManager.setPrimaryClip(clip);
+
+        Toast.makeText(activity, R.string.toast_key_copied, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Set positive button that uploads if not yet uploaded else updates
+     * @param dialog dialog
+     */
     private void setPositiveButton(AlertDialog dialog) {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (!isShared && isOwner) {
-                            Toast.makeText(activity, R.string.toast_list_uploaded,
-                                    Toast.LENGTH_SHORT).show();
-                            fdbm.uploadList(listId, userId);
-
-                            Bundle bundle = new Bundle();
-                            bundle.putLong("id", listId);
-
-                            ShareDialog shareDialog = new ShareDialog();
-                            shareDialog.setArguments(bundle);
-                            shareDialog.show(getFragmentManager(), "ShareDialog");
-
-                            dismiss();
+                            uploadList();
                         } else {
-                            Toast.makeText(activity, R.string.toast_list_updated,
-                                    Toast.LENGTH_SHORT).show();
-                            fdbm.uploadList(listId, userId);
+                            updateList();
                         }
                     }
                 });
     }
 
+    /**
+     * Uploads the list
+     */
+    private void uploadList() {
+        Toast.makeText(activity, R.string.toast_list_uploaded,
+                Toast.LENGTH_SHORT).show();
+        fdbm.uploadList(listId, userId);
+
+        Bundle bundle = new Bundle();
+        bundle.putLong("id", listId);
+
+        ShareDialog shareDialog = new ShareDialog();
+        shareDialog.setArguments(bundle);
+        shareDialog.show(getFragmentManager(), "ShareDialog");
+
+        dismiss();
+    }
+
+    /**
+     * Updates the list
+     */
+    private void updateList() {
+        Toast.makeText(activity, R.string.toast_list_updated,
+                Toast.LENGTH_SHORT).show();
+        fdbm.uploadList(listId, userId);
+    }
+
+    /**
+     * Set negative button that dismisses dialog.
+     * @param dialog dialog
+     */
     private void setNegativeButton(AlertDialog dialog) {
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
                 .setOnClickListener(new View.OnClickListener() {
@@ -174,6 +251,10 @@ public class ShareDialog extends DialogFragment
                 });
     }
 
+    /**
+     * Set neutral button that updates list
+     * @param dialog dialog
+     */
     private void setNeutralButton(AlertDialog dialog) {
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
                 .setOnClickListener(new View.OnClickListener() {

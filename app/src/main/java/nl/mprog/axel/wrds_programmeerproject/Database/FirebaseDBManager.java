@@ -15,6 +15,8 @@ import nl.mprog.axel.wrds_programmeerproject.Interfaces.FirebaseKeyInterface;
 
 /**
  * Created by axel on 24-1-17.
+ *
+ * FirebaseDBManager handles most of the Firebase database functions.
  */
 
 public class FirebaseDBManager {
@@ -27,6 +29,10 @@ public class FirebaseDBManager {
         // Only exists to defeat instantiation
     }
 
+    /**
+     * If instance exists return instance else create new and return
+     * @return FirebaseDBManager instance
+     */
     public static FirebaseDBManager getInstance() {
         if (instance == null) {
             dbm = DatabaseManager.getInstance();
@@ -37,11 +43,24 @@ public class FirebaseDBManager {
         return instance;
     }
 
+    /**
+     * Create user.
+     *
+     * Save username in usernames and set value user id and save user id in users
+     * and save username
+     * @param username  username
+     * @param id        user id
+     */
     public void createUser(String username, String id) {
         firebaseDB.getReference().child("users").child(id).setValue(username);
         firebaseDB.getReference().child("usernames").child(username).setValue(id);
     }
 
+    /**
+     * Checks if firebaseId still exists in Database
+     * @param firebaseId    firebaseId
+     * @param callback      callback function
+     */
     public void listIdExists(final String firebaseId, final Object callback) {
         firebaseDB.getReference().child("lists").child(firebaseId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -59,6 +78,15 @@ public class FirebaseDBManager {
 
     }
 
+    /**
+     * Upload list
+     *
+     * Creates key or finds local key and starts uploadList(final String key,
+     * final long listId, String userId)
+     * @param listId    local list id
+     * @param userId    user id
+     * @return          firebase key location
+     */
     public String uploadList(long listId, String userId) {
         String key = dbm.getFirebaseId(listId);
 
@@ -76,6 +104,14 @@ public class FirebaseDBManager {
         return key;
     }
 
+    /**
+     * Upload list
+     *
+     * Finds username and starts uploadList(long listId, String key, String username)
+     * @param key       firebase list key
+     * @param listId    local list id
+     * @param userId    user id
+     */
     private void uploadList(final String key, final long listId, String userId) {
         firebaseDB.getReference().child("users").child(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -93,11 +129,26 @@ public class FirebaseDBManager {
                 });
     }
 
+    /**
+     * Upload list
+     *
+     * Adds list to lists in Firebase with new ke and adds username
+     * @param listId    local list id
+     * @param key       firebase key
+     * @param username  username
+     */
     private void uploadList(long listId, String key, String username) {
         HashMap<String, Object> data = createListHashTable(listId, username);
         firebaseDB.getReference().child("lists").child(key).setValue(data);
     }
 
+    /**
+     * Delete list in firebase
+     *
+     * Removes list data and adds deletion date. Also delete firebase id in local database
+     * @param listId        local list id
+     * @param firebaseId    firebase id
+     */
     public void deleteList(long listId, String firebaseId) {
         dbm.updateFirebaseId(listId, null);
 
@@ -110,6 +161,12 @@ public class FirebaseDBManager {
 
     }
 
+    /**
+     * Create HashMap with list data
+     * @param listId    local list id
+     * @param username  username
+     * @return          HashMap with list data
+     */
     private HashMap<String, Object> createListHashTable(long listId, String username) {
         Cursor lCursor = dbm.getSingleList(listId);
 
@@ -128,6 +185,12 @@ public class FirebaseDBManager {
         return addWordsHashMap(listId, hashMap);
     }
 
+    /**
+     * Adds list words to HashMap
+     * @param listId    list id
+     * @param hashMap   hashMap without words
+     * @return          hashMap with words
+     */
     private HashMap<String, Object> addWordsHashMap(long listId, HashMap<String, Object> hashMap) {
         Cursor wCursor = dbm.getListWords(listId);
 

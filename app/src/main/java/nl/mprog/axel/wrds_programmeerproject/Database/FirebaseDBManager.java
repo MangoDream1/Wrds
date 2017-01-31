@@ -1,6 +1,7 @@
 package nl.mprog.axel.wrds_programmeerproject.Database;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,8 +67,10 @@ public class FirebaseDBManager {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d("test", "test:"+dataSnapshot.hasChild("deletedOn"));
+
                         ((FirebaseKeyInterface) callback)
-                                .keyStillExists(firebaseId, dataSnapshot.hasChild("deletedOn"));
+                                .keyStillExists(firebaseId, !dataSnapshot.hasChild("deletedOn"));
                     }
 
                     @Override

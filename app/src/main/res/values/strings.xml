@@ -12,7 +12,7 @@
     <string name="dialog_load_title">Paste the key in the box below</string>
     <string name="dialog_modify_word_title">Modify word</string>
     <string name="dialog_share_upload_title">Upload list</string>
-    <string name="dialog_share_title">Shared list</string>
+    <string name="dialog_share_title">Share this key</string>
     <string name="dialog_share_message">Upload your list and share the
         key with your friends</string>
 

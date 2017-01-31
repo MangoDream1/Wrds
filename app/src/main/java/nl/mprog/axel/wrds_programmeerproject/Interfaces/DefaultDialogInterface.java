@@ -5,5 +5,5 @@ package nl.mprog.axel.wrds_programmeerproject.Interfaces;
  */
 
 public interface DefaultDialogInterface {
-    void dialogPositive();
+    void dialogPositive(String origin);
 }

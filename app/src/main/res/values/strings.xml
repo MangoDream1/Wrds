@@ -15,6 +15,9 @@
     <string name="dialog_share_title">Share this key</string>
     <string name="dialog_share_message">Upload your list and share the
         key with your friends</string>
+    <string name="dialog_copy_title">Are you sure you want to copy this list?</string>
+    <string name="dialog_copy_message">The copied list will be yours and you use it as a
+        list made by yourself.</string>
 
     <string name="button_quit">Quit</string>
     <string name="button_cancel">Cancel</string>

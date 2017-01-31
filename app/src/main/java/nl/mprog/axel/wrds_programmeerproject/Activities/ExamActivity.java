@@ -170,8 +170,11 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void dialogPositive() {
-        finish();
+    public void dialogPositive(String origin) {
+        switch (origin) {
+            case "quit":
+                finish();
+        }
     }
 
     @Override
@@ -217,6 +220,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
                 bundle.putInt("message", R.string.dialog_cancel_message);
                 bundle.putInt("positive", R.string.button_quit);
                 bundle.putInt("negative", R.string.button_cancel);
+                bundle.putString("origin", "quit");
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");

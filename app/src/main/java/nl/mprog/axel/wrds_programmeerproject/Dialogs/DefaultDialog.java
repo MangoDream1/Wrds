@@ -17,6 +17,8 @@ import nl.mprog.axel.wrds_programmeerproject.Interfaces.DefaultDialogInterface;
  */
 
 public class DefaultDialog extends DialogFragment {
+    String origin;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -26,6 +28,7 @@ public class DefaultDialog extends DialogFragment {
         int message = arguments.getInt("message", 0);
         int positiveString = arguments.getInt("positive", 0);
         int negativeString = arguments.getInt("negative", 0);
+        origin = arguments.getString("origin", null);
 
         builder.setMessage(message);
         builder.setTitle(title);
@@ -46,7 +49,7 @@ public class DefaultDialog extends DialogFragment {
             builder.setPositiveButton(positiveString, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    ((DefaultDialogInterface) getActivity()).dialogPositive();
+                    ((DefaultDialogInterface) getActivity()).dialogPositive(origin);
                 }
             });
         }

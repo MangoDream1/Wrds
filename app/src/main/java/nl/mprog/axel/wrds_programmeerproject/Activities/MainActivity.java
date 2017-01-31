@@ -133,13 +133,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void dialogPositive() {
-        // Reached when user is sure it wants to delete
-        for (long id: selectedItemsList) {
-            dbm.deleteList(id);
+    public void dialogPositive(String origin) {
+        switch (origin) {
+            case "delete":
+                // Reached when user is sure it wants to delete
+                for (long id: selectedItemsList) {
+                    dbm.deleteList(id);
+                }
+                selectedItemsList.clear();
+                break;
+            case "copy":
+                dbm.copyList(selectedItemsList.get(0));
+                break;
         }
 
-        selectedItemsList.clear();
         showMainToolbar();
         dataChange();
     }
@@ -186,12 +193,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.copy_button:
-                dbm.copyList(selectedItemsList.get(0));
-                dataChange();
+                DefaultDialog defaultDialog = new DefaultDialog();
+
+                bundle = new Bundle();
+
+                bundle.putInt("title", R.string.dialog_copy_title);
+                bundle.putInt("message", R.string.dialog_copy_message);
+                bundle.putInt("positive", R.string.button_yes);
+                bundle.putInt("negative", R.string.button_no);
+                bundle.putString("origin", "copy");
+
+                defaultDialog.setArguments(bundle);
+                defaultDialog.show(getFragmentManager(), "DefaultDialog");
+
                 return true;
 
             case R.id.delete_button:
-                DefaultDialog defaultDialog = new DefaultDialog();
+                defaultDialog = new DefaultDialog();
 
                 bundle = new Bundle();
 
@@ -199,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bundle.putInt("message", R.string.dialog_delete_list_message);
                 bundle.putInt("positive", R.string.button_yes);
                 bundle.putInt("negative", R.string.button_no);
+                bundle.putString("origin", "delete");
 
                 defaultDialog.setArguments(bundle);
                 defaultDialog.show(getFragmentManager(), "DefaultDialog");

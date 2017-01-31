@@ -18,6 +18,8 @@ import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * Created by axel on 17-1-17.
+ *
+ * Dialog for modification of a word
  */
 
 public class ModifyWordDialog extends DialogFragment {
@@ -25,27 +27,40 @@ public class ModifyWordDialog extends DialogFragment {
     private DatabaseManager dbm;
     private long wordId;
 
+    private Activity activity;
+
+    private EditText wordAEditText;
+    private EditText wordBEditText;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Activity activity = getActivity();
-
-
-        // Use the Builder class for convenient dialog construction
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-        // Get the layout inflater
-        LayoutInflater inflater = activity.getLayoutInflater();
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.modify_word_dialog, null);
+        activity = getActivity();
 
         dbm = DatabaseManager.getInstance();
 
-        builder.setView(view);
+        View view = createView();
+        setText(view);
 
-        final EditText wordAEditText = (EditText) view.findViewById(R.id.wordA_editText);
-        final EditText wordBEditText = (EditText) view.findViewById(R.id.wordB_editText);
+        return createBuilder(view).create();
+    }
+
+    /**
+     * Create view
+     * @return  view
+     */
+    private View createView() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        return inflater.inflate(R.layout.modify_word_dialog, null);
+    }
+
+    /**
+     * Set text in edit text from database
+     * @param view  view
+     */
+    private void setText(View view) {
+        wordAEditText = (EditText) view.findViewById(R.id.wordA_editText);
+        wordBEditText = (EditText) view.findViewById(R.id.wordB_editText);
 
         Bundle arguments = getArguments();
         wordId = arguments.getLong("id");
@@ -54,29 +69,58 @@ public class ModifyWordDialog extends DialogFragment {
         wordAEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_A)));
         wordBEditText.setText(cursor.getString(cursor.getColumnIndex(DatabaseHelper.STR_WORD_B)));
 
-        builder.setTitle(R.string.dialog_modify_word_title)
-                .setPositiveButton(R.string.button_modify, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String wordA = wordAEditText.getText().toString();
-                        String wordB = wordBEditText.getText().toString();
+    }
 
-                        dbm.updateWord(wordId, wordA, wordB);
+    /**
+     * Create builder
+     * @param view  view
+     * @return      created builder
+     */
+    private AlertDialog.Builder createBuilder(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-                        ((ListActivity) activity).dataChange();
-                    }
-                })
-                .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // User cancelled the dialog
-                        // Empty since this does nothing except close
+        builder.setView(view);
+        builder.setTitle(R.string.dialog_modify_word_title);
+        builder = setPositiveButton(builder);
+        builder = setNegativeButton(builder);
 
-                        ((ListActivity) activity).dataChange();
+        return builder;
+    }
 
-                    }
-                });
+    /**
+     * setPositiveButton to builder
+     * @param builder   builder without positive button
+     * @return          builder with positive button
+     */
+    private AlertDialog.Builder setPositiveButton(AlertDialog.Builder builder) {
+        builder.setPositiveButton(R.string.button_modify, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String wordA = wordAEditText.getText().toString();
+                String wordB = wordBEditText.getText().toString();
 
-        return builder.create();
+                dbm.updateWord(wordId, wordA, wordB);
+
+                ((ListActivity) activity).dataChange();
+            }
+        });
+
+        return builder;
+    }
+
+    /**
+     * setNegativeButton to builder
+     * @param builder   builder without negative button
+     * @return          builder with negative button
+     */
+    private AlertDialog.Builder setNegativeButton(AlertDialog.Builder builder) {
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((ListActivity) activity).dataChange();
+            }
+        });
+
+        return builder;
     }
 }

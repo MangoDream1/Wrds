@@ -7,15 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Axel on 15-01-17.
+ * Created by axel on 15-01-17.
+ *
+ * AnswerComparison compares the correct answer with the given answer and check where the mistake
+ * was made.
  */
 
 public class AnswerComparison {
 
+    /**
+     * Checks if wordA and Word are equal
+     * @param wordA     wordA
+     * @param wordB     wordB
+     * @return          true if wordA is equal to wordB, else false
+     */
     public static boolean checkCorrect(String wordA, String wordB) {
         return wordA.equals(wordB);
     }
 
+    /**
+     * Underlines wordA on the locations that where wrong in wordB
+     * @param wordA     wordA
+     * @param wordB     wordB
+     * @return          SpannableString of wordA with locations underlined
+     */
     public static SpannableString underlineWrongPart(String wordA, String wordB) {
         SpannableString spanString = new SpannableString(wordA);
 
@@ -35,6 +50,12 @@ public class AnswerComparison {
         return spanString;
     }
 
+    /**
+     * Finds the indexes of the strings in substringList in string
+     * @param string        string
+     * @param substringList substringList
+     * @return              Int list of indexes of the substrings in string
+     */
     private static List<Integer> findIndexesOfSubstringsInString(String string,
                                                           List<String> substringList) {
         int wordALength = string.length();
@@ -63,18 +84,32 @@ public class AnswerComparison {
         return indexes;
     }
 
-    private static List<String> createPartitions(String word, int size) {
+    /**
+     * Partition string in all possible substring of length size
+     * @param string    string
+     * @param size      size
+     * @return          substrings list where strings are of length equal to size
+     */
+    private static List<String> createPartitions(String string, int size) {
         List<String> l = new ArrayList<>();
 
         // Create all possible substring of the given size by looping
-        for (int i = 0; i < word.length() - size + 1; i++) {
-            String substring = word.substring(i, i+ size);
+        for (int i = 0; i < string.length() - size + 1; i++) {
+            String substring = string.substring(i, i+ size);
             l.add(substring);
         }
 
         return l;
     }
 
+    /**
+     * Find similarities in wordA and wordB. Uses recursion to find similarities of all sizes.
+     * @param wordA     wordA
+     * @param wordB     wordB
+     * @param size      size of similarity
+     * @param result    the found similarities
+     * @return          List of string with the similarities
+     */
     private static List<String> findSimilarities(String wordA, String wordB,
                                           int size, List<String> result) {
 
@@ -101,6 +136,13 @@ public class AnswerComparison {
         return findSimilarities(wordA, wordB, size-1, result);
     }
 
+    /**
+     * Starts findSimilarities(String wordA, String wordB, int size, List<String> result) recursion
+     * @param wordA     wordA
+     * @param wordB     wordB
+     * @return          result of findSimilarities(String wordA, String wordB,
+     *                                              int size, List<String> result)
+     */
     private static List<String> findSimilarities(String wordA, String wordB) {
         return findSimilarities(wordA, wordB, wordB.length(), new ArrayList<String>());
     }

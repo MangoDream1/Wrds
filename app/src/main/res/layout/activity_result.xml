@@ -63,21 +63,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/retry_mistakes_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Borderless" />
 
         <Button
             android:text="@string/button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/retry_all_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Borderless" />
 
         <Button
             android:text="@string/button_continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/continue_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Borderless" />
     </LinearLayout>
 
 </LinearLayout>

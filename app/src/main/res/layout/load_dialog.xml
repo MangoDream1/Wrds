@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/key_editText"
+            android:id="@+id/key_textView"
             android:hint="@string/hint_key"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp"

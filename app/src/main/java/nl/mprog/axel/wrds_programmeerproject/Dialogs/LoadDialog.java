@@ -1,6 +1,5 @@
 package nl.mprog.axel.wrds_programmeerproject.Dialogs;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -58,7 +57,7 @@ public class LoadDialog extends DialogFragment implements View.OnClickListener,
     private View createView() {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.load_dialog, null);
-        keyEditText = (EditText) view.findViewById(R.id.key_editText);
+        keyEditText = (EditText) view.findViewById(R.id.key_textView);
         view.findViewById(R.id.paste_button).setOnClickListener(this);
 
         return view;

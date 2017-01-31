@@ -41,8 +41,8 @@ public class DatabaseManager {
 
     /**
      * Open database
-     * @param context Context from where database is opened
-     * @throws SQLException
+     * @param context   Context from where database is opened
+     * @throws          SQLException
      */
     public void open(Context context) throws SQLException {
         dbHelper = new DatabaseHelper(context);
@@ -58,11 +58,11 @@ public class DatabaseManager {
 
     /**
      * Inserts new list into database
-     * @param title list title
-     * @param desc list description
-     * @param creator creator of list
-     * @param languageA language A of list
-     * @param languageB language A of list
+     * @param title         list title
+     * @param desc          list description
+     * @param creator       creator of list
+     * @param languageA     language A of list
+     * @param languageB     language A of list
      */
     public void insertList(String title, String desc, String creator,
                               String languageA, String languageB) {
@@ -79,13 +79,13 @@ public class DatabaseManager {
 
     /**
      * Updates values in a list using listId to find the list
-     * @param listId the id of the list that is updated
-     * @param title new title
-     * @param desc new desc
-     * @param creator new creator
-     * @param languageA new language A
-     * @param languageB new language B
-     * @return Amount of rows affected
+     * @param listId        the id of the list that is updated
+     * @param title         new title
+     * @param desc          new desc
+     * @param creator       new creator
+     * @param languageA     new language A
+     * @param languageB     new language B
+     * @return              Amount of rows affected
      */
     public int updateList(long listId, String title, String desc, String creator,
                              String languageA, String languageB) {
@@ -100,12 +100,12 @@ public class DatabaseManager {
 
     /**
      * Fills in the contentValues for lists in the database
-     * @param title list title
-     * @param desc list desc
-     * @param creator creator of list
-     * @param languageA language A of list
-     * @param languageB language B of list
-     * @return ContentValues filled with params
+     * @param title         list title
+     * @param desc          list desc
+     * @param creator       creator of list
+     * @param languageA     language A of list
+     * @param languageB     language B of list
+     * @return              ContentValues filled with params
      */
     private ContentValues createListContentValues(String title, String desc, String creator,
                                                   String languageA, String languageB) {
@@ -148,11 +148,11 @@ public class DatabaseManager {
 
     /**
      * Queries a table
-     * @param table table name
-     * @param columns columns to be queried
-     * @param where where part of query
-     * @param sortedOn on what result is sorted
-     * @return cursor with results moved to first if not null
+     * @param table     table name
+     * @param columns   columns to be queried
+     * @param where     where part of query
+     * @param sortedOn  on what result is sorted
+     * @return          cursor with results moved to first if not null
      */
     private Cursor query(String table, String[] columns, String where, String sortedOn) {
         Cursor cursor = database.query(table, columns, where, null, null, null, sortedOn, null);
@@ -167,10 +167,11 @@ public class DatabaseManager {
     /**
      * Query list table with variables defined by columns, cells defined by where and sorted on
      * defined by sortedOn
-     * @param columns columns
-     * @param where where
-     * @param sortedOn sortedOn
-     * @return cursor with values defined by columns, cells by where and sorted on by sortedOn
+     * @param columns   columns
+     * @param where     where
+     * @param sortedOn  sortedOn
+     * @return          cursor with values defined by columns,
+     *                  cells by where and sorted on by sortedOn
      */
     private Cursor queryListTable(String[] columns, String where, String sortedOn) {
         return query(DatabaseHelper.LIST_TABLE, columns, where, sortedOn);
@@ -178,9 +179,10 @@ public class DatabaseManager {
 
     /**
      * Query list table with variables defined by columns, cells defined by where
-     * @param columns columns
-     * @param where where
-     * @return cursor with values defined by columns, cells by where and sorted on by sortedOn
+     * @param columns   columns
+     * @param where     where
+     * @return          cursor with values defined by columns,
+     *                  cells by where and sorted on by sortedOn
      */
     private Cursor queryListTable(String[] columns, String where) {
         return queryListTable(columns, where, null);
@@ -188,8 +190,8 @@ public class DatabaseManager {
 
     /**
      * Query list table with cells defined by where
-     * @param where where
-     * @return cursor with values defined by where
+     * @param where     where
+     * @return          cursor with values defined by where
      */
     private Cursor queryListTable(String where) {
         return queryListTable(null, where);
@@ -197,8 +199,8 @@ public class DatabaseManager {
 
     /**
      * Query list table to find title, lan A and lan B for creation title
-     * @param listId id of list
-     * @return cursor with query results
+     * @param listId    id of list
+     * @return          cursor with query results
      */
     public Cursor getUserListTitle(long listId) {
         String[] columns = new String[]{DatabaseHelper.STR_TITLE,
@@ -211,8 +213,8 @@ public class DatabaseManager {
 
     /**
      * Query all data of one list
-     * @param listId id of list
-     * @return cursor with query result with all variables of one list
+     * @param listId    id of list
+     * @return          cursor with query result with all variables of one list
      */
     public Cursor getSingleList(long listId) {
         String where = DatabaseHelper.PK_LIST_ID + " = " + String.valueOf(listId);
@@ -222,8 +224,8 @@ public class DatabaseManager {
 
     /**
      * Count the amount of words in list
-     * @param listId id of list
-     * @return amount of words in list
+     * @param listId    id of list
+     * @return          amount of words in list
      */
     public long countListWords(long listId) {
         return DatabaseUtils.queryNumEntries(database, DatabaseHelper.WORD_TABLE,
@@ -242,8 +244,8 @@ public class DatabaseManager {
 
     /**
      * Checks if user is list owner
-     * @param listId id of list
-     * @return boolean if the user is the list owner
+     * @param listId    id of list
+     * @return          boolean if the user is the list owner
      */
     public boolean isListOwner(long listId) {
         String[] columns = new String[]{DatabaseHelper.BOOL_IS_OWNER};
@@ -256,9 +258,9 @@ public class DatabaseManager {
 
     /**
      * Insert a word into word table
-     * @param listId id of list where the word goes into
-     * @param wordA wordA
-     * @param wordB wordB
+     * @param listId    id of list where the word goes into
+     * @param wordA     wordA
+     * @param wordB     wordB
      */
     public void insertWord(long listId, String wordA, String wordB) {
         /* Inserts new word in database connecting with correct list */
@@ -275,10 +277,10 @@ public class DatabaseManager {
 
     /**
      * Updates a word
-     * @param wordId id of word
-     * @param wordA new wordA
-     * @param wordB new wordB
-     * @return number of columns affected
+     * @param wordId    id of word
+     * @param wordA     new wordA
+     * @param wordB     new wordB
+     * @return          number of columns affected
      */
     public int updateWord(long wordId, String wordA, String wordB) {
         /* Updates a word in the database */
@@ -303,9 +305,9 @@ public class DatabaseManager {
 
     /**
      * Query the word table returning columns and from where
-     * @param columns columns
-     * @param where where
-     * @return cursor with variables defined by columns and cells defined by where
+     * @param columns   columns
+     * @param where     where
+     * @return          cursor with variables defined by columns and cells defined by where
      */
     private Cursor queryWordTable(String[] columns, String where) {
         return query(DatabaseHelper.WORD_TABLE, columns, where, null);
@@ -313,8 +315,8 @@ public class DatabaseManager {
 
     /**
      * Get words defined by where
-     * @param where where
-     * @return cursor with words defined by where
+     * @param where     where
+     * @return          cursor with words defined by where
      */
     private Cursor getListWords(String where) {
         /* Get all the words of a list */
@@ -326,8 +328,8 @@ public class DatabaseManager {
 
     /**
      * Get all words of list
-     * @param listId id of list
-     * @return cursor with all words in list
+     * @param listId    id of list
+     * @return          cursor with all words in list
      */
     public Cursor getListWords(long listId) {
         String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId);
@@ -337,8 +339,8 @@ public class DatabaseManager {
 
     /**
      * Get the words for retry per list
-     * @param listId id of list
-     * @return cursor with all word that need to be retried
+     * @param listId    id of list
+     * @return          cursor with all word that need to be retried
      */
     public Cursor getRetryWords(long listId) {
         String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId) + " AND " +
@@ -349,9 +351,9 @@ public class DatabaseManager {
 
     /**
      * Return single word
-     * @param wordId id of word
-     * @param columns columns queried
-     * @return cursor with single word with variables defined in columns
+     * @param wordId    id of word
+     * @param columns   columns queried
+     * @return          cursor with single word with variables defined in columns
      */
     private Cursor getSingleWord(long wordId, String[] columns ) {
         String where = DatabaseHelper.PK_WORD_ID + " = " + String.valueOf(wordId);
@@ -361,8 +363,8 @@ public class DatabaseManager {
 
     /**
      * Return single word with all variables
-     * @param wordId id of word
-     * @return cursor with single word with all variables
+     * @param wordId    id of word
+     * @return          cursor with single word with all variables
      */
     public Cursor getSingleWord(long wordId) {
         /* Get all of single word */
@@ -371,8 +373,8 @@ public class DatabaseManager {
 
     /**
      * Increment word try
-     * @param wordId id of word
-     * @return amount of rows affected
+     * @param wordId    id of word
+     * @return          amount of rows affected
      */
     public int incrementWordTry(long wordId) {
         Cursor cursor = getSingleWord(wordId, new String[]{DatabaseHelper.INT_TRIES});
@@ -389,8 +391,8 @@ public class DatabaseManager {
 
     /**
      * Reset the word tries of words defined in where
-     * @param where which words to be reset
-     * @return amount of rows affected
+     * @param where     which words to be reset
+     * @return          amount of rows affected
      */
     private int resetWordTries(String where) {
         ContentValues contentValues = new ContentValues();
@@ -403,9 +405,9 @@ public class DatabaseManager {
     /**
      * Reset the word tries of words in list. If isRetry then only reset words
      * that need to be retried
-     * @param listId id of list
-     * @param isRetry isRetry boolean
-     * @return amount of row affected
+     * @param listId    id of list
+     * @param isRetry   isRetry boolean
+     * @return          amount of row affected
      */
     public int resetWordTries(long listId, boolean isRetry) {
         String where = DatabaseHelper.FK_LIST_ID + " = " + String.valueOf(listId);
@@ -419,8 +421,8 @@ public class DatabaseManager {
 
     /**
      * Count the number of mistakes made after exma
-     * @param listId id of list
-     * @return number of mistakes
+     * @param listId    id of list
+     * @return          number of mistakes
      */
     public int getNumberOfMistakes(long listId) {
         int count = 0;
@@ -441,9 +443,9 @@ public class DatabaseManager {
 
     /**
      * Count number of tries given by nTries
-     * @param listId id of list
-     * @param nTries the number of tries to be counted
-     * @return count of the number of tries of nTries
+     * @param listId    id of list
+     * @param nTries    the number of tries to be counted
+     * @return          count of the number of tries of nTries
      */
     public int countNumberTries(long listId, int nTries) {
         int count = 0;
@@ -464,8 +466,8 @@ public class DatabaseManager {
 
     /**
      * Find the max tries
-     * @param listId id of list
-     * @return the max tries of list
+     * @param listId    id of list
+     * @return          the max tries of list
      */
     public int getHighestTries(long listId) {
         int max = 0;
@@ -485,8 +487,8 @@ public class DatabaseManager {
 
     /**
      * Insert from database into firebase
-     * @param map data from firebase
-     * @param firebaseId firebaseId
+     * @param map           data from firebase
+     * @param firebaseId    firebaseId
      */
     public void insertFromFirebase(Map<String, Object> map, String firebaseId) {
         ContentValues contentValues = createListContentValues(
@@ -513,8 +515,8 @@ public class DatabaseManager {
 
     /**
      * Get Firebase id from database
-     * @param listId id of list
-     * @return Firebase id of list
+     * @param listId    id of list
+     * @return          Firebase id of list
      */
     public String getFirebaseId(long listId) {
 
@@ -528,9 +530,9 @@ public class DatabaseManager {
 
     /**
      * Update Firebase id
-     * @param listId id of list
-     * @param firebaseId Firebase id
-     * @return amount of rows affected
+     * @param listId        id of list
+     * @param firebaseId    Firebase id
+     * @return              amount of rows affected
      */
     int updateFirebaseId(long listId, String firebaseId) {
         ContentValues contentValues = new ContentValues();

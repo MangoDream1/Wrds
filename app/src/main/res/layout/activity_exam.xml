@@ -103,7 +103,7 @@
                 android:text="@string/button_stop_exam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cancel_button"
+                android:id="@+id/quit_button"
                 style="@style/Widget.AppCompat.Button.Small" />
 
             <RelativeLayout

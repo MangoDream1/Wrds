@@ -39,15 +39,15 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         Intent intent = getIntent();
         listId = intent.getLongExtra("id", 0L);
 
-        setButtons();
+        setButtonListeners();
         setScore();
         createPieChart();
     }
 
     /**
-     * Sets buttons of view
+     * Sets button listeners
      */
-    private void setButtons() {
+    private void setButtonListeners() {
         findViewById(R.id.continue_button).setOnClickListener(this);
         findViewById(R.id.retry_all_button).setOnClickListener(this);
         findViewById(R.id.retry_mistakes_button).setOnClickListener(this);

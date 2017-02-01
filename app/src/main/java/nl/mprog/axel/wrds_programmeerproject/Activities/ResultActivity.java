@@ -21,7 +21,8 @@ import nl.mprog.axel.wrds_programmeerproject.R;
 
 /**
  * ResultActivity shows the score of the exam and a pie chart showing the distribution of mistakes
- * and right answer.
+ * and right answer. The ExamActivity can be accessed from the buttons. The continue button will
+ * close this activity resulting in the user going back to the ListActivity.
  */
 
 public class ResultActivity extends AppCompatActivity implements View.OnClickListener {

@@ -133,5 +133,67 @@
 
 ## Day 3
 
-- 
+- Removed limit in getUserLists
+- No longer create new list in Firebase if already shared; now updates
+- Save Firebase list id in local database
+- Added share dialog that shows the code and allows for the user to copy it
+- Now delete Firebase list id if local list is deleted
+- Can now cancel share. Will delete list in Firebase database
+- Improved code layout
+- Added LoadDialog. Can now paste or type a key in the dialog to load corresponding list from Firebase
+- Words now succesfully loaded from Firebase aswell
 
+## Day 4
+
+- Added warning messages in ListActivity
+- Added icons to toolbar
+- Now only allowed to delete list from Firebase if user is the owner
+- Added empty view to ListView in MainActivity
+- Added DefaultDialog. This dialog takes message, title, button strings and sets these to correct place. Will use newly added DefaultDialogInterface for callback in the Activities
+
+## Day 5
+
+- Fixed landscape of ResultActivity now should show buttons again
+- Added check if create list from is filled in correctly
+- Added padding to Dialogs
+- Improved usability by not putting first letter of new word in caps in title field in create list
+- No longer able to overwrite in firebase if user is not the owner
+- Can now load lists no words without crash
+- Added progressBar to LoginActivity showing that the app is working on loging in
+
+## Day 6
+
+- Now checks if firebase key still exists in ShareDialog if user is not the owner.
+- Will first ask for confirmation before list is uploaded
+- Added trim to all inputs
+- Moved paste/copy button in LoadDialog/ShareDialog
+- No longer delete in firebase in case key gets reused by another user. Should prevent old keys being used to get wrong lists. Now deletes contents and adds a timestamp of deletion
+
+
+# Week 4
+
+## Day 1
+
+- Can no longer add , delete or modify words in a list that user does not own
+- Replaced barChart with PieChart after Friday feedback
+- Improved data gathering of PieChart data
+- Now cannot start Exam without words in list
+- Moved all hardcoded string to string.xml (! took a very long time !)
+- DefaultDialog now only accepts string id, no strings
+- Changed name of LoginActivity to LogInActivity
+
+## Day 2
+
+- Started adding javadoc comments to methods
+- Started splitting large code methods into more smaller methods
+- Fixed bug with looking if key exists
+- Added QueryFirebaseInterface. 
+- Moved Firebase function from LoadDialog to FirebaseDBManager. Using QueryFirebaseInterface for callback
+- Added copy list functionality
+- Changed DefaultDialogInterface, now needs origin location. This is used if multiple DefaultDialogs are called from the same activity; now can differentiate the origin
+
+## Day 3
+
+- Finished adding javadoc comments to methods
+- Finished splitting large code methods into more smaller methods
+- Improved Bettercodehub score!!

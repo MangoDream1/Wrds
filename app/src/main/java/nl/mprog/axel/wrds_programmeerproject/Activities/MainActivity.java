@@ -73,20 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Restore savedInstanceState if possible otherwise create empty list or selectedItemsList
-     * @param savedInstanceState bundle with saved instance
-     */
-    private void restoreSavedInstanceState(Bundle savedInstanceState) {
-        // If there is a savedInstanceState get data from it, otherwise create empty list
-        if (savedInstanceState == null) {
-            selectedItemsList = new ArrayList<>();
-        } else {
-            selectedItemsList = (ArrayList<Long>) savedInstanceState
-                    .getSerializable("selectedItemsList");
-        }
-    }
-
-    /**
      * Set ListView listener and set adapter
      */
     private void fillListView() {
@@ -455,6 +441,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("selectedItemsList", selectedItemsList);
+    }
+
+    /**
+     * Restore savedInstanceState if possible otherwise create empty list or selectedItemsList
+     * @param savedInstanceState bundle with saved instance
+     */
+    private void restoreSavedInstanceState(Bundle savedInstanceState) {
+        // If there is a savedInstanceState get data from it, otherwise create empty list
+        if (savedInstanceState == null) {
+            selectedItemsList = new ArrayList<>();
+        } else {
+            selectedItemsList = (ArrayList<Long>) savedInstanceState
+                    .getSerializable("selectedItemsList");
+        }
     }
 
     /**

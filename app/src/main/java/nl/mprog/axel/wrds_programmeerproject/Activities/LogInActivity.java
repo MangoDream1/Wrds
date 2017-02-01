@@ -46,20 +46,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.register_button).setOnClickListener(this);
         findViewById(R.id.log_in_button).setOnClickListener(this);
-
-
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
+    /**
+     * Show EditTexts for login and hide those for register
+     */
     private void showLogin() {
         ((TextView) findViewById(R.id.title_textView)).setText(getString(R.string.title_log_in));
 
@@ -75,6 +66,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.log_in_button).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Show EditTexts for register and hide those for login
+     */
     private void showRegister() {
         ((TextView) findViewById(R.id.title_textView)).setText(getString(R.string.title_register));
 
@@ -91,6 +85,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.register_button).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Create Firebase account
+     */
     private void createAccount() {
         Log.d(TAG, "createAccount:" + email);
 
@@ -98,25 +95,36 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "createUserWithEmail:failed", task.getException());
-                            Toast.makeText(LogInActivity.this, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            showLogin();
-                            signIn();
-
-                            fdbm.createUser(username,
-                                    FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        }
-
-                        hideProgressBar();
+                        createAccount(task);
                     }
                 });
     }
 
+    /**
+     * Process task created from createAccount()
+     * @param task firebase task
+     */
+    private void createAccount(Task task) {
+        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+        if (!task.isSuccessful()) {
+            Log.w(TAG, "createUserWithEmail:failed", task.getException());
+            Toast.makeText(LogInActivity.this, task.getException().getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            showLogin();
+            signIn();
+
+            fdbm.createUser(username,
+                    FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
+
+        hideProgressBar();
+    }
+
+    /**
+     * Sign in user after form is validated
+     */
     private void signIn() {
         Log.d(TAG, "signIn:" + email);
 
@@ -128,75 +136,114 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(LogInActivity.this, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            finish();
-                        }
-
-                        hideProgressBar();
+                        signIn(task);
                     }
                 });
+    }
+
+    /**
+     * Process task from signIn()
+     * @param task firebase task
+     */
+    private void signIn(Task task) {
+        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+        if (!task.isSuccessful()) {
+            Log.w(TAG, "signInWithEmail:failed", task.getException());
+            Toast.makeText(LogInActivity.this, task.getException().getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            finish();
+        }
+
+        hideProgressBar();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.log_in_button:
-                showProgressBar();
-                showLogin();
-                signIn();
-
+                logInButton();
                 break;
 
             case R.id.register_button:
-                showRegister();
-
-                // If reset is valid check if username is taken
-                // if not taken it will start createAccount()
-                if (validateForm()) {
-                    showProgressBar();
-                    usernameTaken();
-                }
-
+                registerButton();
                 break;
         }
     }
 
+    /**
+     * Show login and try to log in user
+     */
+    private void logInButton() {
+        showProgressBar();
+        showLogin();
+        signIn();
+    }
+
+    /**
+     * Show register and try to register user if form is valid
+     */
+    private void registerButton() {
+        showRegister();
+
+        // If reset is valid check if username is taken
+        // if not taken it will start createAccount()
+        if (validateForm()) {
+            showProgressBar();
+            usernameTaken();
+        }
+
+    }
+
+    /**
+     * Check if username is taken
+     */
     private void usernameTaken() {
         firebaseDB.getReference().child("usernames").child(username)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "usernameTaken:" + dataSnapshot.getValue());
-
-                        if (dataSnapshot.getValue() != null) {
-                            validateUsername(true);
-                        } else {
-                            createAccount();
-                        }
+                        usernameTaken(dataSnapshot);
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
     }
 
+    /**
+     * Process username taken
+     * @param dataSnapshot firebase database snapshot
+     */
+    private void usernameTaken(DataSnapshot dataSnapshot) {
+        if (dataSnapshot.getValue() != null) {
+            ((EditText) findViewById(R.id.username_editText))
+                    .setError(getString(R.string.error_username_taken));
+            hideProgressBar();
+        } else {
+            createAccount();
+        }
+    }
+
+    /**
+     * Show progressBar
+     */
     private void showProgressBar() {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hide progressBar
+     */
     private void hideProgressBar() {
         findViewById(R.id.progressBar).setVisibility(View.GONE);
-
     }
 
+    /**
+     * Validate entire form
+     * @return true if valid else false
+     */
     private boolean validateForm() {
         // If statement is lazy thus not possible thus check all first then find false
         Boolean[] isValid = new Boolean[]{validateEmail(), validatePassword(), validateUsername()};
@@ -204,6 +251,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         return !Arrays.asList(isValid).contains(false);
     }
 
+    /**
+     * Validate email of user. Set error if not.
+     * @return true if valid else false
+     */
     private boolean validateEmail() {
         EditText emailEditText = (EditText) findViewById(R.id.email_editText);
         email = emailEditText.getText().toString().trim();
@@ -216,7 +267,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-    private boolean validateUsername(boolean usernameTaken) {
+    /**
+     * Validate username. Set error if not
+     * @return true if valid else false
+     */
+    private boolean validateUsername() {
         EditText usernameEditText = (EditText) findViewById(R.id.username_editText);
         username = usernameEditText.getText().toString().trim().toLowerCase();
 
@@ -227,43 +282,61 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             } else if (username.contains(" ")) {
                 usernameEditText.setError(getString(R.string.error_username_space));
                 return false;
-            } else if (usernameTaken) {
-                usernameEditText.setError(getString(R.string.error_username_taken));
-                return false;
             }
         }
 
         return true;
     }
 
-    private boolean validateUsername() {
-        return validateUsername(false);
+    /**
+     * Validate password. Set error if not.
+     * @return true if valid else false
+     */
+    private boolean validatePassword() {
+        password = ((EditText) findViewById(R.id.password_editText)).getText().toString();
+        String password2 = ((EditText) findViewById(R.id.password2_editText)).getText().toString();
+
+        Boolean[] isValid = new Boolean[]{validatePassword(password),
+                validatePassword2(password, password2)};
+
+        return !Arrays.asList(isValid).contains(false);
     }
 
-    private boolean validatePassword() {
-        boolean valid = true;
-
+    /**
+     * Validate password if filled in
+     * @param password password
+     * @return boolean if filled in
+     */
+    private boolean validatePassword(String password) {
         EditText passwordEditText = (EditText) findViewById(R.id.password_editText);
-        EditText password2EditText = (EditText) findViewById(R.id.password2_editText);
-
-        password = passwordEditText.getText().toString();
-        String password2 = password2EditText.getText().toString();
 
         if (password.isEmpty()) {
             passwordEditText.setError(getString(R.string.error_required));
-            valid = false;
+            return false;
         }
+
+        return true;
+    }
+
+    /**
+     * Check password2 is filled in and if password is equal to password2
+     * @param password password
+     * @param password2 repeat password
+     * @return boolean if valid
+     */
+    private boolean validatePassword2(String password, String password2) {
+        EditText passwordEditText = (EditText) findViewById(R.id.password_editText);
+        EditText password2EditText = (EditText) findViewById(R.id.password2_editText);
 
         if (password2EditText.isEnabled()) {
             if (password2.isEmpty()) {
                 password2EditText.setError(getString(R.string.error_required));
-                valid = false;
+                return false;
             } else if (!password.equals(password2)) {
                 passwordEditText.setError(getString(R.string.error_passwords_not_equal));
-                valid = false;
+                return false;
             }
         }
-
-        return valid;
+        return true;
     }
 }

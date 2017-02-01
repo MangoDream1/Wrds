@@ -24,14 +24,14 @@ public class DefaultDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         Bundle arguments = getArguments();
-        int title = arguments.getInt("title", 0);
-        int message = arguments.getInt("message", 0);
-        int positiveString = arguments.getInt("positive", 0);
-        int negativeString = arguments.getInt("negative", 0);
+        int title = arguments.getInt("title", -1);
+        int message = arguments.getInt("message", -1);
+        int positiveString = arguments.getInt("positive", -1);
+        int negativeString = arguments.getInt("negative", -1);
         origin = arguments.getString("origin", null);
 
-        builder.setMessage(message);
-        builder.setTitle(title);
+        if (message != -1) { builder.setMessage(message); }
+        if (title != -1) { builder.setTitle(title); }
 
         builder = addNegativeButton(addPositiveButton(builder, positiveString), negativeString);
 

@@ -18,7 +18,7 @@
     <string name="dialog_copy_title">Are you sure you want to copy this list?</string>
     <string name="dialog_copy_message">The copied list will be yours and you use it as a
         list made by yourself.</string>
-    <string name="dialog_logout_title">Are you sure you want to log out?</string>
+    <string name="dialog_log_out_title">Are you sure you want to log out?</string>
 
     <string name="button_quit">Quit</string>
     <string name="button_cancel">Cancel</string>

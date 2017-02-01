@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DefaultDialog defaultDialog = new DefaultDialog();
 
         Bundle bundle = new Bundle();
-        bundle.putInt("title", R.string.dialog_logout_title);
+        bundle.putInt("title", R.string.dialog_log_out_title);
         bundle.putInt("positive", R.string.button_yes);
         bundle.putInt("negative", R.string.button_no);
         bundle.putString("origin", "logOut");

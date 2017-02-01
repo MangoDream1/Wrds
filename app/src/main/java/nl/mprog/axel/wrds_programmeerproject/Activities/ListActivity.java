@@ -26,6 +26,11 @@ import nl.mprog.axel.wrds_programmeerproject.Dialogs.ModifyWordDialog;
 import nl.mprog.axel.wrds_programmeerproject.Interfaces.DefaultDialogInterface;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
+/**
+ * ListActivity where the user can add new words, delete words or modify words. From here the user
+ * can start the exam of list.
+ */
+
 public class ListActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, DefaultDialogInterface {
 

@@ -23,6 +23,11 @@ import java.util.Arrays;
 import nl.mprog.axel.wrds_programmeerproject.Database.FirebaseDBManager;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
+
+/**
+ * LoginActivity where the user can create an account or log in to an existing one
+ */
+
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = "TEST";

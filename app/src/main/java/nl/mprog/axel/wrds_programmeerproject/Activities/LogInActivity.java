@@ -133,6 +133,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private void signIn() {
         Log.d(TAG, "signIn:" + email);
 
+        Toast.makeText(this, R.string.toast_signing_in, Toast.LENGTH_SHORT).show();
         if (!validateForm()) {
             return;
         }
@@ -142,6 +143,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         signIn(task);
+                        Toast.makeText(getBaseContext(), R.string.toast_signing_succes,
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -69,6 +69,8 @@
     <string name="toast_list_uploaded">List uploaded</string>
     <string name="toast_list_updated">List updated</string>
     <string name="toast_stopped_share">Stopped share</string>
+    <string name="toast_signing_in">Signing in</string>
+    <string name="toast_signing_succes">Sign in success</string>
 
     <string name="title_log_in">Log in</string>
     <string name="title_register">Register</string>

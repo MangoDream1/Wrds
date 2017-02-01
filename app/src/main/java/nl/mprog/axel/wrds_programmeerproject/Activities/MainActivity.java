@@ -66,16 +66,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         restoreSavedInstanceState(savedInstanceState);
-        fillListView();
+        populateListView();
         startFirebaseAuth();
         setButtonListeners();
         setToolbar();
     }
 
     /**
+     * OnClick listener
+     * @param v view
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.add_button:
+                addButton();
+                break;
+        }
+    }
+
+    /**
      * Set ListView listener and set adapter
      */
-    private void fillListView() {
+    private void populateListView() {
         Cursor cursor = dbm.getUserLists();
         adapter = new WordListsCursorAdapter(this, R.layout.list_item, cursor, 0);
 
@@ -181,19 +194,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             currentMenu.findItem(R.id.log_out_button).setVisible(true);
         } else {
             currentMenu.findItem(R.id.log_out_button).setVisible(false);
-        }
-    }
-
-    /**
-     * OnClick listener
-     * @param v view
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_button:
-                addButton();
-                break;
         }
     }
 

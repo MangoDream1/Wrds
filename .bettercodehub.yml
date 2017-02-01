@@ -1,0 +1,5 @@
+exclude:
+- /app/src/main/java/nl/mprog/axel/wrds_programmeerproject/Database/DatabaseManager.java
+component_depth: 8
+languages:
+- java

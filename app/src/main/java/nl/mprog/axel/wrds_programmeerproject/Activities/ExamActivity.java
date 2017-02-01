@@ -19,6 +19,11 @@ import nl.mprog.axel.wrds_programmeerproject.Dialogs.DefaultDialog;
 import nl.mprog.axel.wrds_programmeerproject.Interfaces.DefaultDialogInterface;
 import nl.mprog.axel.wrds_programmeerproject.R;
 
+/**
+ * ExamActivity that asks a random word out of data list. Feedback is given with the contents
+ * depending on if the answer is correct or not.
+ */
+
 public class ExamActivity extends AppCompatActivity implements View.OnClickListener,
         DefaultDialogInterface{
 

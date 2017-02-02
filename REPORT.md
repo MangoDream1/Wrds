@@ -79,6 +79,53 @@ Tijdens de ontwikkeling van de app liep ik tegen drie grote problemen aan (grote
 
 Verder gaf BetterCodeHub ook problemen, doordat een DatabaseManager gebruikt wordt kon *Separate Concerns in Modules* niet gehaald worden. De DatabaseManager wordt in bijna elke class gebruikt en bevat veel verschillende functies. Hierdoor zijn de classes te sterk gekoppeld; waardoor dit punt niet gehaald kan worden. Dit zorgde voor veel frustratie omdat het een race werd naar de hoogste BetterCodeHub score in de groep maar dit punt was helaas niet behalen als *Seperation of Concerns* ook behouden moet worden. Hetzelfde geldt voor *Couple Architecture Components Loosely*, want in deze code wordt gebruik gemaakt van interfaces voor de Firebase callbacks of andere callbacks. Dit zorgt er echter voor dat dit punt ook niet te behalen is.
 
+Er zijn niet echt veranderingen gemaakt ten opzichte van de design document. Dit document schetst namelijk het *Minimal Viable Product*, en de code was op dat stadium ook zo opgebouwd. De extra's die zijn toegevoegd hebben voor de verandering gezorgt die nu in de code te vinden is. Dit zijn dus de toegevoegde dialogs, veranderde database structuur plus functies, firebase functies en log in.
+
+#### Database structuur
+
+##### SQL database
+
+ListTable
+   - \_id         (Primary key, integer autoincrement)
+   - title        (text, not null)
+   - desc         (text)
+   - createdAt    (datetime default current_date)
+   - creator      (text, not null)
+   - languageA    (text, not null)
+   - languageB    (text, not null)
+   - firebaseID   (text, default null)
+   - isOwner      (Integer, default 0)
+
+WordTable
+   - \_id         (Primary key, integer autoincrement)
+   - listID       (integer, not null)
+   - wordA        (text, not null)
+   - wordB        (text, not null)
+   - tries        (Integer, default 0)
+
+##### Firebase database
+
+- username
+   - username: userId
+- user
+   -userId: username
+- lists
+   - listId
+      - createdAt: datetime
+      - desc: string
+      - languageA: string
+      - languageB: string
+      - title: string
+      - username: string (creator username)
+      - words
+         - 0
+            - wordA: string
+            - wordB: string
+         - 1
+            - wordA: string
+            - wordB: string
+         etc...
+
 #### Keuzes
 
 Er is gekozen voor unieke usernames, omdat de username aangeeft wie de lijst heeft gemaakt. Als hiervoor niet unieke usernames worden gebruikt dan kunnen gebruikers elkaar personificeren, waardoor niet duidelijk is of een lijst betrouwbaar is of niet. Dit is tevens ook de reden dat alle usernames lower case zijn, zodat het moeilijk wordt usernames te creëren die veel op elkaar lijken. Deze is keuze is vooral gemaakt met de doelgroep in gedachten.

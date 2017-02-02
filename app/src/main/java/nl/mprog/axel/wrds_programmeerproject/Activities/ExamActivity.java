@@ -236,7 +236,7 @@ public class ExamActivity extends AppCompatActivity implements View.OnClickListe
         wordB = ((EditText) findViewById(R.id.editText)).getText().toString().trim();
         dbm.incrementWordTry(wordId);
 
-        if (!wordB.isEmpty() || AnswerComparison.checkCorrect(wordA, wordB)) {
+        if (!wordB.isEmpty() && AnswerComparison.checkCorrect(wordA, wordB)) {
             updateProgressBar();
 
             // Correct thus don't ask again

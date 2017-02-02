@@ -197,3 +197,10 @@
 - Finished adding javadoc comments to methods
 - Finished splitting large code methods into more smaller methods
 - Improved Bettercodehub score!!
+
+## Day 4
+
+- Finished writing report
+- Created AUDIT.md
+- Updated README.md
+- Made screenshots

@@ -202,3 +202,5 @@
 
 - Finished writing report
 - Created AUDIT.md
+- Updated README.md
+- Made screenshots

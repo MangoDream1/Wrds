@@ -6,6 +6,11 @@
 
 Mijn app is gericht op middelbare scholieren die taalvakken volgen. Deze scholieren moeten veel lange woordenlijsten uit hun hoofd leren en deze app helpt hiermee. De gebruiker kan in de app de woordenlijst invullen en vervolgens overhoren. Tijdens het overhoren krijgt de gebruiker feedback of het door hun gegeven antwoord klopt of niet. Zo niet wordt aangeven waar de fout ligt. Wanneer alle woorden goed zijn beantwoord dan krijgt de gebruiker een cijfer te zien en een pie chart die de verhouding goed/fout laat zien. Verder is de mogelijkheid ingebouwd om lijsten te delen op Firebase en kunnen andere gebruikers die lijst vervolgens downloaden en zelf gebruiken.   
 
+#### Screenshots
+
+Deze screenshot wordt het woord testtest gevraagd de vertaling hiervan is in dit geval ook testtest. Nu heeft de gebruiker desddesd ingevuld, dit is dus fout. De feedback laat zien waar de fout zit, namelijk de t's zijn omgewisseld met d's, door het te onderstrepen.<br><br>
+![12.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/12.png "12.png")
+
 #### Globale overview app
 
 De eerste activity die de gebruiker ziet is de **MainActivity**. In een ListView worden de bestaande lijsten laten zien van de gebruiker. Deze kunnen geselecteerd worden met een *long click* om lijsten te verwijderen, kopiëren , veranderen of te delen. Alleen verwijderen kan met meerdere lijsten; de andere knopen verdwijnen wanneer meerdere lijsten geselecteerd zijn. De knopen staan in de toolbar. Verder kan de gebruiker ook nieuwe lijsten aanmaken door op de knop te drukken. Als op een lijst wordt gedrukt in de ListView gaat de gebruiker naar de **ListActivity**.<br>

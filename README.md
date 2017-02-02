@@ -10,7 +10,7 @@ https://github.com/PhilJay/MPAndroidChart
 For external database and user log in Firebase was user:<br>
 https://console.firebase.google.com/
 
-For a more detailed explanation of how the app works see REPORT.md or the source code (it's well documented with javadoc)
+For a more detailed explanation of how the app works see <a href="https://github.com/MangoDream1/Wrds---Programmeer-Project/blob/master/REPORT.md">REPORT.md</a> or the source code (it's well documented with javadoc)
 
 ### Screenshots
 
@@ -110,7 +110,7 @@ Now no longer see the key on the loaded list since it isnt shared any longer:<br
 Lists can be copied to gain all right to it:<br>
 ![30.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/30.png "30.png")
 
-All rights availible:<br>
+All rights available:<br>
 ![31.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/31.png "31.png")
 
 

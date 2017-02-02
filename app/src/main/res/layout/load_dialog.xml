@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:paddingBottom="20dp"
     android:paddingEnd="20dp"
-    android:paddingLeft="30dp"
+    android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingStart="30dp">
+    android:paddingStart="20dp">
 
     <LinearLayout
         android:orientation="horizontal"

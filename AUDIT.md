@@ -1,6 +1,6 @@
 ### Audit document
 
-![bettercodehub picture](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/bettercodehub.png "bettercodehub picture")
+![bettercodehub picture](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/bettercodehub.PNG "bettercodehub picture")
 
 De DatabaseManager zorgt ervoor dat *Separate Concerns in Modules* niet gehaald kan worden. De DatabaseManager wordt in bijna elke class gebruikt en bevat veel verschillende functies. Hierdoor zijn de classes te sterk gekoppeld; waardoor dit punt niet gehaald kan worden. Dit punt was helaas niet behalen als *Seperation of Concerns* ook behouden moet worden.
 

@@ -69,8 +69,6 @@ public class FirebaseDBManager {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("test", "test:"+dataSnapshot.hasChild("deletedOn"));
-
                         ((FirebaseKeyInterface) callback)
                                 .keyStillExists(firebaseId, !dataSnapshot.hasChild("deletedOn"));
                     }
@@ -80,7 +78,6 @@ public class FirebaseDBManager {
 
                     }
                 });
-
     }
 
     /**

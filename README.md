@@ -1,33 +1,129 @@
-# wrds - ProgrammeerProject
+# **wrds** - ProgrammeerProject
 
 ### Axel Verheul - 10744185
 
-The problem that this app is trying to solve is the learning of words in a new language. The user will be able to created lists with a words in one language and the translation. After the list is finished the user start an examination. Here one word will be asked and the user should fill in the translation. The program tracks how many words are correctly translated and then finally will calculate a score. The user sees what mistake is made and will thus learn from these mistakes. Therefore helping with learning.
+The problem that this app is trying to solve is the learning of words in a new language. The user will be able to created lists with a words in one language and the translation. After the list is finished the user start an examination. Here one word will be asked and the user should fill in the translation. The program tracks how many words are correctly translated and then finally will calculate a score. The user sees what mistake is made and will thus learn from these mistakes.  Therefore helping with learning. These lists can also be shared with other users. The app is called **wrds**.
 
-The user creates lists of words and these need to be saved. Otherwise no external data sets are used. The application has several parts. The view that lists all the user created lists of words. In this view new lists can be created and existing lists can be deleted. A view of one list of words where new words can be added with translation. Also in this view the examination is started. The examination view asks for the translation of random word in the selected list and then checks if it is correct. If not correct shows where the faults are. After examination a results view shows the user score.   
+For the pie charts the following external library was used:<br>
+https://github.com/PhilJay/MPAndroidChart
 
-No APIs are needed. If there is any time left, maybe Firebase so that lists of words can be shared between users. A possible technical problem is the comparing between the correct word and the translation. Best case it could show how much is correct and how much how is incorrect. This might be difficult to program.
+For external database and user log in Firebase was user:<br>
+https://console.firebase.google.com/
 
-A similar app is Duolingo, only here the the list of words is pre-defined by the application. The examination part however is similar in the way how this application should do it.
+For a more detailed explanation of how the app works see REPORT.md or the source code (it's well documented with javadoc)
 
-### Sketches
+### Screenshots
 
-Main View:
+MainActivity with no lists:
+![0.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/0.png "0.png")
 
-![Main View](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Main View.png "Main View")
+Create list dialog (same as modify list dialog, only then values filled in from database for edit):
+![1.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/1.png "1.png")
 
-Main View add list dialog:
+Filled in:
+![2.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/2.png "2.png")
 
-![Main View add list dialog](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Main View add list dialog.png "Main View add list dialog")
+If not correctly filled give error:
+![3.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/3.png "3.png")
 
-List View:
+New list in ListView:
+![4.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/4.png "4.png")
 
-![List View](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/List View.png "List View")
+If selected (long click) possible to edit, copy, delete or upload. To clear selection press return. Only delete possible on multiple lists:
+![5.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/5.png "5.png")
 
-Exam View:
+Created list for to test deletion:
+![6.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/6.png "6.png")
 
-![Exam view](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Exam view.png "Exam view")
+Confirmation:
+![7.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/7.png "7.png")
 
-Exam view incorrect pop up:
+List deleted:
+![8.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/8.png "8.png")
 
-![Exam view incorrect pop up](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/sketch/Exam view incorrect pop up.png "Exam view incorrect pop up")
+After click on list goto ListView:
+![9.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/9.png "9.png")
+
+Added words by pressing add after filling in form. Add button goes down with rest. Words can selected and then edited, deleted and modified the same way lists are:
+![10.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/10.png "10.png")
+
+Started exam by pressing play button:
+![11.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/11.png "11.png")
+
+If the user quits the exam confirmation is asked first
+![32.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/32.png "32.png")
+
+Incorrectly translated word; gives feedback where mistakes were made is shown:
+![12.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/12.png "12.png")
+
+Correct feedback
+![13.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/13.png "13.png")
+
+Incorrect words not removed from list thus asked again. All words need to be correct once before continuing to ResultActivity:
+![14.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/14.png "14.png")
+
+Show score with a pie chart showing distribution correct/false
+![15.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/15.png "15.png")
+
+Pressed improve. Now only use words that were incorrect for the exam:
+![16.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/16.png "16.png")
+
+New score after improving:
+![17.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/17.png "17.png")
+
+Pressed share on list in MainActivity without being logged in takes us to log in screen
+![18.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/18.png "18.png")
+
+Pressing register lets us register:
+![19.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/19.png "19.png")
+
+After register we are signed in:
+![20.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/20.png "20.png")
+
+Now being signed in we can upload a list:
+![21.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/21.png "21.png")
+
+After upload get key to give to friends:
+![22.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/22.png "22.png")
+
+List can be loaded after pressing "Load List" in MainActivity
+![23.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/23.png "23.png")
+
+Pasted in the key
+![24.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/24.png "24.png")
+
+List added from Firebase, now with a new creator (see test as username)
+![25.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/25.png "25.png")
+
+Not possible to add, remove or modify words in these lists
+![26.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/26.png "26.png")
+
+Back to share to stop the share
+![27.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/27.png "27.png")
+
+Share stopped
+![28.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/28.png "28.png")
+
+Now no longer see the key on the loaded list since it isnt shared any longer
+![29.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/29.png "29.png")
+
+Lists can be copied to gain all right to it
+![30.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/30.png "30.png")
+
+All rights availible
+![31.png](https://raw.githubusercontent.com/MangoDream1/Wrds---Programmeer-Project/master/doc/screenshots/31.png "31.png")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

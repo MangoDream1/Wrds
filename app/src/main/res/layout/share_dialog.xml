@@ -15,35 +15,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/key_layout"
         android:visibility="gone">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/key_textView"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/button_copy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/key_textView"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="18sp"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="@string/button_copy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/copy_button"
-                android:layout_marginLeft="40dp"
-                android:layout_marginStart="40dp"
-                style="@style/Widget.AppCompat.Button.Small" />
-        </LinearLayout>
-    </RelativeLayout>
+            android:id="@+id/copy_button"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            style="@style/Widget.AppCompat.Button.Small" />
+    </LinearLayout>
 
 </LinearLayout>

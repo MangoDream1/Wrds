@@ -162,6 +162,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.edit_menu, currentMenu);
 
         currentMenu.findItem(R.id.share_button).setVisible(false);
+        currentMenu.findItem(R.id.copy_button).setVisible(false);
 
         if (selectedItemsList.size() > 1) {
             currentMenu.findItem(R.id.modify_button).setVisible(false);
